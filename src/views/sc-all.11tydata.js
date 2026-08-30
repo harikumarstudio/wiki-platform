@@ -1,7 +1,7 @@
 module.exports = {
-  title: 'Все статьи',
-  // Без layout: sc-all.njk — уже полный документ, как sc.njk и
-  // sc-index.njk. С обёрткой в base.njk страница получалась вложенной
-  // сама в себя, с двумя doctype и двумя body.
+  title: 'All Articles',
+  // Without a layout, sc-all.njk is already a complete document, just like sc.njk and
+  // sc-index.njk. Wrapping it in base.njk resulted in the page being nested
+  // within itself, with two doctypes and two body tags.
   permalink: '/all/index.sc.html',
 }

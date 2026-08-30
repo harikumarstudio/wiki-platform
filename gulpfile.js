@@ -10,10 +10,10 @@ const csso = require('postcss-csso')
 const pimport = require('postcss-import')
 const minmax = require('postcss-media-minmax')
 const autoprefixer = require('autoprefixer')
-// С версии 0.15 gulp-esbuild экспортирует именованные функции вместо самого
-// себя, а entryPoints и outfile стали обязательными: раньше точка входа
-// бралась из потока gulp. Без них поток молча повисает, и gulp сообщает
-// только «Did you forget to signal async completion?».
+// Starting with version 0.15, gulp-esbuild exports named functions instead of the object itself.
+// themselves, and entryPoints and outfile became mandatory: previously the entry point
+// was taken from the gulp stream. Without them, the stream hangs silently, and gulp reports
+// only "Did you forget to signal async completion?".
 const { gulpEsbuild } = require('gulp-esbuild')
 // gulp-rev 12 и gulp-rev-rewrite 7 собраны как ESM: при require() приезжает
 // пространство имён с __esModule, а сама функция лежит в default.
@@ -22,9 +22,9 @@ const revRewrite = require('gulp-rev-rewrite').default
 
 const { contentRepGithub, contentRepFolders } = require(path.join(__dirname, 'config/constants'))
 
-// Раньше здесь был пакет del. С 7-й версии он ESM-only и больше не callable
-// (экспортирует deleteAsync/deleteSync), а обе площадки вызова передавали
-// обычные пути без глобов — то есть ровно то, что умеет родной fs.rm.
+// There used to be a `del` package here. Since version 7, it is ESM-only and no longer callable.
+// (exports deleteAsync/deleteSync), and both call sites passed
+// standard paths without globs—that is, exactly what the native `fs.rm` supports.
 const removePaths = (paths) => Promise.all(paths.map((target) => rm(target, { recursive: true, force: true })))
 
 const cloneContent = () => git.clone(contentRepGithub)

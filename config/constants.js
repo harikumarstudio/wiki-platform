@@ -1,7 +1,7 @@
 require('dotenv').config({ path: '.env' })
 
 const DEFAULT_ENVS = {
-  BASE_URL: 'https://doka.guide',
+  BASE_URL: 'https://archvizwiki.com',
   SECTIONS: 'html, css, js, a11y, tools, recipes',
   CONTENT_REP_GITHUB: 'https://github.com/doka-guide/content.git',
   CONTENT_HOT_BACKLOG: 'https://github.com/doka-guide/content/milestone/22',

@@ -7,7 +7,7 @@ const THEMES = {
   AUTO: 'auto',
 }
 
-// DOM-элементы
+// Elements
 let toggleElement
 const darkThemeStyles = document.head.querySelector('link[rel=stylesheet][media*=prefers-color-scheme][media*=dark]')
 const lightThemeMeta = document.head.querySelector('meta[name=theme-color][media*=prefers-color-scheme][media*=light]')
@@ -25,7 +25,7 @@ const metaColors = {
 
 const store = localStorage
 
-// Функции
+// Functions
 function hasStoredTheme() {
   return !!store.getItem(STORAGE_KEY)
 }
@@ -70,7 +70,7 @@ function applyTheme(theme = getCurrentTheme()) {
   }
 }
 
-// Инициализация
+// Initialization
 if (hasStoredTheme()) {
   applyTheme()
 }

@@ -19,13 +19,11 @@ class Logo {
   }
 
   setFocusOnElement() {
-    this.refs.symbols.innerHTML =
-      'U<span class="logo__eye">&gt;</span><span class="logo__nose">ᴥ</span><span class="logo__eye">&lt;</span>U'
+    this.refs.symbols.innerHTML = 'Arch ⌁ Viz'
   }
 
   unsetFocusOnElement() {
-    this.refs.symbols.innerHTML =
-      'U<span class="logo__eye">•</span><span class="logo__nose">ᴥ</span><span class="logo__eye">•</span>U'
+    this.refs.symbols.innerHTML = 'Arch ⌂ Viz'
   }
 
   startAnimation() {

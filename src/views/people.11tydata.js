@@ -1,13 +1,12 @@
 module.exports = {
-  title: 'Участники',
+  title: 'Credits and Contributors',
   layout: 'base.njk',
   permalink: '/people/',
 
   eleventyComputed: {
-    // Правило скрывает карточки участников, не попадающие в выбранные разделы.
-    // Строится из коллекций, поэтому не может лежать в обычном CSS-файле.
-    // Раньше отдавалось тегом <style> прямо в разметке страницы, но по
-    // спецификации style — метаданные и допустим только в head.
+    // Rule to hide contributor cards that don't belong to the selected sections.
+    // Built from collections, so it can't be in a regular CSS file.
+    // Previously it was delivered as a <style> tag directly in the page markup, but according to the specification, style is metadata and is only allowed in the head.
     pageStyles: function (data) {
       const sections = data.collections.articleIndexes || []
       const selector = sections

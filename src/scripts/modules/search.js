@@ -159,7 +159,7 @@ class SearchResultOutput extends BaseComponent {
       emptyResults: (element) => {
         setLiveRegion(true, element)
         return `
-          <div class="search-page__empty">Ничего не найдено</div>
+          <div class="search-page__empty">Nothing found</div>
         `
       },
     }

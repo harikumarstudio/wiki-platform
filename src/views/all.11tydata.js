@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Все статьи',
+  title: 'All Articles',
   layout: 'base.njk',
   permalink: '/all/',
 }

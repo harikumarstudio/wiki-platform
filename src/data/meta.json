@@ -1,7 +1,7 @@
 {
-  "title": "Дока",
-  "description": "Путь в разработку",
+  "title": "ArchVizWiki",
+  "description": "Documentation for technical artists, 3D artists and developers in the field of architectural visualization.",
   "url": "https://github.com/doka-guide/content",
-  "lang": "ru",
-  "locale": "ru_ru"
+  "lang": "en",
+  "locale": "en_us"
 }

@@ -7,7 +7,7 @@ dist
 *.sublime-workspace
 *.sublime-project
 
-# симлинки на данные репозитория контента
+# Content repository data
 a11y
 html
 css
@@ -23,11 +23,11 @@ interviews
 
 .eslintcache
 
-# кеш для @11ty/eleventy-cache-assets
+# cache for @11ty/eleventy-cache-assets
 .cache
 .issues.json
 
-# бинарник, который editorconfig-checker скачивает при запуске
+# binary that editorconfig-checker downloads when running
 bin
 
 .env

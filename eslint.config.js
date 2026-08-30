@@ -7,8 +7,8 @@ const jest = require('eslint-plugin-jest')
 
 module.exports = [
   {
-    // Переехало из .eslintignore. Разделы контента подключены симлинками и
-    // содержат демки со своим кодом — линтить чужие файлы не нужно.
+    // Moved from .eslintignore. Content sections are included via symlinks and
+    // contain demos with their own code — there is no need to lint third-party files.
     ignores: [
       'node_modules/**',
       'dist/**',
@@ -42,14 +42,14 @@ module.exports = [
     },
   },
 
-  // Правила jest подключаются только к тестам: раньше plugin:jest/recommended
-  // висел на всём проекте, хотя за пределами __tests__ он ничего не проверяет.
+  // Jest rules are only included in tests: previously, plugin:jest/recommended
+  // would hang throughout the entire project, even though it doesn't check anything outside of __tests__.
   {
     files: ['**/__tests__/**/*.js'],
     ...jest.configs['flat/recommended'],
   },
 
-  // Идёт последним: отключает форматирующие правила, конфликтующие с prettier,
-  // и включает сам prettier как правило.
+  // Comes last: Disables formatting rules that conflict with prettier,
+  // and typically includes Prettier itself.
   prettierRecommended,
 ]

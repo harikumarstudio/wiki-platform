@@ -10,11 +10,11 @@ module.exports = {
   permalink: '{{doc.filePathStem}}.sc.html',
 
   eleventyComputed: {
-    // Нужен для <title> на странице карточки: в head он обязателен по
-    // спецификации, хотя сама страница нужна только под скриншот.
+    // Required for the <title> on the card page: it is mandatory in the <head>
+    // according to the specification, even though the page itself is only needed for a screenshot.
     documentTitle: function (data) {
       const { doc } = data
-      return titleFormatter([doc.data.title, 'Дока'])
+      return titleFormatter([doc.data.title, 'ArchVizWiki'], { separator: ' | ' })
     },
 
     cover: function (data) {

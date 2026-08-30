@@ -1,10 +1,10 @@
 {
-  "name": "Дока",
-  "description": "Путь в разработку",
+  "name": "ArchVizWiki",
+  "description": "Documentation for technical artists, 3D artists and developers in the field of architectural visualization.",
   "categories": [
     "education"
   ],
-  "lang": "ru",
+  "lang": "en",
   "dir": "ltr",
   "id": "/",
   "start_url": "/",

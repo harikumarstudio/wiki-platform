@@ -1,6 +1,6 @@
-// Проектный конфиг вместо .babelrc: последний применяется только к файлам
-// внутри пакета и не действует на node_modules. Это важно для jest —
-// jsdom 30 тянет ESM-пакет @exodus/bytes, который приходится трансформировать.
+// Project-level config instead of .babelrc: the latter applies only to files
+// within the package and does not affect node_modules. This is important for Jest —
+// jsdom 30 pulls in the ESM package @exodus/bytes, which needs to be transformed.
 module.exports = {
   presets: ['@babel/preset-env'],
 }

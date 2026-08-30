@@ -26,7 +26,7 @@
 
   <header
     class="header {% if isMainPage or isSearchPage %}header--static{% else %}header--sticky{% endif %}"
-    aria-label="Главный"
+    aria-label="Main"
   >
     <div class="header__controls font-theme font-theme--code">
       <ul class="header__breadcrumbs breadcrumbs base-list">
@@ -67,7 +67,7 @@
       {% if (not isMainPage) and (not isSearchPage) %}
         <div class="header__buttons">
           <span class="hotkey hotkey--search font-theme font-theme--code">
-            Клавиша <kbd class="hotkey__key">/</kbd>
+            Key <kbd class="hotkey__key">/</kbd>
           </span>
           <span class="hotkey hotkey--close font-theme font-theme--code">
             <kbd class="hotkey__key">esc</kbd>

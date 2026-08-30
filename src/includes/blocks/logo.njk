@@ -17,7 +17,7 @@
   {% endset %}
 
   {% set defaultLetters %}
-    U<span class="logo__eye">•</span><span class="logo__nose">ᴥ</span><span class="logo__eye">•</span>U
+    Arch::Viz
   {% endset %}
   {% set letters = letters if letters else defaultLetters %}
 
@@ -31,13 +31,13 @@
           {{ letters | safe }}
         </span>
         <span class="logo__symbols logo__symbols--search">
-          U<span class="logo__eye">ˇ</span><span class="logo__nose">ᴥ</span><span class="logo__eye">ˇ</span>U
+          Arch ⌁ Viz
         </span>
       </span>
     {% endif %}
     <span
       class="logo__text {{ 'link' if isLink else '' }} {{ 'logo__text--contrast' if not isContrastColor else 'logo__image--custom' }}">
-      Дока
+      wiki
     </span>
   </{{tag}}>
 {% endmacro %}

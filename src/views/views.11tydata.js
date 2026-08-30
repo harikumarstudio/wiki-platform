@@ -39,7 +39,7 @@ module.exports = {
 
   eleventyComputed: {
     documentTitle: function (data) {
-      return titleFormatter([data.title, 'Дока'])
+      return titleFormatter([data.title, 'ArchVizWiki'])
     },
 
     socialTitle: function (data) {
@@ -412,7 +412,7 @@ module.exports = {
 
       switch (pageUrl) {
         case '/licenses/':
-          return 'U<span class="logo__eye">©</span><span class="logo__nose">ᴥ</span><span class="logo__eye">©</span>U'
+          return 'arch::viz'
         default:
           return null
       }

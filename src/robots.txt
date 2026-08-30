@@ -14,4 +14,4 @@ Disallow: /search
 Disallow: *demos/
 Clean-param: q
 
-Sitemap: https://doka.guide/sitemap.xml
+Sitemap: https://archvizwiki.com/sitemap.xml

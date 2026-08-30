@@ -25,12 +25,12 @@ module.exports = {
       )
 
       const standalonePages = [
-        // главная страница
+        // Home Page
         {
           url: `${baseUrl}/`,
           date: new Date(),
         },
-        // страница с индексами категорий
+        // Category Index Page
         ...mainSections.map((section) => ({
           url: `${baseUrl}/${section}/`,
           date: new Date(),

@@ -196,7 +196,7 @@ class QuickSearch extends BaseComponent {
 
     const itemsMarkup =
       !hitObjectList || hitObjectList.length === 0
-        ? `Ничего не найдено`
+        ? `Nothing found`
         : hitObjectList
             .map((hitObject) => {
               const title = hitObject.originalTitle.replace(

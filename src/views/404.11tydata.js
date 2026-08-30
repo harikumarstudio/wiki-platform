@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Страница не найдена',
+  title: 'Page not found',
   layout: 'base.njk',
   permalink: '/404/index.html',
 }
