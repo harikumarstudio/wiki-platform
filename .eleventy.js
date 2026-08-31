@@ -304,10 +304,10 @@ module.exports = function (config) {
     return text
   })
 
-  config.addFilter('ruDate', (value) => {
+  config.addFilter('enDate', (value) => {
     let v = typeof value === 'string' ? new Date(value) : value
     return v
-      .toLocaleString('ru', {
+      .toLocaleString('en', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -317,7 +317,7 @@ module.exports = function (config) {
 
   config.addFilter('shortDate', (value) => {
     return value
-      .toLocaleString('ru', {
+      .toLocaleString('en', {
         month: 'short',
         day: 'numeric',
       })
@@ -500,7 +500,7 @@ module.exports = function (config) {
   config.addPassthroughCopy('src/robots.txt')
   config.addPassthroughCopy('src/fonts')
   config.addPassthroughCopy('src/images')
-  config.addPassthroughCopy('src/(css|html|js|a11y|tools|recipes|people|interviews)/**/!(*11tydata*)*.!(md)')
+  config.addPassthroughCopy('src/(cpp|css|html|js|a11y|tools|recipes|people|interviews)/**/!(*11tydata*)*.!(md)')
 
   return {
     dir: {

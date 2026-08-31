@@ -39,20 +39,20 @@
 
 <dl class="contributors">
   <div class="contributors__item">
-    <dt class="contributors__key">Авторы:</dt>
+    <dt class="contributors__key">Authors:</dt>
     <dd class="contributors__value">{{ personsList(list=populatedAuthors, personType="author") }}</dd>
   </div>
 
   {% if populatedContributors.length > 0 %}
     <div class="contributors__item">
-      <dt class="contributors__key">Контрибьюторы:</dt>
+      <dt class="contributors__key">Contributors:</dt>
       <dd class="contributors__value">{{ personsList(list=populatedContributors, personType="contributor") }}</dd>
     </div>
   {% endif %}
 
   {% if populatedEditors.length > 0 %}
     <div class="contributors__item">
-      <dt class="contributors__key">Редакторы:</dt>
+      <dt class="contributors__key">Editors:</dt>
       <dd class="contributors__value">{{ personsList(list=populatedEditors, personType="editor") }}</dd>
     </div>
   {% endif %}
