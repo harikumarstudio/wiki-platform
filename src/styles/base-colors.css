@@ -15,6 +15,7 @@
   --color-violet: 276 100% 72%;
   --color-aquamarine: 162 90% 51%;
 
+  --color-base-cpp: hsl(var(--color-blue));
   --color-base-html: hsl(var(--color-orange));
   --color-base-css: hsl(var(--color-blue));
   --color-base-js: hsl(var(--color-yellow));

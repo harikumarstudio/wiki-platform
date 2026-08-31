@@ -15,6 +15,7 @@
   --color-fade: 220 7% 28%;
   --color-border: hsl(var(--color-base-text) / 0.3);
 
+  --color-cpp: hsl(209 70% 24%);
   --color-html: hsl(25 70% 24%);
   --color-css: hsl(209 70% 24%);
   --color-js: hsl(49 74% 23%);

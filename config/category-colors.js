@@ -1,4 +1,8 @@
 module.exports = {
+  cpp: {
+    light: 'hsl(209 100% 59%)',
+    dark: 'hsl(209 70% 24%)',
+  },
   html: {
     light: 'hsl(25 100% 59%)',
     dark: 'hsl(25 70% 24%)',

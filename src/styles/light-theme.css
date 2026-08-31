@@ -13,6 +13,7 @@
   --color-fade: 0 0% 82%;
   --color-border: hsl(var(--color-base-text) / 0.3);
 
+  --color-cpp: hsl(var(--color-blue));
   --color-html: hsl(var(--color-orange));
   --color-css: hsl(var(--color-blue));
   --color-js: hsl(var(--color-yellow));
