@@ -316,7 +316,7 @@ module.exports = {
     documentTitle: function (data) {
       // удаляем символы обратных кавычек html-тегов из markdown
       const title = data.title.replace(/`/g, '')
-      return titleFormatter([title, data.categoryName, 'Дока'])
+      return titleFormatter([title, data.categoryName, 'ArchVizWiki'])
     },
 
     socialTitle: function (data) {
