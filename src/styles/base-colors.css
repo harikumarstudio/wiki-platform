@@ -16,6 +16,10 @@
   --color-aquamarine: 162 90% 51%;
 
   --color-base-cpp: hsl(var(--color-blue));
+  --color-base-houdini: hsl(var(--color-orange));
+  --color-base-python: hsl(var(--color-yellow));
+  --color-base-ai: hsl(var(--color-green));
+  --color-base-unreal: hsl(var(--color-violet));
   --color-base-html: hsl(var(--color-orange));
   --color-base-css: hsl(var(--color-blue));
   --color-base-js: hsl(var(--color-yellow));

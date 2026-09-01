@@ -14,6 +14,10 @@
   --color-border: hsl(var(--color-base-text) / 0.3);
 
   --color-cpp: hsl(var(--color-blue));
+  --color-houdini: hsl(var(--color-orange));
+  --color-python: hsl(var(--color-yellow));
+  --color-ai: hsl(var(--color-green));
+  --color-unreal: hsl(var(--color-violet));
   --color-html: hsl(var(--color-orange));
   --color-css: hsl(var(--color-blue));
   --color-js: hsl(var(--color-yellow));

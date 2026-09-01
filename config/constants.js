@@ -2,10 +2,11 @@ require('dotenv').config({ path: '.env' })
 
 const DEFAULT_ENVS = {
   BASE_URL: 'https://archvizwiki.com',
-  SECTIONS: 'cpp, html, css, js, a11y, tools, recipes',
+  SECTIONS: 'cpp, houdini, python, ai, unreal, html, css, js, a11y, tools, recipes',
   CONTENT_REP_GITHUB: 'https://github.com/doka-guide/content.git',
   CONTENT_HOT_BACKLOG: 'https://github.com/doka-guide/content/milestone/22',
-  CONTENT_REP_FOLDERS: 'cpp, html, css, js, a11y, tools, recipes, people, pages, settings, interviews',
+  CONTENT_REP_FOLDERS:
+    'cpp, houdini, python, ai, unreal, html, css, js, a11y, tools, recipes, people, pages, settings, interviews',
   PATH_TO_CONTENT: '../wiki-content',
   DOKA_ORG: 'DOKA_ORG',
   PLATFORM_REP_GITHUB_URL: 'https://github.com/doka-guide/platform',

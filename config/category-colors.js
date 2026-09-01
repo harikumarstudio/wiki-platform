@@ -3,6 +3,22 @@ module.exports = {
     light: 'hsl(209 100% 59%)',
     dark: 'hsl(209 70% 24%)',
   },
+  houdini: {
+    light: 'hsl(25 100% 59%)',
+    dark: 'hsl(25 70% 24%)',
+  },
+  python: {
+    light: 'hsl(49 100% 58%)',
+    dark: 'hsl(49 74% 23%)',
+  },
+  ai: {
+    light: 'hsl(122 78% 58%)',
+    dark: 'hsl(122 56% 23%)',
+  },
+  unreal: {
+    light: 'hsl(276 100% 72%)',
+    dark: 'hsl(276 39% 32%)',
+  },
   html: {
     light: 'hsl(25 100% 59%)',
     dark: 'hsl(25 70% 24%)',

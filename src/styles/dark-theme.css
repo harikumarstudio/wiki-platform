@@ -16,6 +16,10 @@
   --color-border: hsl(var(--color-base-text) / 0.3);
 
   --color-cpp: hsl(209 70% 24%);
+  --color-houdini: hsl(25 70% 24%);
+  --color-python: hsl(49 74% 23%);
+  --color-ai: hsl(122 56% 23%);
+  --color-unreal: hsl(276 39% 32%);
   --color-html: hsl(25 70% 24%);
   --color-css: hsl(209 70% 24%);
   --color-js: hsl(49 74% 23%);

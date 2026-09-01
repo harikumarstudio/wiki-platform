@@ -4,7 +4,7 @@
 
 {% if (featuredArticles and featuredArticles.length > 0) %}
   <section class="articles-gallery">
-    <h2 class="visually-hidden">Избранные статьи</h2>
+    <h2 class="visually-hidden">Featured Articles</h2>
 
     <ul class="featured-articles-list base-list">
       {% for article in featuredArticles %}
@@ -17,7 +17,7 @@
 
     {% if featuredArticles and featuredArticles.length > lazyLoadingIndexThreshold %}
       <button class="articles-gallery__more-button button" type="button">
-        Показать ещё
+        Show more
       </button>
     {% endif %}
   </section>
