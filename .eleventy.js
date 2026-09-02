@@ -281,11 +281,11 @@ module.exports = function (config) {
     const wordsPerMinute = 150
     const value = Math.ceil(textLength / wordsPerMinute)
     if (value > 15) {
-      return `больше 15 мин`
+      return `more than 15 min`
     } else if (value < 5) {
-      return `меньше 5 мин`
+      return `less than 5 min`
     } else {
-      return `${value} мин`
+      return `${value} min`
     }
   })
 

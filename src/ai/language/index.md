@@ -1,10 +1,6 @@
 ---
 title: "Language Architecture"
 description: "Меняем масштаб элемента."
-baseline:
-  - group: LLM
-    features:
-      - css.properties.zoom
 authors:
   - ivkrylova
 contributors:

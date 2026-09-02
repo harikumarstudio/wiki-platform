@@ -1,63 +1,63 @@
 <form class="feedback-form" method="post" autocomplete="off">
   <fieldset class="feedback-form__fieldset feedback-form__fieldset--vote font-theme font-theme--code">
-    <legend class="feedback-form__title font-theme font-theme--code">Статья была полезной?</legend>
-    <button class="vote vote--up" name="answer" value="Понравилось" type="submit">
-      <span class="visually-hidden">Понравилось</span>
+    <legend class="feedback-form__title font-theme font-theme--code">Was the article helpful?</legend>
+    <button class="vote vote--up" name="answer" value="The article is helpful" type="submit">
+      <span class="visually-hidden">The article is helpful</span>
       <span aria-hidden="true">^‿^</span>
     </button>
     <button class="vote vote--down" type="button" aria-expanded="false" aria-controls="reason">
-      <span class="visually-hidden">Не понравилось</span>
+      <span class="visually-hidden">The article is not helpful</span>
       <span aria-hidden="true">ˇ⌒ˇ</span>
     </button>
   </fieldset>
 
   <fieldset class="feedback-form__fieldset feedback-form__fieldset--reason" id="reason" hidden>
-    <legend class="feedback-form__legend">Расскажите, что не понравилось?</legend>
+    <legend class="feedback-form__legend">Tell us what you didn't like?</legend>
     <ul class="feedback-control-list base-list">
       <li class="feedback-control-list__item">
-        <button class="feedback-form__reason-button button button--round" name="answer" value="Статья слишком сложная" type="submit">
-          Статья слишком сложная
+        <button class="feedback-form__reason-button button button--round" name="answer" value="The article is too complex" type="submit">
+          The article is too complex
         </button>
       </li>
       <li class="feedback-control-list__item">
-        <button class="feedback-form__reason-button button button--round" name="answer" value="Статья устарела" type="submit">
-          Статья устарела
+        <button class="feedback-form__reason-button button button--round" name="answer" value="The article is outdated" type="submit">
+          The article is outdated
         </button>
       </li>
       <li class="feedback-control-list__item">
-        <button class="feedback-form__reason-button button button--round" name="answer" value="В статье не хватает информации" type="submit">
-          В статье не хватает информации
+        <button class="feedback-form__reason-button button button--round" name="answer" value="The article lacks information" type="submit">
+          The article lacks information
         </button>
       </li>
       <li class="feedback-control-list__item">
-        <button class="feedback-form__reason-button button button--round" name="answer" value="В статье мало примеров" type="submit">
-          В статье мало примеров
+        <button class="feedback-form__reason-button button button--round" name="answer" value="The article has few examples" type="submit">
+          The article has few examples
         </button>
       </li>
       <li class="feedback-control-list__item">
-        <button class="feedback-form__reason-button button button--round button--another-reason" name="answer" value="Что-то другое" type="button" aria-expanded="false" aria-controls="another-reason">
-          Что-то другое
+        <button class="feedback-form__reason-button button button--round button--another-reason" name="answer" value="Something else" type="button" aria-expanded="false" aria-controls="another-reason">
+          Something else
         </button>
       </li>
     </ul>
     <div class="feedback-form__text" id="another-reason" hidden>
       <div class="text-control">
         <div class="text-control__row">
-          <textarea class="text-control__item text-control__input" name="answer" id="textarea" placeholder="Например, много ошибок"></textarea>
-          <label for="textarea">Другая причина</label>
+          <textarea class="text-control__item text-control__input" name="answer" id="textarea" placeholder="For example, many errors"></textarea>
+          <label for="textarea">Another reason</label>
         </div>
-        <button class="text-control__item text-control__button button button--invert" type="submit">Отправить</button>
+        <button class="text-control__item text-control__button button button--invert" type="submit">Submit</button>
       </div>
     </div>
   </fieldset>
 
   <p class="feedback-form__description">
-    Если вы нашли ошибку, отправьте нам <a class="link" href="{{ constants.contentRepLink }}">пулреквест</a>!
+    If you find an error, please send us a <a class="link" href="{{ constants.contentRepLink }}">pull request</a>!
   </p>
 
-  <p aria-live="polite" class="feedback-form__success" id="success" data-state="success">Спасибо за оценку ❤️</p>
+  <p aria-live="polite" class="feedback-form__success" id="success" data-state="success">Thank you for your feedback ❤️</p>
 
   <p aria-live="assertive" class="feedback-form__error" id="error" data-state="error">
-    Во время отправки формы что-то пошло не так. Перезагрузите страницу и попробуйте оценить материал ещё раз.
+    Something went wrong while submitting the form. Please refresh the page and try again.
   </p>
 </form>
