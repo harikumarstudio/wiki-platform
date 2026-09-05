@@ -1,10 +1,8 @@
 ---
-title: "`zoom`"
-description: "Меняем масштаб элемента."
+title: "Procedural modelling"
+description: "The nodes to help 3D model any object"
 authors:
-  - ivkrylova
-contributors:
-  - inventoris
+  - harikumarstudio
 related:
   - css/transform-function
   - css/transform

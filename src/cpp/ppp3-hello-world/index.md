@@ -1,10 +1,6 @@
 ---
-title: "Functions as data"
-description: "A function is a block of code which only runs when it is called."
-baseline:
-  - group: OOP
-    features:
-      - css.properties.zoom
+title: "Hello, World! `<prnt>`"
+description: "Меняем масштаб элемента."
 authors:
   - ivkrylova
 contributors:
@@ -16,6 +12,90 @@ related:
 tags:
   - doka
 ---
+
+## H2 Section Heading 
+### H3 Section Heading  
+#### H4 Section Heading 
+**Bold text, if h4 was not enough**
+
+**Application architecture** — is a set of decisions regarding how application modules will communicate with each other and with the outside world.
+
+![Logo Icon](../../images/icons/192x192.png)
+Tagline to image
+
+
+<aside>
+
+🍕 It is important to have pizza! With empty lines above and bottom.
+
+</aside>
+
+
+  <details>
+    <summary>More about the details section</summary>
+
+    Here, there can be a long text for those who are interested and have expanded the section.
+
+  </details>
+
+
+```css
+.container {
+  display: flex;
+}
+```
+
+```cpp
+#include <iostream> // for std::cout
+
+int main()
+{
+    std::cout << 5;       // print the literal number `5`
+    std::cout << -6.7;    // print the literal number `-6.7`
+    std::cout << 'H';     // print the literal character `H`
+    std::cout << "Hello"; // print the literal text `Hello`
+
+    return 0;
+}
+```
+
+https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md
+
+To make text bold, use two asterisks: **Bold**, and to make text italic , use one underscore: _Italics_ 
+
+Keyboard shortcut: 
+<kbd>`Ctrl B`</kbd>
+
+Buttons with double quotes: 
+Click the <kbd>`"Save"`</kbd> button
+
+Real symbols instead of unicode: 
+<kbd>→</kbd>
+
+Tags in angle brackets: 
+<cite>
+
+Parantheses at the end of function name to emphasise difference from properties: 
+The method <kbd>`forEach()`</kbd> accepts a callback
+
+1. First
+2. Second
+3. Тhird
+- bullet point;
+- bullet point 2;
+- bullet point three.
+
+Another set of bullet points (comma):
+
+- Bullet point,
+- Bullet point 2,
+- Bullet point three. 
+
+References to other documents on site: 
+
+- [Асинхронность в JS](/js/async-in-js/)
+- [Как реально работают flex-shrink и flex-grow](/css/flex-grow-shrink/)
+- [Как ребейзить ветку и не думать ни о чём](/recipes/git-rebase-onto/)
 
 ## Кратко
 

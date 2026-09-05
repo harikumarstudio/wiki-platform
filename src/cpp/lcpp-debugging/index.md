@@ -1,10 +1,6 @@
 ---
-title: "Karma"
-description: "Меняем масштаб элемента."
-baseline:
-  - group: zoom
-    features:
-      - css.properties.zoom
+title: "Debugging C++ Programs"
+description: "Find the bug!"
 authors:
   - ivkrylova
 contributors:

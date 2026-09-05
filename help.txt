@@ -1,1 +1,20 @@
 print("Hello World")
+
+StyleGuide: 
+
+Article/Document Formt: 
+-   Use headings from <h2>to <h4>:
+-   Don't use a first-level heading, one on a page. 
+
+- Image as follows: 
+![There is a plate with two doughnuts on the table. One is covered in pink glaze, and the other is dusted with powdered sugar.](images/donuts.png)
+
+- Video: 
+If you need to add animation to your text, choose an MP4 video over a GIF: video is lighter and can be paused. You can convert an existing GIF to MP4 online.
+
+Small block of text: 
+<aside>
+
+🥨 Брецель важно есть свежим!
+
+</aside>

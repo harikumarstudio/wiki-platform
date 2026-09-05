@@ -1,9 +1,28 @@
 ---
 name: 'Python'
 groups:
-  - name: 'OOP'
+  - name: 'CS50P'
     items:
-      - functions
+    - Functions, Variables
+    - Conditionals
+    - Loops
+    - Exceptions
+    - Libraries
+    - Unit Tests
+    - File I/O
+    - Regular Expressions
+    - Object-Oriented Programming
+    - Et Cetera
+  - name: 'Python Programming MOOC'
+    items:
+      - pmooc-basics
+      - pconditionals
+      - ploops
+      - plists
+      - pdictionaries
+      - pfiles
+      - pmodules 
+---
 
 ---
 

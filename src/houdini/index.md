@@ -1,9 +1,9 @@
 ---
 name: 'Houdini'
 groups:
-  - name: 'Render engine'
+  - name: 'Modelling'
     items:
-      - karma
+      - procedural
 
 ---
 
