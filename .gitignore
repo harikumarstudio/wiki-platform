@@ -8,12 +8,11 @@ dist
 *.sublime-project
 
 # Content repository data
-a11y
-html
-css
-js
-tools
-recipes
+cpp
+houdini
+python
+ai
+unreal
 people
 about
 pages

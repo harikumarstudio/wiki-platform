@@ -1,5 +1,5 @@
 ---
-title: "Algorithms"
+title: "`Algorithms`"
 description: "The basic building blocks of programming including functions, conditionals, loops, and variables and how to build a project in Scratch."
 authors:
   - harikumarstudio
