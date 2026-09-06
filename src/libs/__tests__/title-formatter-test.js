@@ -2,16 +2,16 @@ const { titleFormatter } = require('../title-formatter/title-formatter')
 
 describe('titleFormatter', () => {
   it('склеивает части длинным тире', () => {
-    expect(titleFormatter(['display', 'CSS', 'Дока'])).toBe('display — CSS — Дока')
+    expect(titleFormatter(['display', 'CSS', 'Wiki'])).toBe('display — CSS — Wiki')
   })
 
   it('выбрасывает пустые части', () => {
-    expect(titleFormatter(['display', undefined, 'Дока'])).toBe('display — Дока')
-    expect(titleFormatter(['display', '', null, 'Дока'])).toBe('display — Дока')
+    expect(titleFormatter(['display', undefined, 'Wiki'])).toBe('display — Wiki')
+    expect(titleFormatter(['display', '', null, 'Wiki'])).toBe('display — Wiki')
   })
 
   it('возвращает единственную часть без разделителя', () => {
-    expect(titleFormatter(['Дока'])).toBe('Дока')
+    expect(titleFormatter(['Wiki'])).toBe('Wiki')
   })
 
   it('возвращает пустую строку, когда частей нет', () => {
