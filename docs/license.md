@@ -1,23 +1,21 @@
-# Что можно делать с Докой
-
-**Обратите внимание:** здесь вы прочитаете упрощённую русскоязычную версию лицензии. Все юридически значимые документы лежат в своих репозиториях и доступны на английском языке.
+# What can you do with Doka?
 
 ## Лицензия на код платформы
 
-Платформа создана и работает на базе [Eleventy](https://www.11ty.dev), исходный код которой распространяется по лицензии MIT.
+The platform is created and operates on the basis of [Eleventy](https://www.11ty.dev), the source code of which is distributed under the MIT license.
 
-Вы можете делать с кодом платформы что угодно (сохраняя уведомление об авторском праве), но мы или те, кто работал до нас, не несут за этот код никакой ответственности.
+You can do whatever you want with the platform code (as long as you keep the copyright notice), but we or anyone who came before us bear no responsibility for that code.
 
-Почитать [текст лицензии](../LICENSE.md)
+Read [the license text](../LICENSE.md)
 
-## Лицензия на шрифты
+## Font License
 
-Для Доки мы используем шрифты Graphik и Spot Mono. Наши копии шрифтов можно использовать только на сайте [doka.guide](https://doka.guide/).
+We use the Graphik and Spot Mono fonts for Doka. Our font copies may only be used on the doka.guide website .
 
-Авторские права на шрифт Graphik во всех начертаниях принадлежат ООО «Тайп Тудэй». Шрифт предоставлен Доке по лицензии для веб-шрифтов. Подробности читайте в тексте лицензий [в репозитории](../src/fonts/graphik/LICENSE.md) или [на официальном сайте](https://type.today/en/license/today/web).
+The Graphik font in all styles is copyrighted by Type Today LLC. The font is provided to Doka under a web font license. For details, see the license text in the repository or on the official website .
 
-Авторские права на шрифт Spot Mono принадлежат Schick Toikka GbR. Шрифт предоставлен Доке по лицензии для веб-шрифтов. Подробности читайте в тексте лицензий [в репозитории](../src/fonts/spot-mono/LICENSE.md) или [на официальном сайте](https://www.schick-toikka.com/licenses).
+The Spot Mono font is copyrighted by Schick Toikka GbR. It is provided to Doka under a webfont license. For details, see the license text in the repository or on the official website .
 
-## Прочие случаи
+## Other cases
 
-Если мы используем какие-либо материалы по другим лицензиям или из общественного достояния, мы обязательно об этом сообщим и приложим нужные документы.
+If we use any materials under other licenses or from the public domain, we will be sure to notify you and provide the necessary documentation.

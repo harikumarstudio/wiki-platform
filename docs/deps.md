@@ -1,8 +1,8 @@
-# Советы по работе с зависимостями
+# Tips for dealing with dependencies
 
-## Обновление зависимостей
+## Updating dependencies
 
-Для проверки актульности зависимостей проекта пакетный менеджер npm имеет встроенную команду `npm outdated`. Её вывод может быть примерно таким:
+To check if a project's dependencies are up-to-date, the npm package manager has a built-in command `npm outdated`. Its output might look something like this:
 
 ```sh
 Package             Current   Wanted   Latest  Location
@@ -16,25 +16,25 @@ markdown-it-anchor    8.0.3    8.1.0    8.1.0  global
 simple-git-hooks      2.4.1    2.5.1    2.5.1  global
 ```
 
-Из таблицы видно, что некоторые зависимости имеют обновлённые минорые или патч-версии. В таком случае безопасно (с точки зрения семантического версионирования) выполнить команду `npm update` или `npm update <package-name>`.
+The table shows that some dependencies have updated minor or patch versions. In this case, it is safe (from a semantic versioning perspective) to run the command `npm update` or `npm update <package-name>`.
 
-Некоторые зависимости имеют обновлённую мажорную версию. Перед её установкой полезно узнать, какие изменения произошли в пакете. Это могут быть кардинальные изменения внешнего API или ядра библиотеки. Обычно изменения хранятся в файлах _CHANGELOG_, _CHANGELOG.md_ или _NEWS_ в корне репозитория проекта. Перейти к репозиторию можно командой `npm repo <package-name>`.
+Some dependencies have an updated major version. Before installing it, it's useful to know what changes have occurred in the package. These could be significant changes to the external API or the library core. Changes are typically stored in the CHANGELOG , CHANGELOG.md , or NEWS files in the root of the project repository. You can access the repository with the command npm repo <package-name>.
 
-В случае, если нас всё устраивает, можно обновить мажорную версию пакета: `npm i <package-name>@latest`. После обновления нужно обязательно проверить корректность выполнения команды `npm run build` и её результатов.
+If everything is OK, you can update the major version of the package: `npm i <package-name>@latest.` After updating, be sure to check that the command executes correctly `npm run build`and its results.
 
-Есть способ массово обновить все зависимости до новых мажорных версий с помощью стороннего пакета `npm-check-updates`:
+There is a way to bulk update all dependencies to new major versions using a third-party package `npm-check-updates:`
 
 ```
 npx npm-check-updates -u
 npm install
 ```
 
-## Разрешение конфликтов в файле _package-lock.json_
+## Resolving conflicts in the package-lock.json file
 
-Иногда могут возникнуть конфликты слияния в Git для _package-lock.json_. Править руками этот файл можно лишь в исключительных ситуациях.
+Merge conflicts may occasionally occur in Git for package-lock.json . Manually editing this file should only be done in exceptional situations.
 
-Для разрешения конфликтов в этом файле можно использовать следующий алгоритм:
+To resolve conflicts in this file, you can use the following algorithm:
 
-- правим конфликты (если есть) в файле _package.json_;
-- принимаем изменения в _package-lock.json_ из той ветки, которую вливаем в свою;
-- обновляем файл _package-lock.json_, выполнив команду `npm install`.
+fix conflicts (if any) in the package.json file ;
+we accept changes to package-lock.json from the branch that we are merging into ours;
+Update the package-lock.json file by running the command `npm install`.

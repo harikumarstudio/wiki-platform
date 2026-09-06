@@ -1,40 +1,40 @@
-# Деплой Доки
+# Deployment Docks
 
-Дока хостится на сервере как набор статических файлов.
+The document is hosted on the server as a set of static files.
 
-## Когда деплоим
+## When we deploy
 
-Деплоим автоматически, при слиянии пул-реквеста в ветку `main` в репозитории `content` или `platform`.
+Deploy automatically when a pull request is merged into a branch mainin the repository contentor platform.
 
-## Как собираем
+## How to assemble
 
-Проект собирается с помощью [GitHub Actions](https://docs.github.com/en/actions).
+The project is built using [GitHub Actions](https://docs.github.com/en/actions).
 
-В каждом репозитории описан свой воркфлоу для сборки:
+Each repository describes its own build workflow:
 
-- [Воркфлоу контента](https://github.com/doka-guide/content/blob/main/.github/workflows/product-deploy.yml) — один сплошной проход: скачать, установить, собрать, отправить на сервер;
-- [Воркфлоу платформы](https://github.com/doka-guide/platform/blob/main/.github/workflows/product-deploy.yml) — три джобы, описаны ниже.
+- [The content workflow](https://github.com/doka-guide/content/blob/main/.github/workflows/product-deploy.yml) — is one continuous pass: download, install, compile, send to the server;
+- [The platform workflow](https://github.com/doka-guide/platform/blob/main/.github/workflows/product-deploy.yml) — consists of three jobs, described below:
 
-### Как устроена сборка платформы
+### How the platform assembly works
 
-Сайт собирается **один раз**, а результат разъезжается по джобам артефактами. Раньше его собирали дважды: отдельно для публикации и отдельно для проверки разметки.
+The site is built `once`, and the results are scattered across jobs as artifacts. Previously, it was built twice: once for publication and once for markup verification.
 
-1. **Сборка** — переиспользуемый [build-site.yml](https://github.com/doka-guide/platform/blob/main/.github/workflows/build-site.yml): скачивает контент и кеш, ставит зависимости, подключает статьи симлинками, собирает проект. Выкладывает два артефакта: полный `site-dist` для публикации и маленький `site-html` только со страницами — валидатору картинки не нужны. Рядом кладёт опись: контрольная сумма архива, число файлов и число страниц.
-1. **Валидация разметки** — берёт `site-html` и прогоняет W3C-валидатор.
-1. **Публикация** — берёт `site-dist`, сверяет опись и отправляет на сервер.
+1. The **build** is a reusable [build-site.yml](https://github.com/doka-guide/platform/blob/main/.github/workflows/build-site.yml): it downloads content and cache, installs dependencies, connects articles with symlinks, and builds the project. It produces two artifacts: a full one `site-dist` for publication and a smaller one  `site-html` with just pages—the validator doesn't need images. An inventory is also included: the archive's checksum, number of files, and number of pages.
+1. Markup validation is `site-html` carried out by the W3C validator.
+1. Publication — takes `site-dist`, checks the inventory and sends it to the server.
 
-Публикация зависит только от сборки, но не от валидации: красная разметка выкатку не останавливает.
+Publication depends only on the build, not on validation: red markings do not stop the rollout.
 
-### Что защищает боевой сайт
+### What protects a combat site?
 
-Публикация идёт через `rsync` с удалением лишнего, поэтому неполный артефакт опаснее упавшего деплоя: он не оставит старую версию, а сотрёт недостающее. Защита в три рубежа:
+Publishing is done `rsync` with deletion of excess data, so an incomplete artifact is more dangerous than a failed deployment: it won't retain the old version, but will erase the missing data. Three lines of defense are in place:
 
-1. **Сверка описи до распаковки.** Не сошлась контрольная сумма — деплой не начинается. После распаковки сверяется число файлов, плюс отбивается сборка, выдавшая неправдоподобно мало страниц.
-1. **Удаление только после передачи** (`--delete-after`). Если передача оборвётся, не удалится ничего: на сервере останется прежняя версия плюс частично долитая новая.
-1. **Предел на удаление** (`--max-delete`), посчитанный от размера сборки. Если удаляемого неправдоподобно много, `rsync` прерывается и не вычищает сайт.
+1. Inventory verification before unpacking. If the checksum doesn't match, the deployment doesn't start. After unpacking, the file count is verified, and the build is rejected if it produced an unrealistically small number of pages.
+1. Delete only after transfer (`--delete-after`). If the transfer is interrupted, nothing will be deleted: the previous version plus a partially updated version of the new one will remain on the server.
+1. The deletion limit (`--max-delete`), calculated based on the assembly size. If the amount to be deleted is unrealistically large, `rsync` the process aborts and does not clean up the site.
 
-На стороне сервера не происходит никаких действий, кроме публикации переданной папки со сборкой.
+No actions occur on the server side other than publishing the transferred folder with the assembly.
 
-## Образ для Docker
+## Docker image
 
-Отдельный воркфлоу [docker-deploy.yml](https://github.com/doka-guide/platform/blob/main/.github/workflows/docker-deploy.yml) собирает образ под две архитектуры, каждую на своём нативном раннере, и уже потом навешивает тег на общий манифест. Через эмуляцию QEMU сборка под arm64 падала через раз.
+Docker [docker-deploy.yml](https://github.com/doka-guide/platform/blob/main/.github/workflows/docker-deploy.yml) workflow builds an image for two architectures, each with its own native runner, and then tags the shared manifest. Using QEMU emulation, the arm64 build failed occasionally.

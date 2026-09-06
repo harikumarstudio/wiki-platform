@@ -1,16 +1,16 @@
-# Частые задачи
+# Frequently asked questions
 
-Короткие рецепты для типовых правок платформы. Общее устройство сборки описано в [руководстве по работе Доки](how-its-work.md), запуск — [в руководстве по запуску](how-to-run.md).
+Short recipes for typical platform changes. The general build process is described in the Doki guide , and launching is described in the launch guide .
 
-## Добавить блок на страницу статьи
+## Add a block to the article page
 
-1. Шаблон блока — `src/includes/blocks/my-block.njk`.
-2. Стили — `src/styles/blocks/my-block.css` плюс `@import` в `src/styles/index.css`.
-3. Подключить в `src/views/doc.njk`: `{% include "blocks/my-block.njk" %}`.
+1. The block template — `src/includes/blocks/my-block.njk`.
+2. Styles are — `src/styles/blocks/my-block.css` a plus  `@import` in `src/styles/index.css`.
+3. Connect to `src/views/doc.njk`: `{% include "blocks/my-block.njk" %}`.
 
-## Добавить вычисляемое поле к данным статьи
+## Add a calculated field to article data
 
-В `src/views/doc.11tydata.js`, в объект `eleventyComputed`:
+In `src/views/doc.11tydata.js`, in object `eleventyComputed`:
 
 ```js
 myField: function (data) {
@@ -19,34 +19,34 @@ myField: function (data) {
 }
 ```
 
-## Добавить трансформацию
+## Add transformation
 
-1. Создать `src/transforms/my-transform.js` — экспортировать функцию `(window, content, outputPath)`. Почти всем трансформациям нужен только `window`: разметка правится в нём на месте, возвращать ничего не надо.
-2. Подключить в `.eleventy.js`, в массиве `transforms`.
-3. Покрыть тестом в `src/transforms/__tests__/` — трансформация принимает разметку и возвращает разметку, это самый дешёвый вид теста в проекте.
+1. Create src/transforms/my-transform.js— export function (window, content, outputPath). Almost all transformations only require window: the markup is edited in-place, no need to return anything.
+2. Connect to .eleventy.js, in array transforms.
+3. Cover with test in src/transforms/__tests__/- the transformation takes markup and returns markup, this is the cheapest type of test in the project.
 
-## Добавить клиентский модуль
+## Add a client module
 
-1. Создать `src/scripts/modules/my-module.js`.
-2. Импортировать в `src/scripts/index.js`.
-3. Класс компонента наследовать от `BaseComponent` из `src/scripts/core/base-component.js` — он расширяет `EventTarget` и добавляет `on`, `off`, `emit`.
+1. Create src/scripts/modules/my-module.js.
+2. Import to src/scripts/index.js.
+3. The component class inherits from BaseComponent- src/scripts/core/base-component.jsit extends EventTargetand adds on, off, emit.
 
-Модули инициализируются по наличию своих элементов в DOM.
+Modules are initialized based on the presence of their elements in the DOM.
 
-## Добавить страницу нового типа
+## Add a new type of page
 
-Кроме шаблона и данных, допишите страницу в список `PAGES` в `scripts/lint-html.js` — иначе новый тип страницы останется без проверки разметки.
+In addition to the template and data, add the page to the list `PAGES` in `scripts/lint-html.js` - otherwise the new page type will not be checked for markup.
 
 ---
 
-# Полезные детали
+# Useful details
 
-**Фронтматтер статьи.** Данные материала приходят из репозитория контента:
+**Article front matter.** This material comes from the content repository:
 
 ```yaml
 title: 'Заголовок'
 description: 'Описание'
-tags: [doka] # или [article], или [placeholder]
+tags: [doka] # [article] [placeholder]
 authors: [username]
 contributors: [username]
 editors: [username]
@@ -65,16 +65,16 @@ baseline:
     features: [display-flex]
 ```
 
-**Baseline.** Данные о поддержке браузерами берутся из npm-пакета `web-features`. Статья объявляет блок `baseline:` во фронтматтере, версии браузеров платформа достаёт сама.
+Baseline. Browser support data is taken from the npm package web-features. The article declares a block baseline:in the frontmatter; the platform retrieves browser versions automatically.
 
-**Featured-статьи.** Список читается из `src/settings/featured.md` — файл приходит из репозитория контента через симлинк. Максимум 12 штук.
+Featured articles. The list is read from src/settings/featured.md—the file comes from the content repository via a symlink. Maximum 12 items.
 
-**Сортировка статей.** Внутри раздела материалы сортируются по названию без учёта регистра и не-буквенных символов, чтобы порядок был стабильным между пересборками.
+Article sorting. Within a section, materials are sorted by title, ignoring case and non-alphanumeric characters, to ensure consistency between recompiles.
 
-**Темы.** Светлая, тёмная и авто; выбор хранится в `localStorage` под ключом `color-theme`. Цвета тем — в `src/styles/base-colors.css`, `light-theme.css`, `dark-theme.css`. Цвета разделов задаются дважды: в `config/category-colors.js` для JavaScript и переменными CSS в темах.
+Themes. Light, dark, and auto; the choice is stored in localStoragethe key color-theme. Theme colors are in src/styles/base-colors.css, light-theme.css, dark-theme.css. Section colors are specified twice: in config/category-colors.jsJavaScript and using CSS variables in the themes.
 
-**Service Worker.** Отключён. `src/sw.js` остался заглушкой, которая снимает регистрацию и чистит кеши у тех, кому старый воркер успел установиться, — поэтому файл нельзя удалять, он должен и дальше отдаваться по `/sw.js`. Причины отключения — в комментарии в самом файле.
+Service Worker. Disabled. src/sw.jsIt remains a stub that deregisters and clears caches for those who have the old worker installed. Therefore, the file cannot be deleted; it must continue to be served via [service worker] /sw.js. The reasons for disabling it are in the comments in the file itself.
 
-**Social cards.** Шаблоны `sc.njk` и `sc-index.njk` собирают отдельные HTML-страницы карточек для соцсетей — `*/index.sc.html` в `dist`. Картинки с них снимаются вне этого репозитория, в платформе есть только разметка.
+Social cards. Templates sc.njkand sc-index.njkindividual HTML pages for social media cards are compiled */index.sc.htmlin [ https://github.com/socialcards/social-cards/] dist. The images for these cards are taken outside of this repository; the platform only contains the markup.
 
-**markdown-it.** Конфигурация в `src/markdown-it.js`: `html: true`, `breaks: true`, `linkify: false` (URL не превращаются в ссылки автоматически). Подсветка кода отдаётся CSS: рендерер оборачивает блок в `<pre data-lang="js"><code>…</code></pre>`. Есть свой рендерер `html_block` для `<video>` — оборачивает видео в `<figure>` с подписью.
+Markdown-it. Configuration in src/markdown-it.js[ html: trueurl breaks: true] linkify: false(URLs are not automatically converted to links). Code highlighting is handled by CSS: the renderer wraps the block in [ url <pre data-lang="js"><code>…</code></pre>]. There's a dedicated renderer html_blockfor <video>[url]—it wraps the video in [ <figure>url] with a caption.
