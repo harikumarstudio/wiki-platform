@@ -1,13 +1,13 @@
-# Документация к платформе Доки
+# Documentation for the Doki platform
 
-Чтобы вносить вклад в развитие платформы Доки, пожалуйста, прочитайте документы ниже.
+To contribute to the development of the Doki platform, please read the documents below.
 
 ## Содержание
 
-- [Как запустить Доку локально](how-to-run.md)
-- [Как работает Дока](how-its-work.md)
-- [Частые задачи и полезные детали](recipes.md)
-- [Деплой Доки](deploy.md)
-- [Советы по работе с зависимостями](deps.md)
-- [Лицензии](license.md)
-- [⚠️ Если сайт Доки медленно загружается или не работает совсем](load-fix.md)
+- [How to run Doku locally](how-to-run.md)
+- [How does Doka work?](how-its-work.md)
+- [Frequently asked questions and useful details](recipes.md)
+- [Deployment Docks](deploy.md)
+- [Tips for dealing with dependencies](deps.md)
+- [Licenses](license.md)
+- [⚠️ If the Doki website loads slowly or doesn't work at all](load-fix.md)

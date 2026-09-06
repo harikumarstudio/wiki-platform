@@ -1,43 +1,44 @@
-# Как запустить Доку локально
+# How to run Doku locally
 
-Для работы с платформой вам потребуется [Node.js](https://nodejs.org/en/) и npm. Мы используем стабильную LTS-версию Node.js и версию npm, которая идёт в комплекте. Если у вас установлена другая версия Node.js, вы можете использовать [nvm](https://github.com/nvm-sh/nvm) для переключения на нужную.
+To work with the platform, you'll need [Node.js](https://nodejs.org/en/) and npm. We use the stable LTS version of Node.js and the included npm version. If you have a different version of Node.js installed, you can use [nvm](https://github.com/nvm-sh/nvm) to switch to the correct one.
 
-## Минимальный запуск
+## Minimum launch
 
-Чтобы запустить Доку локально, нужно:
+To run Doku locally, you need to:
 
-1. Скачать репозиторий.
-1. Установить зависимости командой `npm i`.
-1. Сделать копию файла `.env.example` и назвать его `.env`. Задать в нём нужные переменные окружения.
-1. Запустить локальный веб-сервер командой `npm start`.
+1. Download the repository.
+1. Install dependencies with the command `npm i`.
+1. Make a copy of the file  `.env.example` and name it `.env`. Set the required environment variables in it.
+1. Start the local web server with the command  `npm start`.
 
-## Запуск с реальным контентом
 
-1. Скачать репозитории с контентом и платформой в одну папку.
-1. Установить зависимости командой `npm i`.
-1. Сделать копию файла `.env.example` и назвать его `.env`. Задать в нём нужные переменные окружения:
-  - `BASE_URL` - базовый адрес для сайта;
-  - `SECTIONS` - список разделов сайта;
-  - `PATH_TO_CONTENT` - путь до репозитория с контентом;
-  - `CONTENT_REP_FOLDERS` - папки с содержимым разделов и служебной информацией для сборки;
-  - `DOKA_ORG` - путь до организации на GitHub;
-  - `PLATFORM_REP_GITHUB_URL` - путь до репозитория с платформой на GitHub;
-  - `CONTENT_REP_GITHUB_URL` - путь до репозитория с контентом на GitHub;
-  - `CONTENT_REP_GITHUB` - ссылка до репозитория с контентом на GitHub для работы с Git;
-  - `SERVER_PATH` - абсолютный путь до папки на сервере с текущей сборкой.
-2. Запустить локальный веб-сервер командой `npm start`.
+## Launch with real content
 
-## Файл `.issues.json`
+1. Download repositories with content and platform into one folder.
+1. Install dependencies with the command `npm i`.
+1. Make a copy of the file `.env.example` and name it `.env`. Set the required environment variables in it:
+  - `BASE_URL` - base address for the site;
+  - `SECTIONS` - list of site sections;
+  - `PATH_TO_CONTENT` - path to the repository with content;
+  - `CONTENT_REP_FOLDERS` - folders with the contents of sections and service information for assembly;
+  - `DOKA_ORG` - path to the organization on GitHub;
+  - `PLATFORM_REP_GITHUB_URL` - path to the repository with the platform on GitHub;
+  - `CONTENT_REP_GITHUB_URL` - path to the repository with content on GitHub;
+  - `CONTENT_REP_GITHUB` - a link to a repository with content on GitHub for working with Git;
+  - `SERVER_PATH` - absolute path to the folder on the server with the current build.
+2. Start the local web server with the command `npm start`.
 
-Из него считается активность участников — сколько у кого пулреквестов и issue.
+## File.issues.json
 
-Для разработки он не нужен: без файла `npm start` выведет предупреждение и соберёт страницы участников с пустой статистикой. А вот боевая сборка (`NODE_ENV=production`) без него падает намеренно, чтобы сайт не уехал без статистики.
+It calculates the activity of participants - how many pull requests and issues each person has.
 
-Файл не лежит в репозитории платформы, его готовит отдельный репозиторий [doka-guide/cache](https://github.com/doka-guide/cache). В CI он копируется оттуда автоматически. Если хочется собрать боевую версию локально, положите его в корень руками:
+It's not needed for development: without the file, `npm start` it will display a warning and generate user pages with empty statistics. However, the production build  (`NODE_ENV=production`) intentionally crashes without it to prevent the site from leaving without statistics.
+
+The file isn't in the platform repository; it's maintained in a separate repository [doka-guide/cache](https://github.com/doka-guide/cache). It's copied from there automatically in CI. If you want to build the production version locally, manually place it in the root directory:
 
 ```bash
 git clone --depth 1 https://github.com/doka-guide/cache.git ../doka-cache
 cp ../doka-cache/issues.json .issues.json
 ```
 
-Файл добавлен в `.gitignore`, коммитить его не нужно.
+The file has been added to .gitignore, no need to commit it.
