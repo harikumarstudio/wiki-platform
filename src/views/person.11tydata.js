@@ -13,7 +13,7 @@ module.exports = {
 
   permalink: '/people/{{ person.fileSlug }}/',
 
-  categoryName: 'Участники',
+  categoryName: 'People',
 
   eleventyComputed: {
     personId: function (data) {
@@ -79,7 +79,7 @@ module.exports = {
     },
 
     practicesPersonRole: function () {
-      return 'Автор совета'
+      return 'Author совета'
     },
 
     practicesIndex: function (data) {
@@ -88,7 +88,7 @@ module.exports = {
     },
 
     answersPersonRole: function () {
-      return 'Автор ответа'
+      return 'Author ответа'
     },
 
     answersInArticles: function (data) {

@@ -3,13 +3,13 @@ require('dotenv').config({ path: '.env' })
 const DEFAULT_ENVS = {
   BASE_URL: 'https://archvizwiki.com',
   SECTIONS: 'cpp, houdini, python, ai, unreal',
-  CONTENT_REP_GITHUB: 'https://github.com/doka-guide/content.git',
-  CONTENT_HOT_BACKLOG: 'https://github.com/doka-guide/content/milestone/22',
+  CONTENT_REP_GITHUB: 'https://github.com/harikumarstudio/wiki-content.git',
+  CONTENT_HOT_BACKLOG: 'https://github.com/harikumarstudio/wiki-content/milestone/1',
   CONTENT_REP_FOLDERS: 'cpp, houdini, python, ai, unreal, people, interviews, pages, specials, settings',
   PATH_TO_CONTENT: '../wiki-content',
   DOKA_ORG: 'DOKA_ORG',
-  PLATFORM_REP_GITHUB_URL: 'https://github.com/doka-guide/platform',
-  CONTENT_REP_GITHUB_URL: 'https://github.com/doka-guide/content',
+  PLATFORM_REP_GITHUB_URL: 'https://github.com/harikumarstudio/wiki-platform',
+  CONTENT_REP_GITHUB_URL: 'https://github.com/harikumarstudio/wiki-content',
 }
 
 function getEnv(envKey) {

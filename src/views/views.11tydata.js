@@ -249,10 +249,10 @@ module.exports = {
       const docsByPerson = {}
       const personFields = ['authors', 'contributors', 'editors', 'coverAuthors']
       const fieldNameMap = {
-        authors: 'Автор',
-        contributors: 'Контрибьютор',
-        editors: 'Редактор',
-        coverAuthors: 'Иллюстратор',
+        authors: 'Authors',
+        contributors: 'Contributors',
+        editors: 'Editors',
+        coverAuthors: 'Cover Authors',
       }
 
       for (const categoryId of mainSections) {
