@@ -25,7 +25,7 @@ module.exports = {
     },
 
     documentTitle: function (data) {
-      return titleFormatter([data.categoryName, 'Дока'])
+      return titleFormatter([data.categoryName, 'ArchVizWiki'])
     },
 
     documentDescription: function (data) {
