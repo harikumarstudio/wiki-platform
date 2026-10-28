@@ -162,9 +162,9 @@ jobs:
         run: |
           set -eu
           SSH_COMMAND="ssh -i $HOME/.ssh/wiki_deploy -p 65002 -o StrictHostKeyChecking=no"
-          $SSH_COMMAND deploy@31.170.164.47 mkdir -p "$PREVIEW_PATH"
+          $SSH_COMMAND u815720699@31.170.164.47 mkdir -p "$PREVIEW_PATH"
           rsync -e "$SSH_COMMAND" --archive --compress --delete-after --safe-links \
-            "$PREVIEW_DIR/" "deploy@31.170.164.47:$PREVIEW_PATH"
+            "$PREVIEW_DIR/" "u815720699@31.170.164.47:$PREVIEW_PATH"
           echo "Preview available at $DEPLOY_DOMAIN"
 
   # Post the final comment. Without always(), a failed build would leave the
