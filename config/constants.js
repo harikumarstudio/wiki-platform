@@ -5,7 +5,7 @@ const DEFAULT_ENVS = {
   SECTIONS: 'cpp, houdini, python, ai, unreal',
   CONTENT_REP_GITHUB: 'https://github.com/harikumarstudio/wiki-content.git',
   CONTENT_HOT_BACKLOG: 'https://github.com/harikumarstudio/wiki-content/milestone/1',
-  CONTENT_REP_FOLDERS: 'cpp, houdini, python, ai, unreal, people, interviews, pages, specials, settings',
+  CONTENT_REP_FOLDERS: 'cpp, houdini, python, ai, unreal, people, pages, settings',
   PATH_TO_CONTENT: '../wiki-content',
   DOKA_ORG: 'DOKA_ORG',
   PLATFORM_REP_GITHUB_URL: 'https://github.com/harikumarstudio/wiki-platform',
