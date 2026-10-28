@@ -52,7 +52,7 @@ describe('конфигурация 11ty', () => {
   it('регистрирует коллекции разделов', () => {
     const names = loaded.calls.collections.map((collection) => collection.name)
 
-    for (const section of ['html', 'css', 'js', 'a11y', 'tools', 'recipes']) {
+    for (const section of ['cpp', 'houdini', 'python', 'ai', 'unreal']) {
       expect(names).toContain(section)
     }
     expect(names).toContain('docs')
