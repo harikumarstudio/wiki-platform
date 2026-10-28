@@ -15,20 +15,20 @@ case "$1" in
 esac
 }
 
-MONTH_TO_RUS() {
+MONTH_TO_EN() {
 case "$1" in
-    01) echo "декабрь" ;;
-    02) echo "январь" ;;
-    03) echo "февраль" ;;
-    04) echo "март" ;;
-    05) echo "апрель" ;;
-    06) echo "май" ;;
-    07) echo "июнь" ;;
-    08) echo "июль" ;;
-    09) echo "август" ;;
-    10) echo "сентябрь" ;;
-    11) echo "октябрь" ;;
-    12) echo "ноябрь" ;;
+    01) echo "December" ;;
+    02) echo "January" ;;
+    03) echo "February" ;;
+    04) echo "March" ;;
+    05) echo "April" ;;
+    06) echo "May" ;;
+    07) echo "June" ;;
+    08) echo "July" ;;
+    09) echo "August" ;;
+    10) echo "September" ;;
+    11) echo "October" ;;
+    12) echo "November" ;;
 esac
 }
 
@@ -48,9 +48,9 @@ SUBTITLE_OLD_1="## What's Changed"
 SUBTITLE_OLD_2="## New Contributors"
 SUBTITLE_OLD_3="Full Changelog"
 
-SUBTITLE_NEW_1="## Технический ченджлог ($(MONTH_TO_RUS $CURRENT_MONTH) $CURRENT_YEAR)"
-SUBTITLE_NEW_2="## Новые контрибьюторы"
-SUBTITLE_NEW_3="Весь ченджлог"
+SUBTITLE_NEW_1="## Technical changelog ($(MONTH_TO_EN $CURRENT_MONTH) $CURRENT_YEAR)"
+SUBTITLE_NEW_2="## New contributors"
+SUBTITLE_NEW_3="Full changelog"
 
 gh repo set-default doka-guide/platform
 gh release create "$TAG" --title="$TITLE" --generate-notes

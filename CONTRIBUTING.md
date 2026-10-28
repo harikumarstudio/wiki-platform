@@ -1,19 +1,19 @@
-# Как вносить вклад в платформу Доки
+# Contributing to the Doka platform
 
-Спасибо, что хотите помочь. Этот репозиторий — движок сайта [doka.guide](https://doka.guide). Если вы пришли править **статью**, вам в [репозиторий с контентом](https://github.com/doka-guide/content): статьи, практики и страницы участников живут там.
+Thank you for wanting to help. This repository is the engine behind [doka.guide](https://doka.guide). If you want to edit an **article**, use the [content repository](https://github.com/doka-guide/content): articles, practical tips, and contributor pages live there.
 
-## Процесс
+## Workflow
 
-Работаем по GitHub Flow: в `main` лежит текущая версия продукта, изменения приезжают в неё пулреквестами.
+We use GitHub Flow: `main` contains the current version of the product, and changes are merged through pull requests.
 
-1. Форкните репозиторий и создайте ветку от `main`.
-2. Внесите изменения.
-3. Прогоните проверки: `npm run check`.
-4. Откройте пулреквест в `main` и дождитесь ревью — ревьюеры назначаются по `CODEOWNERS`.
+1. Fork the repository and create a branch from `main`.
+2. Make your changes.
+3. Run the checks: `npm run check`.
+4. Open a pull request against `main` and wait for review. Reviewers are assigned according to `CODEOWNERS`.
 
-На каждый пулреквест собирается превью сайта, ссылка появляется комментарием.
+Each pull request gets a site preview; its link is posted as a comment.
 
-## Запуск
+## Running locally
 
 ```bash
 npm i
@@ -21,57 +21,57 @@ cp .env.example .env
 npm start
 ```
 
-Подробности и все варианты запуска — [в руководстве](docs/how-to-run.md). Для разработки нужен репозиторий с контентом рядом с платформой; файл `.issues.json` можно не готовить, без него статистика вкладов будет пустой.
+See the [launch guide](docs/how-to-run.md) for details and other options. For development, the content repository should be next to the platform repository. You don't need to prepare `.issues.json`; contribution statistics will be empty without it.
 
-Полная сборка контента идёт долго. Какие папки подключаются, задаёт `CONTENT_REP_FOLDERS` в `.env` — для быстрых итераций можно оставить нужный раздел и обязательную `settings`.
+Building all content takes a while. The `CONTENT_REP_FOLDERS` setting in `.env` controls which folders are linked. For faster iterations, you can include just the section you need and the required `settings` folder.
 
-## Проверки
+## Checks
 
 ```bash
-npm run check                    # тесты и линтеры, все отчёты сразу
-npm run build && npm run lint:html   # валидация разметки, нужна Java 17+
+npm run check                        # tests and linters; show all reports
+npm run build && npm run lint:html   # markup validation; requires Java 17+
 ```
 
-`npm run check` не останавливается на первой ошибке — вы видите все проблемы за один прогон. Тесты в pre-commit хук не входят, поэтому прогоняйте их перед пушем сами; в CI они запускаются отдельным воркфлоу.
+`npm run check` continues after a failure so you can see all issues in one run. Tests are not included in the pre-commit hook, so run them before pushing; CI runs them in a separate workflow.
 
-Pre-commit хук чинит форматирование в файлах, добавленных в индекс: `eslint --fix` для JavaScript и `stylelint --fix` для CSS.
+The pre-commit hook fixes formatting only in staged files: `eslint --fix` for JavaScript and `stylelint --fix` for CSS.
 
-## Стиль
+## Style
 
-**Код.** Точки с запятой не ставим, кавычки одинарные, отступ — два пробела. Всё это правит prettier, отдельно следить не нужно.
+**Code.** We omit semicolons, use single quotes, and indent by two spaces. Prettier handles this, so you don't need to check it manually.
 
-**Комментарии — на русском и про «почему».** Хороший комментарий объясняет решение и его причину: почему arm64 собирается на нативном раннере, почему `linkify` выключен, почему валидатор проверяет по одной странице каждого типа. Пересказывать код словами не нужно.
+**Comments explain why, not what.** A good comment explains the reasoning behind a decision: why arm64 is built on a native runner, why `linkify` is disabled, or why the validator checks one page of each type. Don't restate the code.
 
-**Коммиты — на русском, в третьем лице настоящего времени**, с номером пулреквеста в конце:
+**Commit messages use the present tense and third person**, with the pull request number at the end:
 
 ```
-Убирает пустые строки в выдаче поиска (#1366)
-Чинит сборку arm64, добавляет тесты в CI и убирает мёртвый GITHUB_TOKEN (#1365)
+Removes empty lines from search results (#1366)
+Fixes arm64 builds, adds CI tests, and removes the unused GITHUB_TOKEN (#1365)
 ```
 
-## Тесты
+## Tests
 
-Jest, тесты лежат в папках `__tests__/` рядом с тестируемым кодом, общие помощники — в `test/helpers/`.
+We use Jest. Tests live in `__tests__/` folders next to the code they cover; shared helpers are in `test/helpers/`.
 
-Тест в пулреквесте обязателен:
+Tests are required in pull requests:
 
-- почините баг — приложите тест, который его воспроизводит: красный до правки, зелёный после;
-- добавите функциональность — приложите тест на неё.
+- For a bug fix, include a test that reproduces the issue: it should fail before the fix and pass afterward.
+- For a feature, include a test for it.
 
-Если протестировать нечего, потому что правка в шаблоне Nunjucks или в CSS, напишите в пулреквесте, чем проверяли: какую страницу открывали и что на ней смотрели.
+If the change is in a Nunjucks template or CSS and cannot be tested directly, describe how you checked it in the pull request: which page you opened and what you verified.
 
-Если правите трансформацию — покройте её тестом обязательно: она принимает разметку и возвращает разметку, это самое дешёвое место для тестов в проекте.
+Always add a test for a transform: it takes markup as input and returns markup, making it one of the easiest parts of the project to test.
 
-Заодно прочитайте тесты, которые уже относятся к тронутому коду, — не только упавшие. Тест может остаться зелёным, но проверять устаревшее поведение; поправьте его в том же пулреквесте.
+Also read the existing tests related to the changed code—not just the ones that failed. A test may still pass while checking outdated behavior; update it in the same pull request.
 
-## Документация
+## Documentation
 
-Если правка меняет команды, шаги запуска, требования к окружению или устройство сборки — обновите текст рядом: `README.md`, `docs/` и `AGENTS.md`. Это часть той же работы, а не отдельная задача: по документации люди принимают решения, и устаревшая хуже отсутствующей.
+If a change affects commands, setup steps, environment requirements, or how the build works, update the nearby documentation: `README.md`, `docs/`, and `AGENTS.md`. This is part of the same change, not a separate task: people make decisions based on documentation, and outdated documentation is worse than none.
 
-## Что дальше почитать
+## Further reading
 
-- [`docs/how-to-run.md`](docs/how-to-run.md) — запуск
-- [`docs/how-its-work.md`](docs/how-its-work.md) — как устроена сборка
-- [`docs/recipes.md`](docs/recipes.md) — рецепты типовых правок
-- [`docs/deps.md`](docs/deps.md) — работа с зависимостями
-- [`AGENTS.md`](AGENTS.md) — инструкция для ИИ-агентов, если вы работаете с кодом через них
+- [`docs/how-to-run.md`](docs/how-to-run.md) — running the project
+- [`docs/how-its-work.md`](docs/how-its-work.md) — how the build works
+- [`docs/recipes.md`](docs/recipes.md) — recipes for common changes
+- [`docs/deps.md`](docs/deps.md) — working with dependencies
+- [`AGENTS.md`](AGENTS.md) — instructions for AI agents working on the code

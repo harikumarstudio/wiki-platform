@@ -1,21 +1,21 @@
 <!--
-Заголовок пулреквеста — на русском, в третьем лице настоящего времени:
-«Убирает пустые строки в выдаче поиска», «Чинит сборку arm64».
+Use a concise pull request title in the present tense and third person, for example:
+"Removes empty lines from search results" or "Fixes arm64 builds."
 -->
 
-## Что сделано
+## What changed
 
-<!-- Коротко: что изменилось и зачем. Если есть issue — «Закрывает #123». -->
+<!-- Briefly describe what changed and why. If relevant, use "Closes #123". -->
 
-## Как проверить
+## How to verify
 
-<!-- Шаги для ревьюера: какую страницу открыть в превью, что должно произойти. -->
+<!-- Give reviewers steps to follow: which preview page to open and what to expect. -->
 
-## Чеклист
+## Checklist
 
-- [ ] `npm run check` проходит
-- [ ] Для изменений во внешнем виде приложены скриншоты — до и после
-- [ ] Есть тест: на исправленный баг — воспроизводящий его, на новую функциональность — покрывающий её
-- [ ] Если тест написать было не на что (шаблон, CSS, вёрстка) — выше написано, чем проверяли вместо него
-- [ ] Соседние тесты просмотрены и поправлены, если проверяли устаревшее поведение
-- [ ] Документация обновлена, если поменялись команды, запуск или устройство сборки
+- [ ] `npm run check` passes
+- [ ] For visual changes, before-and-after screenshots are attached
+- [ ] A test is included: one that reproduces a bug fix or covers new functionality
+- [ ] If the change could not be tested (template, CSS, or layout), the verification steps are described above
+- [ ] Related tests were reviewed and updated if they checked outdated behavior
+- [ ] Documentation was updated if commands, setup, or the build process changed

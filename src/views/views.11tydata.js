@@ -105,7 +105,7 @@ module.exports = {
       return categoryColors[category || 'default']
     },
 
-    /* создаёт структуру вида:
+    /* Creates a structure like:
     {
       [personId]: {
         [categoryId]: [articles]
@@ -134,7 +134,7 @@ module.exports = {
       return practicesByPerson
     },
 
-    /* создаёт структуру вида:
+    /* Creates a structure like:
     {
       [questionId]: {
         [personId]: {
@@ -182,7 +182,7 @@ module.exports = {
       return answersByQuestion
     },
 
-    /* создаёт структуру вида:
+    /* Creates a structure like:
     {
       [personId]: {
         [categoryId]: [articles]
@@ -232,7 +232,7 @@ module.exports = {
       return answersByPerson
     },
 
-    /* создаёт структуру вида:
+    /* Creates a structure like:
     {
       [personId]: {
         [categoryId]: {
@@ -351,7 +351,9 @@ module.exports = {
 
           let [mostContributedCategory, mostContributedCount] = mostContribution
 
-          // если пользователь сделал вклад по одной статье в нескольких категориях, то оценить наибольший вклад сложно, поэтому присваиваем `null`, чтобы в UI можно было сделать альтернативное нейтральное отображение
+          // If someone contributed to an article in multiple categories, it is
+          // difficult to determine their greatest contribution. Use `null` so
+          // the UI can display a neutral alternative.
           mostContributedCategory =
             mostContributedCount === 1 && statEntries.length > 1 ? null : mostContributedCategory
 

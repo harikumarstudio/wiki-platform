@@ -17,7 +17,7 @@
 <div class="doc">
   <main class="doc__main">
     <article class="doc__article article {% if cover %}article--with-cover{% endif %}">
-      <header class="article__header" aria-label="Материал">
+      <header class="article__header" aria-label="Article">
         <div class="article__header-inner doc__wrapper">
           {% if cover %}
             {{ articleImage(class="article__image", cover=cover, authors=populatedCoverAuthors) }}
@@ -50,7 +50,7 @@
                 <path d="M1.1 7.5l6.22-6.22c.28-.28.6-.42.96-.42.34 0 .66.14.97.42l9.4 9.4c.62.62 1.01 1.21 1.18 1.77l2.6 8.53c.09.22.13.46.13.71 0 .7-.35 1.05-1.05 1.05-.22 0-.46-.04-.71-.13l-8.53-2.6a4.19 4.19 0 01-1.76-1.18L1.1 9.43C.8 9.12.64 8.8.64 8.46c0-.34.15-.66.46-.97zm7.35-3.95l-1.8 1.8 8.27 8.23c.28-.28.81-.95 1.6-2.01L8.44 3.55zm2.94 13.14c.64-.42 1.32-.95 2.02-1.6L5.13 6.87 3.37 8.63l8.02 8.06zm6.51-3.19a13.8 13.8 0 01-4.62 4.62l4.28 1.51c.31-.11.68-.38 1.1-.8.42-.42.68-.78.8-1.09L17.9 13.5z"/>
               </svg>
               <span class="article__placeholder-content">
-                Это незавершённая статья. Вы можете помочь её закончить! Почитайте <a class="link" href="https://github.com/doka-guide/content/blob/main/docs/contributing.md" target="_blank" rel="noopener" rel="noreferrer">о том, как контрибьютить в Доку</a>.
+                This article is a work in progress. You can help finish it! Read <a class="link" href="https://github.com/doka-guide/content/blob/main/docs/contributing.md" target="_blank" rel="noopener" rel="noreferrer">how to contribute to Doka</a>.
               </span>
             </p>
           {% endif %}
@@ -67,7 +67,7 @@
                 aria-controls="table-of-content"
                 type="button"
               >
-                <span class="toggle-text">Содержание</span>
+                <span class="toggle-text">Contents</span>
                 <span class="toggle-button__icons">
                   <svg class="toggle-button__icon toggle-button__icon--close" width="48" height="48" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
                     <path d="M31.27 32.88l-7.3-7.3-7.24 7.24c-.43.43-.81.58-1.15.58a.94.94 0 01-.71-.26.94.94 0 01-.27-.72c0-.34.15-.72.58-1.15l7.24-7.24-7.24-7.23c-.43-.43-.58-.81-.58-1.16 0-.32.1-.54.27-.7a.94.94 0 01.7-.28c.35 0 .73.16 1.16.59l7.24 7.23 7.3-7.3c.44-.44.8-.58 1.09-.58.15 0 .36.07.62.37.28.3.36.55.36.73 0 .3-.14.65-.52 1.03l-7.3 7.3 7.3 7.3c.44.44.58.8.58 1.1 0 .15-.07.36-.37.62-.3.27-.55.35-.73.35-.3 0-.65-.13-1.03-.52z"/>
@@ -81,7 +81,7 @@
             <div class="article-nav__content" id="table-of-content"></div>
           </div>
 
-          <footer class="article__meta" aria-label="Авторы и дата публикации">
+          <footer class="article__meta" aria-label="Authors and publication date">
             <div class="article__persons">
               {% include "contributors.njk" %}
             </div>
@@ -117,7 +117,7 @@
             {% include "questions.njk" %}
           </div>
 
-          <aside class="doc__feedback-form" aria-label="Оценка материала">
+          <aside class="doc__feedback-form" aria-label="Rate this article">
             {% include "feedback-form.njk" %}
           </aside>
 
@@ -128,7 +128,7 @@
           {% endif %}
 
           {% if (previousArticle or nextArticle) %}
-            <aside class="doc__linked-articles" aria-label="Полезные материалы">
+            <aside class="doc__linked-articles" aria-label="Related articles">
               {% if previousArticle %}
                 {{ linkedArticle(article=previousArticle, type="previous") }}
               {% endif %}

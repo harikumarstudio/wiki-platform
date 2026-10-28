@@ -44,8 +44,8 @@ In addition to the template and data, add the page to the list `PAGES` in `scrip
 **Article front matter.** This material comes from the content repository:
 
 ```yaml
-title: 'Заголовок'
-description: 'Описание'
+title: 'Title'
+description: 'Description'
 tags: [doka] # [article] [placeholder]
 authors: [username]
 contributors: [username]

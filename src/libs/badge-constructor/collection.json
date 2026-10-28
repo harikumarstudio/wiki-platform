@@ -8,9 +8,9 @@
       "width": 2
     },
     "src": "/images/badges/doka-dog-help-5.svg",
-    "alt": "Дока Дог держит в лапах цифру пять. Его глаза выражают умиление.",
-    "title": "Пять раз помог Дока Догу",
-    "description": "Можно получить, если поможешь Дока Догу дописать пять материалов"
+    "alt": "Doka Dog holds the number five in his paws, looking adorable.",
+    "title": "Helped Doka Dog five times",
+    "description": "Earn this badge by helping Doka Dog finish five articles."
   },
   "doka-dog-help-10": {
     "id": "doka-dog-help-10",
@@ -21,9 +21,9 @@
       "width": 2
     },
     "src": "/images/badges/doka-dog-help-10.svg",
-    "alt": "Дока Дог держит в лапах цифру десять. Его глаза закрыты от радости.",
-    "title": "Десять раз помог Дока Догу",
-    "description": "Можно получить, если поможешь Дока Догу дописать десять материалов"
+    "alt": "Doka Dog holds the number ten in his paws with his eyes closed in joy.",
+    "title": "Helped Doka Dog ten times",
+    "description": "Earn this badge by helping Doka Dog finish ten articles."
   },
   "doka-dog-help-50": {
     "id": "doka-dog-help-50",
@@ -34,9 +34,9 @@
       "width": 2
     },
     "src": "/images/badges/doka-dog-help-50.svg",
-    "alt": "Дока Дог держит в лапах цифру 50. Его глаза выглядят так, как будто он еле сдерживает радость и восхищение.",
-    "title": "Пятьдесят раз помог Дока Догу",
-    "description": "Можно получить, если поможешь Дока Догу дописать пятьдесят материалов"
+    "alt": "Doka Dog holds the number 50 in his paws, barely containing his joy and admiration.",
+    "title": "Helped Doka Dog 50 times",
+    "description": "Earn this badge by helping Doka Dog finish 50 articles."
   },
   "doka-dog-help-100": {
     "id": "doka-dog-help-100",
@@ -47,9 +47,9 @@
       "width": 2
     },
     "src": "/images/badges/doka-dog-help-100.svg",
-    "alt": "Дока Дог держит в лапах цифру 100. Его глаза расширены, он выглядит так, будто удивлён и одновременно восхищён.",
-    "title": "Сто раз помог Дока Догу",
-    "description": "Можно получить, если поможешь Дока Догу дописать сто материалов"
+    "alt": "Doka Dog holds the number 100 in his paws, looking surprised and impressed.",
+    "title": "Helped Doka Dog 100 times",
+    "description": "Earn this badge by helping Doka Dog finish 100 articles."
   },
   "first-contribution-small": {
     "id": "first-contribution-small",
@@ -60,9 +60,9 @@
       "width": 2
     },
     "src": "/images/badges/first-contribution-small.svg",
-    "alt": "Дока Док с глазами, в которых вместо зрачков расположена цифра один.",
-    "title": "Первый вклад в Доку",
-    "description": "Дата первого пул реквеста: {{ githubFirstContribution }}. Можно получить, написав материал или внеся существенные правки"
+    "alt": "Doka Dog with the number one in place of his pupils.",
+    "title": "First contribution to Doka",
+    "description": "Date of first pull request: {{ githubFirstContribution }}. Earn this badge by writing an article or making significant edits."
   },
   "merged-pr-5": {
     "id": "merged-pr-5",
@@ -73,9 +73,9 @@
       "width": 4
     },
     "src": "/images/badges/merged-pr-5.svg",
-    "alt": "Дока Дог с глазами в форме звёзд. Он машет лапой в сторону цифры пять.",
-    "title": "Пять пулреквестов в Доке",
-    "description": "Можно получить, если пять твоих пулреквестов слиты в основную ветку"
+    "alt": "Doka Dog has star-shaped eyes and waves toward the number five.",
+    "title": "Five pull requests merged into Doka",
+    "description": "Earn this badge when five of your pull requests are merged into the main branch."
   },
   "merged-pr-10": {
     "id": "merged-pr-10",
@@ -86,9 +86,9 @@
       "width": 4
     },
     "src": "/images/badges/merged-pr-10.svg",
-    "alt": "Дока Дог с глазами в форме звёзд. Он машет лапой в сторону цифры десять.",
-    "title": "Десять пулреквестов в Доке",
-    "description": "Можно получить, если десять твоих пулреквестов слиты в основную ветку"
+    "alt": "Doka Dog has star-shaped eyes and waves toward the number ten.",
+    "title": "Ten pull requests merged into Doka",
+    "description": "Earn this badge when ten of your pull requests are merged into the main branch."
   },
   "merged-pr-50": {
     "id": "merged-pr-50",
@@ -99,9 +99,9 @@
       "width": 4
     },
     "src": "/images/badges/merged-pr-50.svg",
-    "alt": "Дока Дог с глазами в форме звёзд. Он машет лапой в сторону цифры 50.",
-    "title": "Пятьдесят пулреквестов в Доке",
-    "description": "Можно получить, если пятьдесят твоих пулреквестов слиты в основную ветку"
+    "alt": "Doka Dog has star-shaped eyes and waves toward the number 50.",
+    "title": "50 pull requests merged into Doka",
+    "description": "Earn this badge when 50 of your pull requests are merged into the main branch."
   },
   "merged-pr-100": {
     "id": "merged-pr-100",
@@ -112,9 +112,9 @@
       "width": 4
     },
     "src": "/images/badges/merged-pr-100.svg",
-    "alt": "Дока Дог с глазами в форме звёзд. Он машет лапой в сторону цифры 100.",
-    "title": "Сто пулреквестов в Доке",
-    "description": "Можно получить, если сто твоих пулреквестов слиты в основную ветку"
+    "alt": "Doka Dog has star-shaped eyes and waves toward the number 100.",
+    "title": "100 pull requests merged into Doka",
+    "description": "Earn this badge when 100 of your pull requests are merged into the main branch."
   },
   "merged-pr-500": {
     "id": "merged-pr-500",
@@ -125,9 +125,9 @@
       "width": 4
     },
     "src": "/images/badges/merged-pr-500.svg",
-    "alt": "Дока Дог с глазами в форме звёзд. Он машет лапой в сторону цифры 500.",
-    "title": "Пятьсот пулреквестов в Доке",
-    "description": "Можно получить, если пятьсот твоих пулреквестов слиты в основную ветку"
+    "alt": "Doka Dog has star-shaped eyes and waves toward the number 500.",
+    "title": "500 pull requests merged into Doka",
+    "description": "Earn this badge when 500 of your pull requests are merged into the main branch."
   },
   "most-viewed-week-line": {
     "id": "most-viewed-week-line",
@@ -138,9 +138,9 @@
       "width": 4
     },
     "src": "/images/badges/most-viewed-week-line.svg",
-    "alt": "Человечек с глазами в виде сердечек сидит за открытым ноутбуком и улыбается.",
-    "title": "Самый просматриваемый материал за неделю",
-    "description": "По статистике твой материал — самый просматриваемый за неделю"
+    "alt": "A smiling person with heart-shaped eyes sits at an open laptop.",
+    "title": "Most-viewed article of the week",
+    "description": "Your article had the most views this week."
   },
   "most-viewed-week-zeta": {
     "id": "most-viewed-week-zeta",
@@ -151,9 +151,9 @@
       "width": 2
     },
     "src": "/images/badges/most-viewed-week-zeta.svg",
-    "alt": "Улыбающийся человечек поднял одну руку вверх, другую опустил вниз и на что-то показывает. Его глаза расширены от удивления.",
-    "title": "Самый просматриваемый материал за неделю",
-    "description": "По статистике твой материал — самый просматриваемый за неделю"
+    "alt": "A smiling person points in two directions with a surprised expression.",
+    "title": "Most-viewed article of the week",
+    "description": "Your article had the most views this week."
   },
   "most-viewed-month-line": {
     "id": "most-viewed-month-line",
@@ -164,9 +164,9 @@
       "width": 4
     },
     "src": "/images/badges/most-viewed-month-line.svg",
-    "alt": "Человечек сидит за открытым ноутбуком и улыбается.",
-    "title": "Самый просматриваемый материал за месяц",
-    "description": "По статистике твой материал — самый просматриваемый за месяц"
+    "alt": "A person smiles at an open laptop.",
+    "title": "Most-viewed article of the month",
+    "description": "Your article had the most views this month."
   },
   "most-viewed-month-zeta": {
     "id": "most-viewed-month-zeta",
@@ -177,9 +177,9 @@
       "width": 2
     },
     "src": "/images/badges/most-viewed-month-zeta.svg",
-    "alt": "Улыбающийся человечек поднял одну руку вверх, другую опустил вниз и на что-то показывает.",
-    "title": "Самый просматриваемый материал за месяц",
-    "description": "По статистике твой материал — самый просматриваемый за месяц"
+    "alt": "A smiling person points in two directions.",
+    "title": "Most-viewed article of the month",
+    "description": "Your article had the most views this month."
   },
   "most-viewed-year-line": {
     "id": "most-viewed-year-line",
@@ -190,9 +190,9 @@
       "width": 4
     },
     "src": "/images/badges/most-viewed-year-line.svg",
-    "alt": "Человечек машет руками в сторону открытого ноутбука и кричит от радости и удивления.",
-    "title": "Самый просматриваемый материал за год",
-    "description": "По статистике твой материал — самый просматриваемый за год"
+    "alt": "A person waves at an open laptop, cheering with joy and surprise.",
+    "title": "Most-viewed article of the year",
+    "description": "Your article had the most views this year."
   },
   "most-viewed-year-zeta": {
     "id": "most-viewed-year-zeta",
@@ -203,9 +203,9 @@
       "width": 2
     },
     "src": "/images/badges/most-viewed-year-zeta.svg",
-    "alt": "Человечек поднял одну руку вверх, другую опустил вниз и на что-то показывает. Его глаза расширены, он кричит от удовольствия и удивления.",
-    "title": "Самый просматриваемый материал за год",
-    "description": "По статистике твой материал — самый просматриваемый за год"
+    "alt": "A person points in two directions with wide eyes, cheering with joy and surprise.",
+    "title": "Most-viewed article of the year",
+    "description": "Your article had the most views this year."
   },
   "hackathon-practicum": {
     "id": "hackathon-practicum",
@@ -216,9 +216,9 @@
       "width": 3
     },
     "src": "/images/badges/hackathon-practicum.svg",
-    "alt": "Надпись «Хакер», под ней звёздочка и треугольник, которые похожи на праздничный колпак",
-    "title": "Участник хакатона",
-    "description": "За участие в хакатоне Доки и Практикума"
+    "alt": "The word 'Hacker' with a star and triangle beneath it, resembling a party hat.",
+    "title": "Hackathon participant",
+    "description": "For participating in the Doka and Practicum hackathon."
   },
   "superstar": {
     "id": "superstar",
@@ -229,9 +229,9 @@
       "width": 3
     },
     "src": "/images/badges/superstar.svg",
-    "alt": "Текстовый смайл с глазами-звёздочками и задорным вихром.",
-    "title": "Суперстар",
-    "description": "Вносит ощутимый регулярный вклад в развитие и популяризацию проекта."
+    "alt": "A text smiley with starry eyes and a playful curl.",
+    "title": "Superstar",
+    "description": "For making a significant, ongoing contribution to the project's growth and outreach."
   },
   "workafrolic": {
     "id": "workafrolic",
@@ -242,9 +242,9 @@
       "width": 4
     },
     "src": "/images/badges/ny.svg",
-    "alt": "Сочувствующий смайл с новогодней ёлкой и подарком.",
-    "title": "Трудоголик",
-    "description": "За контрибьют 1 января 2024 года."
+    "alt": "A sympathetic smiley next to a Christmas tree and a present.",
+    "title": "Workaholic",
+    "description": "For contributing on January 1, 2024."
   },
   "workafrolic-25": {
     "id": "workafrolic",
@@ -255,8 +255,8 @@
       "width": 4
     },
     "src": "/images/badges/ny.svg",
-    "alt": "Сочувствующий смайл с новогодней ёлкой и подарком.",
-    "title": "Трудоголик",
-    "description": "За контрибьют 1 января 2025 года."
+    "alt": "A sympathetic smiley next to a Christmas tree and a present.",
+    "title": "Workaholic",
+    "description": "For contributing on January 1, 2025."
   }
 }

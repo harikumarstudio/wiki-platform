@@ -3,7 +3,7 @@ const visitedPagesKey = 'pages-list'
 const updatingPeriod = 10000
 const sessionObject = {}
 
-// Реакция на триггер по умолчанию
+// Default trigger response.
 function setTrigger() {
   const currentPopupStatus = localStorage.getItem('subscription-form-status')
   const currentCookieStatus = localStorage.getItem('cookie-notification')
@@ -13,7 +13,7 @@ function setTrigger() {
   }
 }
 
-// Триггеры
+// Triggers.
 const pageFromTheListTrigger = 'page-from-the-list'
 const pagesAmountEnoughTrigger = 'pages-amount-enough'
 const averageDurationEnoughTrigger = 'average-duration-enough'

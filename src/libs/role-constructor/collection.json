@@ -1,6 +1,6 @@
 {
   "doka-core-team": {
-    "title": "Редакция",
+    "title": "Editorial team",
     "url": "https://doka.guide/about/#kto-my",
     "color": "hsl(0 0% 0%)",
     "bgColor": "hsl(0 0% 100%)",
@@ -8,7 +8,7 @@
     "border": "hsl(0 0% 0%)"
   },
   "praktikum-mentor": {
-    "title": "Наставник Практикума",
+    "title": "Practicum mentor",
     "url": "https://practicum.yandex.ru/catalog/programming/",
     "color": "hsl(0 0% 100%)",
     "bgColor": "hsl(0 0% 0%)",
@@ -16,7 +16,7 @@
     "border": "hsl(0 0% 0%)"
   },
   "practicum-contributor": {
-    "title": "Контрибьютор Практикума",
+    "title": "Practicum contributor",
     "url": "https://practicum.yandex.ru/catalog/programming/",
     "color": "hsl(0 0% 100%)",
     "bgColor": "hsl(0 0% 0%)",

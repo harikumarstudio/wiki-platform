@@ -177,9 +177,9 @@ The platform can be operated in different modes (described in the[_package.json_
 - `start` — to launch the platform locally with automatic reboot when content or platform files are changed;
 - `build` — for website assembly (with code minification and all transformations);
 - `deploy` — to deploy a website on the Doki infrastructure (if access is available);
-- `editorconfig` — to check files for Editorconfig requirements, according to [конфигурации](https://github.com/doka-guide/platform/blob/main/.editorconfig);
-- `lint:css` — to check styles for Stylelint requirements, according to [конфигурации](https://github.com/doka-guide/platform/blob/main/.stylelintrc.json);
-- `lint:js` — to check scripts for ESLint requirements, according to [конфигурации](https://github.com/doka-guide/platform/blob/main/eslint.config.js);
+- `editorconfig` — to check files for Editorconfig requirements, according to the [configuration](https://github.com/doka-guide/platform/blob/main/.editorconfig);
+- `lint:css` — to check styles for Stylelint requirements, according to the [configuration](https://github.com/doka-guide/platform/blob/main/.stylelintrc.json);
+- `lint:js` — to check scripts for ESLint requirements, according to the [configuration](https://github.com/doka-guide/platform/blob/main/eslint.config.js);
 - `lint:html` — to check the validity of the collected markup, one page of each type (collected dist and Java are needed);
 - `lint-check` — running all linters in a row;
 - `check` — tests and fast linters in one run, without interrupting each other;
@@ -222,7 +222,7 @@ Templates for individual page blocks are located in the _src/includes_ folder :
 - _[analytics/google.njk](https://github.com/doka-guide/platform/blob/main/src/includes/analytics/google.njk)_ — connecting Google Analytics to the website;
 - _[analytics/metrika.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/article-image.njk)_ — connecting Yandex.Metrica to the website;
 - _[blocks/article-image.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/article-image.njk)_ — illustrations of materials;
-- ~~_[blocks/aside.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/aside.njk)_ — вёрстка страниц с боковой навигацией (пока не используется)~~;
+- ~~_[blocks/aside.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/aside.njk)_ — layout for pages with side navigation (currently unused)~~;
 - _[blocks/cookie-notification.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/cookie-notification.njk)_ — pop-up with information about cookie usage;
 - _[blocks/featured-article.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/featured-article.njk)_ — a block for displaying one material for featuring on the main page of the site;
 - _[blocks/footer.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/footer.njk)_ — website footer (theme switcher, secondary menu);

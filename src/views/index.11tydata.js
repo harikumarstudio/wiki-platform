@@ -41,8 +41,8 @@ module.exports = {
 
       const formattedPromos = await Promise.all(
         filteredPromos.map(async (promo) => {
-          // rawInput отдаёт текст уже без фронтматтера, поэтому прежний
-          // split по «---» больше не нужен.
+          // rawInput already omits front matter, so the previous split on
+          // '---' is no longer needed.
           const content = promo.rawInput ?? ''
           const cache = promo.data
           const output = {

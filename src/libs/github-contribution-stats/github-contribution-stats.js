@@ -15,12 +15,12 @@ function readIssues() {
     }
     if (isProdEnv) {
       throw new Error(
-        'Не найден .issues.json — без него боевая сборка соберёт страницы участников без статистики. ' +
-          'Как его получить, написано в docs/how-to-run.md.',
+        '.issues.json is missing — without it, the production build will generate contributor pages without statistics. ' +
+          'See docs/how-to-run.md for instructions on getting it.',
         { cause: error },
       )
     }
-    console.warn('Не найден .issues.json — статистика вкладов будет пустой. Подробности в docs/how-to-run.md.')
+    console.warn('.issues.json is missing — contribution statistics will be empty. See docs/how-to-run.md for details.')
     return []
   }
 }

@@ -40,11 +40,11 @@
   <section class="questions" id="questions">
     {{ questionsAuthors.length }}
     <h2 class="questions__title">
-      На собеседовании
+      Interview questions
     </h2>
 
     <a class="questions__edit-button button" href="https://github.com/doka-guide/content/issues/new?assignees=&labels=&projects=&template=3_new_answer.yml&title=%D0%92%D0%BE%D0%BF%D1%80%D0%BE%D1%81+%D0%B4%D0%BB%D1%8F+%D1%81%D0%BE%D0%B1%D0%B5%D1%81%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%3A+" target="_blank" rel="noopener" rel="noreferrer">
-      {{ githubicon | safe }} Задать вопрос в рубрику
+      {{ githubicon | safe }} Ask a question
     </a>
 
     <div class="questions__list">
@@ -59,7 +59,7 @@
           </aside>
 
           <a class="questions__edit-button button" href="{{ question.addAnswer }}" target="_blank" rel="noopener" rel="noreferrer">
-            🤚 Я знаю ответ
+            🤚 I know the answer
           </a>
 
         </div>
@@ -85,7 +85,7 @@
                       url='/people/' + answerAuthor.fileSlug + '/'
                     ) }}
                   </span>
-                  &nbsp;отвечает
+                  &nbsp;answers
                 </span>
               </h3>
               <div class="answer__content {% if not answer.isLong %}answer__content--short{% endif %} content">
@@ -93,7 +93,7 @@
                   {{ answer.templateContent | safe }}
                   {% if answer.isLong %}
                     <button class="answer__toggler" type="button" aria-live="polite" data-collapsed>
-                      + Развернуть
+                      + Expand
                     </button>
                   {% endif %}
                 </div>
@@ -102,7 +102,7 @@
           {% endfor %}
         {% else %}
           <p class="question__response-placeholder">
-            Это вопрос без ответа. Вы можете помочь! Чтобы написать ответ, следуйте <a href="https://github.com/doka-guide/content/blob/main/docs/interviews.md#%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C-%D0%BE%D1%82%D0%B2%D0%B5%D1%82">инструкции</a>.
+            This question has no answer yet. You can help! To write an answer, follow the <a href="https://github.com/doka-guide/content/blob/main/docs/interviews.md#%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C-%D0%BE%D1%82%D0%B2%D0%B5%D1%82">instructions</a>.
           </p>
         {% endif %}
         </div>

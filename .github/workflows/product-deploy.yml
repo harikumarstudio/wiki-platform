@@ -8,29 +8,29 @@ on:
 permissions: {}
 
 jobs:
-  # Сборка вынесена в переиспользуемый воркфлоу: раньше на каждый push в main
-  # сайт собирался дважды — здесь и в отдельной джобе W3C-валидации.
+  # The build uses a reusable workflow. Previously, every push to main built
+  # the site twice: here and in a separate W3C validation job.
   build:
-    name: Сборка сайта
+    name: Build site
     uses: ./.github/workflows/build-site.yml
-    # Переиспользуемый воркфлоу не может запросить больше прав, чем дал вызывающий,
-    # а на уровне воркфлоу стоит permissions: {} — поэтому выдаём чтение здесь.
+    # A reusable workflow cannot request more permissions than its caller
+    # grants. The workflow-level permissions are empty, so grant read access here.
     permissions:
       contents: read
     with:
       cache-prefix: product
 
-  # Валидация разметки. Собранные страницы приезжают артефактом, поэтому джоба
-  # не пересобирает сайт и не нуждается ни в контенте, ни в секретах.
+  # Validate the markup. The built pages are passed in as an artifact, so this
+  # job does not rebuild the site or need content or secrets.
   validate:
-    name: Валидация разметки
+    name: Validate markup
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: read
     steps:
-      - name: Загрузка платформы
+      - name: Check out platform
         uses: actions/checkout@v6
         with:
           persist-credentials: false
@@ -43,74 +43,74 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           architecture: x64
-      - name: Установка модулей
+      - name: Install dependencies
         run: npm ci
-      - name: Загрузка страниц
+      - name: Download pages
         uses: actions/download-artifact@v4
         with:
           name: site-html
-      - name: Распаковка страниц
+      - name: Extract pages
         run: |
           set -eu
           mkdir -p dist
           tar --extract --file site-html.tar --directory dist \
             --no-same-owner --no-same-permissions
-      - name: Валидация
+      - name: Validate
         run: npm run lint:html
 
-  # Публикация на продакшн. Намеренно зависит только от сборки, а не от
-  # валидации: до выноса сборки это были два независимых воркфлоу, и красная
-  # разметка выкатку не останавливала. Если захотим гейт — это отдельное
-  # решение, а не побочный эффект переезда на артефакты.
+  # Production deployment intentionally depends on the build, not validation.
+  # Before the build was extracted, these were independent workflows, so
+  # invalid markup did not stop a deployment. Adding a validation gate should
+  # be a deliberate decision, not a side effect of moving to artifacts.
   deploy:
-    name: Публикация сайта
+    name: Deploy site
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions: {}
     steps:
-      - name: Загрузка артефакта
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: site-dist
-      # Дальше идёт rsync с --delete, поэтому неполный артефакт опаснее
-      # упавшего деплоя: он не оставит старую версию, а сотрёт недостающее.
-      # Проверяем контрольную сумму до распаковки и опись после, чтобы до
-      # сервера не доехал обрезанный или пустой архив.
-      - name: Проверка артефакта
+      # rsync --delete runs next, so an incomplete artifact is more dangerous
+      # than a failed deployment: it would remove missing files instead of
+      # preserving the old version. Verify the checksum and manifest first.
+      - name: Verify artifact
         run: |
           set -eu
-          test -f site-manifest.txt || { echo "В артефакте нет описи"; exit 1; }
-          # Разбираем grep-ом, а не source: опись — данные, а не код.
+          test -f site-manifest.txt || { echo "Artifact manifest is missing"; exit 1; }
+          # Parse with grep, not source: the manifest is data, not code.
           EXPECTED_SHA="$(grep '^sha256=' site-manifest.txt | cut -d= -f2)"
           ACTUAL_SHA="$(sha256sum site.tar | cut -d' ' -f1)"
           if [ "$EXPECTED_SHA" != "$ACTUAL_SHA" ]; then
-            echo "Архив побился при передаче: ждали $EXPECTED_SHA, получили $ACTUAL_SHA"
+            echo "Archive was corrupted in transit: expected $EXPECTED_SHA, got $ACTUAL_SHA"
             exit 1
           fi
           echo "EXPECTED_FILES=$(grep '^files=' site-manifest.txt | cut -d= -f2)" >> "$GITHUB_ENV"
           echo "EXPECTED_HTML=$(grep '^html=' site-manifest.txt | cut -d= -f2)" >> "$GITHUB_ENV"
-      - name: Распаковка артефакта
+      - name: Extract artifact
         run: |
           set -eu
           SITE_DIR="$(mktemp -d "$RUNNER_TEMP/site.XXXXXX")"
           tar --extract --file site.tar --directory "$SITE_DIR" --no-same-owner --no-same-permissions
-          test -f "$SITE_DIR/index.html" || { echo "В артефакте нет index.html"; exit 1; }
+          test -f "$SITE_DIR/index.html" || { echo "Artifact does not contain index.html"; exit 1; }
           ACTUAL_FILES="$(find "$SITE_DIR" -type f | wc -l | tr -d ' ')"
           if [ "$ACTUAL_FILES" -ne "$EXPECTED_FILES" ]; then
-            echo "Распаковалось $ACTUAL_FILES файлов вместо $EXPECTED_FILES"
+            echo "Extracted $ACTUAL_FILES files instead of $EXPECTED_FILES"
             exit 1
           fi
-          # Нижняя граница на случай сборки, которая формально удалась, но выдала
-          # почти пустой dist. Сейчас страниц около 3500, запас многократный.
+          # Guard against a build that technically succeeded but produced an
+          # almost empty dist. There are about 3,500 pages now, so this leaves
+          # plenty of headroom.
           if [ "$EXPECTED_HTML" -lt 1000 ]; then
-            echo "Подозрительно мало страниц: $EXPECTED_HTML"
+            echo "Suspiciously few pages: $EXPECTED_HTML"
             exit 1
           fi
           echo "SITE_DIR=$SITE_DIR" >> "$GITHUB_ENV"
-      # Последовательность та же, что и до выноса сборки: ключ, конфиг и
-      # холостое подключение, которое добавляет хост в known_hosts.
-      - name: Установка ключа для пользователя
+      # Keep the existing setup sequence: install the key and config, then
+      # connect once to add the host to known_hosts.
+      - name: Set up deployment key
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}
@@ -122,27 +122,26 @@ jobs:
           printf '%s\n' "$DEPLOY_CONFIG" > "$HOME/.ssh/config"
           chmod 600 "$HOME/.ssh/config"
           ssh -o StrictHostKeyChecking=no deploy@dev.doka.guide
-      # --delete-after: сначала переливаются все файлы и только потом удаляются
-      # лишние. Если передача оборвётся на середине, не удалится ничего — на
-      # сервере останется прежняя версия плюс частично долитая новая. При
-      # удалении по ходу (поведение --delete по умолчанию) оборванная передача
-      # оставила бы сайт с уже вычищенными файлами.
+      # --delete-after transfers all files before removing extras. If a
+      # transfer is interrupted, nothing is deleted: the server keeps the old
+      # version plus whatever arrived from the new one. With the default
+      # --delete behavior, an interrupted transfer could remove files early.
       #
-      # --max-delete — последний предохранитель на уровне rsync: если неполный
-      # артефакт всё же прошёл сверку описи, rsync прервётся с кодом 25 и не
-      # станет вычищать боевой сайт.
+      # --max-delete is the final rsync safeguard: if an incomplete artifact
+      # somehow passes the manifest check, rsync exits with code 25 rather than
+      # cleaning up the production site.
       #
-      # Порог считается от размера сборки, а не фиксированным числом. Круглые
-      # 500 уже один раз остановили штатную выкатку: на сервере накапливаются
-      # сгенерированные картинки с прежними хэшами, и законная уборка легко
-      # выходит за любое ровное значение. Пятая часть от числа файлов в
-      # артефакте — это около двух тысяч при нынешних десяти с половиной, чего
-      # хватает на уборку, но катастрофу с почти пустой сборкой всё ещё ловит.
-      - name: Публикация сайта
+      # Calculate the limit from the build size instead of using a fixed
+      # number. A limit of 500 once blocked a normal deployment: old hashed
+      # images accumulate on the server, so a valid cleanup can exceed a round
+      # number. One fifth of the artifact's file count is about 2,000 of the
+      # current 10,500 files—enough for cleanup while still catching an
+      # almost-empty build.
+      - name: Deploy site
         run: |
           set -eu
           MAX_DELETE=$((EXPECTED_FILES / 5))
-          echo "Файлов в артефакте: $EXPECTED_FILES, предел удаления: $MAX_DELETE"
+          echo "Artifact files: $EXPECTED_FILES; deletion limit: $MAX_DELETE"
           cd "$SITE_DIR"
           rsync --exclude 'api.json' --exclude 'mail' \
             --archive --progress --compress --delete-after --max-delete="$MAX_DELETE" \

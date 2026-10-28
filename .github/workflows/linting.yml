@@ -10,28 +10,28 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Загрузка платформы
+      - name: Check out platform
         uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: 'npm'
-      - name: Установка зависимостей
+      - name: Install dependencies
         run: npm ci
 
-      # Шаги не прерывают друг друга: при падении видно все три отчёта сразу,
-      # а не только первый упавший линтер.
-      # editorconfig-checker скачивает свой бинарник через GitHub API. Без
-      # токена запрос неавторизованный, а лимит общий на IP раннера — прогоны
-      # падали случайно, с «API rate limit exceeded» вместо ошибок разметки.
-      - name: Проверка editorconfig
+      # Steps do not stop one another, so all three reports are available even
+      # if one linter fails.
+      # editorconfig-checker downloads its binary through the GitHub API.
+      # Without a token, requests are unauthenticated and share the runner IP's
+      # rate limit, causing intermittent "API rate limit exceeded" errors.
+      - name: Check editorconfig
         if: ${{ !cancelled() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run editorconfig
-      - name: Проверка линтером CSS
+      - name: Lint CSS
         if: ${{ !cancelled() }}
         run: npm run lint:css
-      - name: Проверка линтером JS
+      - name: Lint JavaScript
         if: ${{ !cancelled() }}
         run: npm run lint:js

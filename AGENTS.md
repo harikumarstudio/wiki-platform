@@ -1,89 +1,89 @@
-# AGENTS.md — как работать с платформой Доки
+# AGENTS.md — Working on the Doka Platform
 
-Инструкция для ИИ-агентов: Codex, Cursor, Copilot, Gemini CLI читают этот файл напрямую, Claude Code — через `CLAUDE.md`, который на него ссылается. Здесь только то, что нужно, чтобы начать работать и не сломать ничего по дороге. Подробное устройство сборки — в [`docs/how-its-work.md`](docs/how-its-work.md).
-
----
-
-## 1. Правила работы
-
-Правила смещают баланс в сторону осторожности, а не скорости. На мелких задачах включайте здравый смысл.
-
-### Сначала подумай, потом пиши
-
-- Назови свои допущения вслух. Если не уверен — спроси.
-- Если задачу можно понять двумя способами — покажи оба, не выбирай молча.
-- Если есть решение проще — скажи об этом. Возражать можно и нужно.
-- Если что-то непонятно — остановись и назови, что именно непонятно.
-
-### Минимум кода
-
-- Ничего сверх того, о чём попросили.
-- Никаких абстракций ради одного вызова.
-- Никакой «гибкости» и «настраиваемости», которую не заказывали.
-- Никакой обработки ошибок для невозможных ситуаций.
-- Если получилось 200 строк там, где хватило бы 50, — перепиши.
-
-Проверка: сказал бы опытный разработчик, что здесь переусложнено? Если да — упрощай.
-
-### Правки хирургические
-
-- Не «улучшай» соседний код, комментарии и форматирование заодно.
-- Не рефактори то, что не сломано.
-- Держись существующего стиля, даже если сам написал бы иначе.
-- Заметил не связанный с задачей мёртвый код — скажи о нём, но не удаляй.
-- Убирай за собой только то, что осиротело из-за твоих же правок.
-
-Проверка: каждая изменённая строка должна прослеживаться до запроса пользователя.
-
-### Цель должна быть проверяемой
-
-Формулируй задачу так, чтобы результат можно было проверить командой:
-
-- «добавь валидацию» → «напиши тест на неверный ввод, потом сделай, чтобы он проходил»;
-- «почини баг» → «напиши тест, который его воспроизводит, потом сделай, чтобы он проходил»;
-- «отрефактори X» → «убедись, что тесты зелёные до и после».
-
-Для многошаговых задач сначала напиши короткий план: шаг → чем проверяю.
-
-### Тест обязателен
-
-Не «желательно» и не «если останется время».
-
-- **Чиним баг** — сначала тест, который его воспроизводит. Он должен падать до правки и проходить после. Если тест зелёный до правки — вы починили не то, что сломано.
-- **Добавляем функциональность** — тест на неё в том же пулреквесте, вместе с кодом.
-- **Правка без теста не считается сделанной.** Не откладывайте его «на потом» и не предлагайте написать отдельно.
-
-Тестируемого места нет — сделайте его: вынесите логику из шаблона или обработчика в чистую функцию и покройте её. Если это невозможно (шаблоны Nunjucks, CSS, вёрстка), скажите об этом прямо и напишите, чем проверяли вместо теста — какую страницу открывали и что на ней смотрели.
-
-### Правка не заканчивается на коде
-
-Изменили поведение — пройдитесь по тому, что вокруг него написано, и приведите в соответствие:
-
-- **Документация.** `AGENTS.md`, `README.md`, `CONTRIBUTING.md`, `docs/` — если поменялись команды, шаги запуска, требования к окружению или то, как что-то устроено, правьте текст в том же пулреквесте. Устаревшая документация хуже отсутствующей: по ней принимают решения.
-- **Соседние тесты.** Найдите тесты, которые относятся к тронутому коду, и прочитайте их — не только те, что упали. Тест мог остаться зелёным, но проверять уже не то поведение: устаревшие ожидания, отсылки к переименованному, покрытие ветки, которой больше нет. Такой тест поправьте вместе с кодом.
-
-Проверка: если после ваших правок в репозитории остался текст, который теперь врёт, — работа не закончена.
-
-### Чего делать нельзя
-
-- **Не запускать `npm run deploy`.** Это не проверка сборки, а реальный rsync на `dev.doka.guide`.
-- **Не читать и не печатать `.env`** — там боевой `GITHUB_TOKEN`.
-- **Не коммитить симлинки на контент** (`src/html`, `src/css`, `src/js` и остальные из `.gitignore`), `.issues.json`, `dist` и `bin`.
-- **Не пушить в `main`.** Работа идёт по GitHub Flow: ветка → пулреквест → ревью.
+Instructions for AI agents: Codex, Cursor, Copilot, and Gemini CLI read this file directly; Claude Code reads it through `CLAUDE.md`, which links here. This file contains only what you need to get started without breaking things. For build details, see [`docs/how-its-work.md`](docs/how-its-work.md).
 
 ---
 
-## 2. Что это за репозиторий
+## 1. Working rules
 
-Движок сайта [doka.guide](https://doka.guide) — статический генератор на [Eleventy](https://www.11ty.dev). Берёт Markdown из **отдельного репозитория** [`doka-guide/content`](https://github.com/doka-guide/content) и рендерит через Nunjucks-шаблоны.
+These rules favor caution over speed. Use common sense for small tasks.
 
-Контент и платформа живут в разных репозиториях намеренно: авторы работают с материалами без знания сборки, платформа развивается независимо. Для 11ty это нестандартно — отсюда симлинки, `.11tydata.js` и ручные коллекции.
+### Think before you write
 
-Рядом в экосистеме: `api` (Go-бэкенд форм и рассылок) и `search` (движок поиска по инвертированному индексу).
+- State your assumptions. If you're unsure, ask.
+- If a task has two possible interpretations, explain both instead of choosing silently.
+- If there's a simpler solution, say so. It's okay to disagree.
+- If something is unclear, stop and identify exactly what is unclear.
+
+### Keep the code minimal
+
+- Do no more than requested.
+- Don't add abstractions for a single call.
+- Don't add flexibility or configurability that wasn't requested.
+- Don't add error handling for impossible situations.
+- If 50 lines would do instead of 200, rewrite it.
+
+Check: would an experienced developer consider this overengineered? If so, simplify it.
+
+### Make surgical changes
+
+- Don't "improve" neighboring code, comments, or formatting along the way.
+- Don't refactor code that isn't broken.
+- Follow the existing style, even if you'd write it differently.
+- If you notice unrelated dead code, mention it but don't remove it.
+- Only clean up things orphaned by your own changes.
+
+Check: every changed line should be traceable to the user's request.
+
+### Make the goal verifiable
+
+Phrase the task so the result can be checked with a command:
+
+- "Add validation" → "write a test for invalid input, then make it pass."
+- "Fix a bug" → "write a test that reproduces it, then make it pass."
+- "Refactor X" → "make sure the tests pass before and after."
+
+For multi-step tasks, first write a short plan: step → how to verify it.
+
+### Tests are required
+
+They are not optional and should not be deferred.
+
+- **Bug fix:** first write a test that reproduces the bug. It must fail before the fix and pass afterward. If it passes before the fix, you're not fixing the right problem.
+- **New functionality:** include a test for it in the same pull request.
+- **A change without a test is not done.** Don't defer the test or offer to write it later.
+
+If there is no testable unit, create one: extract the logic from the template or handler into a pure function and test it. If that's impossible (Nunjucks templates, CSS, or layout), say so and describe how you checked it instead: which page you opened and what you inspected.
+
+### A change isn't finished when the code is
+
+When behavior changes, update the surrounding material:
+
+- **Documentation.** Update `AGENTS.md`, `README.md`, `CONTRIBUTING.md`, or `docs/` in the same change if commands, setup steps, environment requirements, or implementation details have changed. Outdated documentation is worse than none; people rely on it to make decisions.
+- **Related tests.** Find and read the tests for the changed code, not just the ones that failed. A test may still pass while checking outdated behavior, an old name, or a branch that no longer exists. Update it in the same change.
+
+Check: if any text in the repository is now inaccurate, the work isn't finished.
+
+### Do not
+
+- **Run `npm run deploy`.** It is not a build check; it runs rsync against `dev.doka.guide`.
+- **Read or print `.env`.** It contains the production `GITHUB_TOKEN`.
+- **Commit content symlinks** (`src/html`, `src/css`, `src/js`, and the other paths in `.gitignore`), `.issues.json`, `dist`, or `bin`.
+- **Push to `main`.** Work through GitHub Flow: branch → pull request → review.
 
 ---
 
-## 3. Запуск
+## 2. About this repository
+
+The [doka.guide](https://doka.guide) site is a static generator built with [Eleventy](https://www.11ty.dev). It takes Markdown from the **separate** [`doka-guide/content`](https://github.com/doka-guide/content) repository and renders it with Nunjucks templates.
+
+Content and platform code intentionally live in separate repositories: authors can work on materials without knowing the build system, while the platform can evolve independently. This is unusual for 11ty, which is why the project uses symlinks, `.11tydata.js` files, and manually defined collections.
+
+Related projects in the ecosystem: `api` (Go backend for forms and newsletters) and `search` (search engine using an inverted index).
+
+---
+
+## 3. Getting started
 
 ```bash
 npm i
@@ -91,82 +91,81 @@ cp .env.example .env
 npm start          # http://localhost:8080
 ```
 
-Версия ноды — из `.nvmrc`. По умолчанию `PATH_TO_CONTENT=../content`: репозиторий с контентом должен лежать рядом. При первом `npm start` скрипт `make-links.js` спросит путь и создаст симлинки.
+Use the Node.js version in `.nvmrc`. By default, `PATH_TO_CONTENT=../content`, so the content repository should be next to this one. The first time you run `npm start`, `make-links.js` asks for the path and creates symlinks.
 
-Сборка всего контента идёт долго. Что подключается симлинками, задаёт `CONTENT_REP_FOLDERS` в `.env`: сборка учитывает только материалы из перечисленных папок, а папки могут быть и пустыми. Для быстрых итераций оставьте нужный раздел и обязательную `settings`. Подробности — в [`docs/how-its-work.md`](docs/how-its-work.md).
+Building all content takes a while. `CONTENT_REP_FOLDERS` in `.env` controls which folders are linked; the build only includes materials in those folders, which may be empty. For quick iterations, keep only the section you need and the required `settings` folder. See [`docs/how-its-work.md`](docs/how-its-work.md) for details.
 
-Файл `.issues.json` (статистика вкладов из репозитория [`doka-guide/cache`](https://github.com/doka-guide/cache)) для разработки не нужен: без него `npm start` печатает предупреждение и собирает страницы участников с пустой статистикой. Для `npm run build` он обязателен — сборка упадёт с внятным сообщением. Как его получить, написано в [`docs/how-to-run.md`](docs/how-to-run.md).
+The `.issues.json` file (contribution statistics from [`doka-guide/cache`](https://github.com/doka-guide/cache)) is not needed for development. Without it, `npm start` prints a warning and builds contributor pages with empty statistics. It is required for `npm run build`, which fails with a clear message if the file is missing. See [`docs/how-to-run.md`](docs/how-to-run.md) for how to get it.
 
 ---
 
-## 4. Как проверять работу
+## 4. Checking your work
 
-От быстрого к медленному. Первый шаг закрывает почти всё:
+From fastest to slowest. The first command covers most checks:
 
 ```bash
-npm run check                         # тесты + editorconfig + stylelint + eslint, ~5 с
-npx eslint <изменённые файлы>         # точечно, без шума от чужих ошибок
-npm start                             # если трогали шаблоны или трансформации — посмотреть глазами
-npm run build && npm run lint:html    # валидация разметки, нужна Java 17+
+npm run check                         # tests + editorconfig + stylelint + eslint, ~5 sec
+npx eslint <changed files>            # focused check without unrelated errors
+npm start                             # inspect visually if you changed templates or transforms
+npm run build && npm run lint:html    # markup validation; requires Java 17+
 ```
 
-`npm run check` доводит до конца все проверки и печатает итоговую таблицу. Не используйте вместо него `npm run lint-check`: там шаги склеены через `&&`, поэтому падение `editorconfig` прячет отчёты stylelint и eslint, и вы чините переводы строк вместо настоящей ошибки.
+`npm run check` runs every check and prints a summary table. Don't use `npm run lint-check` instead: its commands are chained with `&&`, so an `editorconfig` failure hides the stylelint and eslint reports, leaving you to fix line endings instead of the real issue.
 
-`lint:html` проверяет по одной странице каждого типа, а не весь сайт: за разметку статей отвечает один шаблон `doc.njk`, и тысячная статья не скажет ничего, чего не сказала первая. Список страниц — в `scripts/lint-html.js`, при добавлении нового типа страницы его нужно пополнить.
+`lint:html` checks one page of each type, not the whole site. All articles use the same `doc.njk` template, so the thousandth article won't reveal anything the first one doesn't. The page list is in `scripts/lint-html.js`; add new page types there.
 
-`editorconfig-checker` при каждом запуске качает свой бинарник в `./bin/latest/`. Папка в `.gitignore`.
+`editorconfig-checker` downloads its binary to `./bin/latest/` each time. That directory is in `.gitignore`.
 
-Тесты лежат в `__tests__/` рядом с кодом, общие помощники — в `test/helpers/`. Покрытие пока тонкое, самое ценное место для новых тестов — трансформации: это чистые функции, html на входе и html на выходе.
+Tests live in `__tests__/` next to the code; shared helpers are in `test/helpers/`. Coverage is still limited, so transforms are the best place to add tests: they are pure functions that take HTML and return HTML.
 
 ---
 
-## 5. Карта репозитория
+## 5. Repository map
 
-| Где | Что |
+| Location | Contents |
 |---|---|
-| `.eleventy.js` | Главный конфиг: коллекции, фильтры, трансформации, плагины |
-| `gulpfile.js` | Продакшн-пайплайн: бандл CSS/JS, кеш-хэши |
-| `make-links.js` | Симлинки `src/{раздел}` → `content/{раздел}` |
-| `config/` | Константы, окружение, цвета разделов |
-| `src/data/` | Глобальные данные 11ty |
-| `src/layouts/`, `src/includes/` | Базовый шаблон и блоки |
-| `src/views/` | Страницы: `*.njk` плюс `*.11tydata.js` с данными |
-| `src/transforms/` | Постобработка готового HTML |
-| `src/libs/` | Утилиты сборки (Node) |
-| `src/scripts/` | Клиентский JS, точка входа `index.js`, бандлится esbuild |
-| `src/styles/` | CSS по блокам, точка входа `index.css` |
-| `.github/workflows/` | CI: линтеры, тесты, сборка, превью, деплой |
+| `.eleventy.js` | Main configuration: collections, filters, transforms, plugins |
+| `gulpfile.js` | Production pipeline: CSS/JS bundles and cache hashes |
+| `make-links.js` | Symlinks from `src/{section}` to `content/{section}` |
+| `config/` | Constants, environment, section colors |
+| `src/data/` | Global 11ty data |
+| `src/layouts/`, `src/includes/` | Base template and components |
+| `src/views/` | Pages: `*.njk` templates and `*.11tydata.js` data |
+| `src/transforms/` | Post-processing of generated HTML |
+| `src/libs/` | Build utilities (Node.js) |
+| `src/scripts/` | Client-side JavaScript; `index.js` entry point, bundled with esbuild |
+| `src/styles/` | Block-based CSS; `index.css` entry point |
+| `.github/workflows/` | CI: linters, tests, builds, previews, deployment |
 
-Ключевые коллекции в шаблонах: `docs`, `docsById`, разделы (`html`, `css`, `js`, `a11y`, `tools`, `recipes`), `articleIndexes`, `people`, `practice`, `question`, `answer`, `webFeatures`, `posts`.
+Key template collections: `docs`, `docsById`, sections (`html`, `css`, `js`, `a11y`, `tools`, `recipes`), `articleIndexes`, `people`, `practice`, `question`, `answer`, `webFeatures`, and `posts`.
 
-Данные страницы статьи собираются в `src/views/doc.11tydata.js`, общие для всех страниц — в `src/views/views.11tydata.js`.
-
----
-
-## 6. Соглашения
-
-**Код.** `semi: never`, одинарные кавычки, ширина 120 — всё это чинится автоматически, prettier подключён правилом eslint. Отступ 2 пробела, LF, финальная новая строка.
-
-**Комментарии на русском и объясняют «почему», а не «что».** В этом репозитории комментарий — это место для решения и его причины: почему arm64 собирается на нативном раннере, почему глоб в кавычках, почему `linkify` выключен. Пересказ кода словами не нужен.
-
-**Коммиты на русском, в третьем лице настоящего времени**, номер пулреквеста в конце:
-
-```
-Убирает пустые строки в выдаче поиска (#1366)
-Чинит сборку arm64, добавляет тесты в CI и убирает мёртвый GITHUB_TOKEN (#1365)
-```
-
-**Пулреквесты** — в `main`, ревью по CODEOWNERS. Перед пушем прогоните `npm run check`: тесты в pre-commit хук не входят, а CI гоняет их отдельным воркфлоу.
-
-**Pre-commit хук** (`simple-git-hooks` + `nano-staged`) чинит только файлы в индексе: `eslint --fix` для JS, `stylelint --fix` для CSS. До нетронутых файлов он не доходит — поэтому долг по линтерам копится сам собой.
+Article page data is assembled in `src/views/doc.11tydata.js`; data shared by all pages is in `src/views/views.11tydata.js`.
 
 ---
 
-## 7. Где читать дальше
+## 6. Conventions
 
-- [`docs/how-to-run.md`](docs/how-to-run.md) — запуск во всех вариантах, `.issues.json`
-- [`docs/how-its-work.md`](docs/how-its-work.md) — устройство сборки, переменные окружения, трансформации, шаблоны
-- [`docs/deploy.md`](docs/deploy.md) — деплой
-- [`docs/deps.md`](docs/deps.md) — работа с зависимостями
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — как вносить вклад
+**Code.** `semi: never`, single quotes, and a width of 120 are handled automatically by Prettier through ESLint. Use two-space indentation, LF line endings, and a final newline.
 
+**Comments explain why, not what.** In this repository, comments explain a decision and its reasoning: why arm64 builds use a native runner, why a glob is quoted, or why `linkify` is disabled. Don't restate the code.
+
+**Commit messages use the present tense and third person**, with the pull request number at the end:
+
+```
+Removes empty lines from search results (#1366)
+Fixes arm64 builds, adds CI tests, and removes the unused GITHUB_TOKEN (#1365)
+```
+
+**Pull requests** target `main` and are reviewed according to CODEOWNERS. Run `npm run check` before pushing: tests are not included in the pre-commit hook, and CI runs them in a separate workflow.
+
+The **pre-commit hook** (`simple-git-hooks` + `nano-staged`) fixes only staged files: `eslint --fix` for JS and `stylelint --fix` for CSS. It does not check untouched files, so lint issues can accumulate.
+
+---
+
+## 7. Further reading
+
+- [`docs/how-to-run.md`](docs/how-to-run.md) — ways to run the project and `.issues.json`
+- [`docs/how-its-work.md`](docs/how-its-work.md) — build process, environment variables, transforms, and templates
+- [`docs/deploy.md`](docs/deploy.md) — deployment
+- [`docs/deps.md`](docs/deps.md) — working with dependencies
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to contribute

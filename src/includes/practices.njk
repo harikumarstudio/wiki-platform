@@ -10,7 +10,7 @@
   <section class="practices" id="practices">
     {{ practicesAuthors.length }}
     <h2 class="practices__title">
-      На практике
+      In practice
     </h2>
 
     {% for practice in practices %}
@@ -24,14 +24,14 @@
               url='/people/' + practiceAuthor.fileSlug + '/'
             ) }}
           </span>
-          советует
+          recommends
         </h3>
         <div class="practices__content {% if not practice.isLong %}practices__content--short{% endif %} content">
           <div class="practices__summary content">
             {{ practice.templateContent | safe }}
             {% if practice.isLong %}
               <button class="practices__toggler" type="button" aria-live="polite" data-collapsed>
-                + Развернуть
+                + Expand
               </button>
             {% endif %}
           </div>

@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 
-// Один прогон всех быстрых проверок: тесты и линтеры.
+// Run all fast checks: tests and linters.
 //
-// Отличие от `npm run lint-check` в том, что проверки не прерывают друг друга.
-// В lint-check шаги склеены через `&&`: если падает editorconfig, до stylelint
-// и eslint дело не доходит вообще, и в выводе видно ошибки про переводы строк
-// вместо реальных проблем в коде. Здесь каждая проверка отрабатывает до конца,
-// а итог собирается в таблицу — так же, как в CI, где шаги идут через
-// `if: !cancelled()`.
+// Unlike `npm run lint-check`, these checks do not stop one another.
+// lint-check chains steps with `&&`: if editorconfig fails, stylelint and
+// eslint never run, and the output shows line-ending errors instead of actual
+// code issues. Here every check runs to completion and the results are
+// summarized in a table, as they are in CI with `if: !cancelled()`.
 //
-// Проверки разметки здесь нет: `lint:html` работает по собранному `dist` и
-// требует Java, то есть это не быстрый цикл. Запускайте её отдельно после
+// Markup validation is not included: `lint:html` requires a built `dist` and
+// Java, so it is not part of the fast cycle. Run it separately after
 // `npm run build`.
 
 'use strict'
@@ -18,10 +17,10 @@
 const { spawnSync } = require('child_process')
 
 const CHECKS = [
-  ['Тесты', ['test']],
+  ['Tests', ['test']],
   ['editorconfig', ['run', 'editorconfig']],
-  ['Линтер CSS', ['run', 'lint:css']],
-  ['Линтер JS', ['run', 'lint:js']],
+  ['CSS linter', ['run', 'lint:css']],
+  ['JavaScript linter', ['run', 'lint:js']],
 ]
 
 const results = []
@@ -32,7 +31,7 @@ for (const [name, args] of CHECKS) {
   results.push([name, status === 0])
 }
 
-console.log('\n──── Итог ────')
+console.log('\n──── Summary ────')
 for (const [name, ok] of results) {
   console.log(`${ok ? '✓' : '✗'} ${name}`)
 }
@@ -40,8 +39,8 @@ for (const [name, ok] of results) {
 const failed = results.filter(([, ok]) => !ok)
 
 if (failed.length > 0) {
-  console.error(`\nПровалено проверок: ${failed.length} из ${results.length}.`)
+  console.error(`\nFailed checks: ${failed.length} of ${results.length}.`)
   process.exitCode = 1
 } else {
-  console.log('\nВсе проверки прошли.')
+  console.log('\nAll checks passed.')
 }

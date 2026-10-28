@@ -1,4 +1,4 @@
-// константы
+// Constants.
 const STORAGE_KEY = 'color-theme'
 
 const THEMES = {

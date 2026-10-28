@@ -1,9 +1,9 @@
-// Слушаем события с тултипами
+// Listen for tooltip events.
 function initTooltip(tooltipContainer) {
   const trigger = tooltipContainer.querySelector('.person-badges__default-image')
   const tooltip = tooltipContainer.querySelector('.person-badges__pop-up-container')
 
-  // Показываем тултип при наведении курсора и при фокусе
+  // Show the tooltip on hover and focus.
   tooltipContainer.addEventListener('mouseenter', () => {
     showTooltip(tooltip)
   })
@@ -11,7 +11,7 @@ function initTooltip(tooltipContainer) {
     showTooltip(tooltip)
   })
 
-  // Прячем тултип, когда курсор не на значке и фокус на другом элементе
+  // Hide the tooltip when the pointer leaves the badge and focus moves elsewhere.
   tooltipContainer.addEventListener('mouseleave', () => {
     hideTooltip(tooltip)
   })
@@ -19,7 +19,7 @@ function initTooltip(tooltipContainer) {
     hideTooltip(tooltip)
   })
 
-  // Скрываем тултип при нажатии на Esc
+  // Hide the tooltip when Escape is pressed.
   trigger.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       hideTooltip(tooltip)
@@ -36,7 +36,7 @@ function hideTooltip(tooltip) {
 }
 
 window.addEventListener('load', () => {
-  // Вызываем функцию
+  // Call the function.
   const tooltips = document.querySelectorAll('.person-badges__sign')
 
   tooltips.forEach((tooltip) => {

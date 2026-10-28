@@ -16,9 +16,9 @@
 
     {% include "meta.njk" %}
 
-    {# Стили, которые страница вычисляет из коллекций и не может держать в
-    обычном CSS-файле. В head, потому что style — метаданные и в разметке
-    страницы невалиден. #}
+    {# Styles computed from collections cannot live in a regular CSS file.
+    Keep them in the head because style is metadata and is invalid in the
+    page markup. #}
     {% if pageStyles %}
       <style>{{ pageStyles | safe }}</style>
     {% endif %}

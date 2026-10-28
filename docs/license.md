@@ -1,6 +1,6 @@
 # What can you do with Doka?
 
-## Лицензия на код платформы
+## Platform code license
 
 The platform is created and operates on the basis of [Eleventy](https://www.11ty.dev), the source code of which is distributed under the MIT license.
 

@@ -1,5 +1,5 @@
 /*
- * Скрипт для обрезки длины заголовка секции в боковой навигации
+ * Crop section heading text in the sidebar navigation.
  */
 
 const tocLinks = document.querySelectorAll('.toc__link')

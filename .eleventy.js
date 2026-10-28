@@ -237,7 +237,7 @@ module.exports = function (config) {
         const allGroups = [
           ...groups,
           {
-            name: 'Остальные',
+            name: 'Others',
             items: restArticles,
           },
         ].filter((group) => group.items.length > 0)
@@ -500,7 +500,9 @@ module.exports = function (config) {
   config.addPassthroughCopy('src/robots.txt')
   config.addPassthroughCopy('src/fonts')
   config.addPassthroughCopy('src/images')
-  config.addPassthroughCopy('src/(cpp|houdini|python|ai|unreal|css|html|js|a11y|tools|recipes|people|interviews)/**/!(*11tydata*)*.!(md)')
+  config.addPassthroughCopy(
+    'src/(cpp|houdini|python|ai|unreal|css|html|js|a11y|tools|recipes|people|interviews)/**/!(*11tydata*)*.!(md)',
+  )
 
   return {
     dir: {

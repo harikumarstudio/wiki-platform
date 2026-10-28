@@ -1,13 +1,13 @@
 ---
-title: '…Вы великолепны!'
+title: '...You did it!'
 color: '68 98% 47%'
 design: 'dream-job'
 startDate: '2023-11-10T00:00:00'
 endDate: '2023-11-17T00:00:00'
 links:
   - emoji: '☕️'
-    text: 'Акклиматизация на новой работе'
+    text: 'Settling into a new job'
     url: 'https://dream-job.doka.guide/dream-job/acclimate/'
 ---
 
-Вы устроились на работу. А что дальше? Как упростить себе первые недели на новом месте, в новом коллективе? Рассказываем в заключительной главе нашего спецпроекта.
+You've got the job. What comes next? How can you make your first weeks in a new role and team easier? Find out in the final chapter of our special project.

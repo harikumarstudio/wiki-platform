@@ -97,7 +97,8 @@ module.exports = {
 
     docPath: function (data) {
       const { doc } = data
-      // Удаляем `/index` с конца пути (цель - из строки `/js/index-of/index` получить `/js/index-of`)
+      // Remove `/index` from the end of the path (for example, convert
+      // `/js/index-of/index` to `/js/index-of`).
       return doc.filePathStem.replace(/\/index$/, '')
     },
 
@@ -314,14 +315,14 @@ module.exports = {
     },
 
     documentTitle: function (data) {
-      // удаляем символы обратных кавычек html-тегов из markdown
+      // Remove Markdown backticks around HTML tags.
       const title = data.title.replace(/`/g, '')
       return titleFormatter([title, data.categoryName, 'ArchVizWiki'])
     },
 
     socialTitle: function (data) {
       const { documentTitle } = data
-      // Удаляем символы угловых скобок HTML-тегов из markdown, так как соцсети их некорректно отображают
+      // Remove angle brackets around HTML tags because social networks do not display them correctly.
       return documentTitle.replace(/</g, '').replace(/>/g, '')
     },
 

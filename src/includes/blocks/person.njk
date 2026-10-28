@@ -15,13 +15,13 @@
       <span class="person__stat">
         {% if data.totalArticles > 0 %}
           {{ data.totalArticles }}
-          {{ data.totalArticles | declension('статья', 'статьи', 'статей') }}
+          {{ data.totalArticles | declension('article', 'articles', 'articles') }}
         {% elif data.totalPractices > 0 %}
           {{ data.totalPractices }}
-          {{ data.totalPractices | declension('совет', 'совета', 'советов') }}
+          {{ data.totalPractices | declension('tip', 'tips', 'tips') }}
         {% elif data.totalAnswers > 0 %}
           {{ data.totalAnswers }}
-          {{ data.totalAnswers | declension('ответ', 'ответа', 'ответов') }}
+          {{ data.totalAnswers | declension('answer', 'answers', 'answers') }}
         {% endif %}
       </span>
 

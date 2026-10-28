@@ -27,7 +27,7 @@ class Filter extends BaseComponent {
       })
 
     form.addEventListener('reset', () => {
-      /* событие reset срабатывает перед тем, как поля очистятся */
+      /* The reset event fires before the fields are cleared. */
       setTimeout(() => {
         this.emit('reset', this.state)
       })
@@ -207,7 +207,7 @@ function init() {
     element: searchHits,
   })
 
-  /* преобразует состояние фильтров в понятный серверу формат */
+  /* Convert the filter state into a format the server understands. */
   function prepareFilters(filtersState) {
     const result = [
       [...filtersState.getAll('category')].map((v) => {
@@ -221,7 +221,7 @@ function init() {
     return result
   }
 
-  /* сериализует состояние фильтров в формат Search Params */
+  /* Serialize the filter state as search params. */
   function filtersToSearchParams(filtersState, fallbackPath) {
     let searchString = new URLSearchParams(filtersState).toString()
     searchString = searchString ? '?' + searchString : fallbackPath

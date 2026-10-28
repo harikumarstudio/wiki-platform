@@ -1,59 +1,57 @@
-# Платформа Доки
+# Doka Platform
 
-[![Статус линтера](https://github.com/doka-guide/platform/actions/workflows/linting.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/linting.yml)
-[![Статус тестов](https://github.com/doka-guide/platform/actions/workflows/tests.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/tests.yml)
-[![Статус деплоя](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml)
-[![Статус Docker](https://github.com/doka-guide/platform/actions/workflows/docker-deploy.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/docker-deploy.yml)
+[![Linting status](https://github.com/doka-guide/platform/actions/workflows/linting.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/linting.yml)
+[![Test status](https://github.com/doka-guide/platform/actions/workflows/tests.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/tests.yml)
+[![Deployment status](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml)
+[![Docker status](https://github.com/doka-guide/platform/actions/workflows/docker-deploy.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/docker-deploy.yml)
 
+[⚠️ If the Doka website loads slowly or doesn't work at all](docs/load-fix.md)
 
+Doka is a friendly encyclopedia for web developers. Our goal is to make web development documentation practical, clear, and engaging.
 
-[⚠️ Если сайт Доки медленно загружается или не работает совсем](docs/load-fix.md)
+Join [our Telegram community](https://t.me/doka_guide) to keep up with the latest news, or [chat with us](https://t.me/+qYFPI2mExuQxZTFi), ask questions, and have a good time.
 
-Дока — это добрая энциклопедия для веб-разработчиков. Наша цель — сделать документацию по веб-разработке практичной, понятной и не унылой.
+This repository contains the platform for the [Doka website](https://doka.guide/). The platform builds articles from a [separate repository](https://github.com/doka-guide/content).
 
-Присоединяйтесь к [нашему сообществу в Телеграм](https://t.me/doka_guide), чтобы быть в курсе последних новостей, или к [чату](https://t.me/+qYFPI2mExuQxZTFi), чтобы пообщаться, задать вопрос и просто хорошо провести время.
+## How the site works
 
-Этот репозиторий содержит платформу для сайта «[Дока](https://doka.guide/)». Платформа собирает статьи из [отдельного репозитория](https://github.com/doka-guide/content).
+Doka is built with [Eleventy](https://www.11ty.dev). Eleventy uses Nunjucks templates to turn Markdown articles into HTML pages.
 
-## Как устроен сайт
+The project is built with GitHub Actions and hosted on a server. Read [more about deployment](./docs/deploy.md).
 
-Сайт «Доки» работает на базе [Eleventy](https://www.11ty.dev). При помощи Nunjucks-темплейтов Eleventy превращает статьи в формате Markdown в HTML-страницы.
+## Getting started
 
-Проект собирается с помощью GitHub Actions и хостится на сервере, читайте [подробнее про деплой](./docs/deploy.md).
+You need [Node.js](https://nodejs.org/en/) and npm to work with the platform.
 
-## Как работать
+To run Doka locally:
 
-Для работы с платформой вам потребуется [Node.js](https://nodejs.org/en/) и npm.
+1. Clone the repository.
+1. Copy `.env.example` to `.env` and set the required environment variables.
+1. Install dependencies with `npm i`.
+1. Start the local web server with `npm start`.
 
-Чтобы запустить Доку локально, нужно:
+Find more ways to run Doka locally in the [launch guide](docs/how-to-run.md).
 
-1. Скачать репозиторий.
-1. Сделать копию файла `.env.example` и назвать его `.env`. Задать в нём нужные переменные окружения.
-1. Установить зависимости командой `npm i`.
-1. Запустить локальный веб-сервер командой `npm start`.
+## Contributing
 
-Больше вариантов локального запуска Доки — [в руководстве по запуску](docs/how-to-run.md).
-
-## Как вносить вклад
-
-Процесс, стиль кода и коммитов, проверки перед пулреквестом — [в руководстве для контрибьюторов](CONTRIBUTING.md). Если вы работаете над кодом через ИИ-агентов, им нужен [AGENTS.md](AGENTS.md).
+Read the [contributor guide](CONTRIBUTING.md) for the workflow, code and commit style, and checks to run before opening a pull request. If you use AI coding agents, they should read [AGENTS.md](AGENTS.md).
 
 ---
 
-Код распространяется [по лицензии MIT](LICENSE.md), шрифты имеют собственные лицензии, подробнее читайте [в документации](docs/license.md).
+The code is distributed under the [MIT License](LICENSE.md). Fonts have their own licenses; see the [license documentation](docs/license.md) for details.
 
-## Как запускать тесты
+## Running tests
 
-Мы используем [Jest](https://jestjs.io/docs/getting-started).
-Добавьте свои тесты. Для этого добавьте файлы тестов в папку `__tests__`. Файл с тестом лучше называть также, как файл, который тестируется.
+We use [Jest](https://jestjs.io/docs/getting-started).
+Add tests in the `__tests__` folder. Test files should preferably have the same name as the file they cover.
 
-Запустите тесты командой `npm test`.
-Чтобы запустить тесты в `watch` режиме, используйте дополнительный флаг `--watch`: `npm test -- --watch`.
+Run tests with `npm test`.
+To run tests in watch mode, use the `--watch` flag: `npm test -- --watch`.
 
-## Как дебажить?
+## Debugging
 
-Запустите команду `npm run debug` и откройте в Chrome кладку `chrome:://inspect`.
+Run `npm run debug`, then open `chrome://inspect` in Chrome.
 
-Найдите нужную сессию в списке. Нажимайте `inspect` и запускайте отладку.
+Find the relevant session in the list, click `inspect`, and start debugging.
 
-По-умолчанию отладчик сразу остановится. Чтобы добавить больше точек остановки добавьте в ваш код `debugger;` или найдите нужный файл и поставьте точку прямо в интерфейсе отладчика.
+The debugger pauses immediately by default. To add more breakpoints, add `debugger;` to your code or set a breakpoint in the debugger interface.

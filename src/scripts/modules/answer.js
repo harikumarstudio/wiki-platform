@@ -45,12 +45,12 @@ function togglePractice(event) {
   const contentContainer = summaryContainer.parentNode
   contentContainer.classList.toggle('answer__content--open')
   if (isPressed) {
-    element.innerHTML = '+ Развернуть'
+    element.innerHTML = '+ Expand'
     element.removeEventListener('keydown', tabKeyPressed)
     toggleTabIndex(summaryContainer, '-1')
     window.scrollTo(0, contentContainer.offsetTop - 150)
   } else {
-    element.innerHTML = '– Свернуть'
+    element.innerHTML = '– Collapse'
     element.addEventListener('keydown', tabKeyPressed)
     toggleTabIndex(summaryContainer, '0')
   }
@@ -71,7 +71,7 @@ window.addEventListener('load', () => {
       toggler.setAttribute('data-collapsed', true)
       const contentContainer = summary.parentNode
       contentContainer.classList.toggle('answer__content--open')
-      toggler.innerHTML = '+ Свернуть'
+      toggler.innerHTML = '+ Collapse'
       toggleTabIndex(summary, '0')
       window.scrollTo(0, contentContainer.offsetTop + header.offsetTop - 150)
     }

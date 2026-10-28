@@ -11,13 +11,12 @@ env:
   IMAGE: dokaguide/platform
 
 jobs:
-  # Раньше обе архитектуры собирались в одной джобе через QEMU. Node 24 под
-  # эмуляцией arm64 падает с «qemu: uncaught target signal 4 (Illegal
-  # instruction)» на npm ci — не всегда, а через раз, в зависимости от того,
-  # по каким путям пойдёт JIT. Поэтому каждая архитектура собирается на своём
-  # нативном раннере, и эмуляции больше нет вовсе.
+  # Both architectures used to build in one job through QEMU. Node 24 under
+  # arm64 emulation intermittently failed during npm ci with "qemu: uncaught
+  # target signal 4 (Illegal instruction)," depending on the JIT code path.
+  # Each architecture now builds on its own native runner, without emulation.
   build:
-    name: Сборка образа (${{ matrix.platform }})
+    name: Build image (${{ matrix.platform }})
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 30
     permissions:
@@ -31,37 +30,37 @@ jobs:
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
     steps:
-      - name: Загрузка платформы
+      - name: Check out platform
         uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - name: Настройка Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Авторизация на Docker Hub
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      # Каждая сборка кладёт образ без тега и отдаёт дайджест: тег появится
-      # один раз в джобе слияния, когда обе архитектуры готовы.
-      - name: Сборка и выгрузка по дайджесту
+      # Each build pushes an untagged image and returns its digest. The tag is
+      # added once in the merge job after both architectures are ready.
+      - name: Build and push by digest
         id: build
         uses: docker/build-push-action@v6
         with:
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
-      - name: Сохранение дайджеста
+      - name: Save digest
         run: |
           set -eu
           mkdir -p "$RUNNER_TEMP/digests"
           touch "$RUNNER_TEMP/digests/${DIGEST#sha256:}"
         env:
           DIGEST: ${{ steps.build.outputs.digest }}
-      - name: Имя артефакта без слэшей
+      - name: Create slash-free artifact name
         run: echo "ARTIFACT=digest-${PLATFORM//\//-}" >> "$GITHUB_ENV"
         env:
           PLATFORM: ${{ matrix.platform }}
-      - name: Выгрузка дайджеста
+      - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT }}
@@ -69,35 +68,35 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  # Тег dokaguide/platform:latest навешивается на манифест из обоих образов.
-  # Отдельная джоба нужна, чтобы тег не переезжал на одну архитектуру раньше,
-  # чем собралась вторая.
+  # The dokaguide/platform:latest tag is assigned to the manifest containing
+  # both images. This separate job prevents the tag from moving to one
+  # architecture before the other is ready.
   merge:
-    name: Сборка манифеста
+    name: Create manifest
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions: {}
     steps:
-      - name: Загрузка дайджестов
+      - name: Download digests
         uses: actions/download-artifact@v4
         with:
           path: digests
           pattern: digest-*
           merge-multiple: true
-      - name: Настройка Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Авторизация на Docker Hub
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Публикация манифеста
+      - name: Publish manifest
         run: |
           set -eu
           cd digests
           # shellcheck disable=SC2046
           docker buildx imagetools create --tag "$IMAGE:latest" \
             $(printf "$IMAGE@sha256:%s " *)
-      - name: Обзор загруженного образа
+      - name: Inspect published image
         run: docker buildx imagetools inspect "$IMAGE:latest"

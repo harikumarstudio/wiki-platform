@@ -46,7 +46,7 @@ function init() {
   const params = new URLSearchParams(window.location.search)
   applyView(params.get(PARAM_NAME) || VIEWS.THEMES)
 
-  // Chromium иногда не прокручивает до anchor-блока, если в адресной строке нажать enter
+  // Chromium sometimes fails to scroll to the anchor block when Enter is pressed in the address bar.
   const hash = window.location.hash
   if (hash) {
     window.addEventListener('load', () => {

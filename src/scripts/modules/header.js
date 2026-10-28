@@ -89,7 +89,7 @@ class Header extends BaseComponent {
     }
 
     document.addEventListener('keydown', (event) => {
-      // Firefox при нажатии Slash открывает свой поиск по странице
+      // Firefox opens its in-page search when Slash is pressed.
       if (document.activeElement !== this.refs.input && (event.code === 'Slash' || event.code === 'NumpadDivide')) {
         event.preventDefault()
       }
@@ -122,7 +122,7 @@ class Header extends BaseComponent {
     this.scrollThreshold = this.getScrollThreshold()
   }
 
-  /* события для закрытия/открытия дропдауна с разделами */
+  /* Events for opening and closing the section dropdown. */
   enter() {
     this.refs.input?.focus()
   }
@@ -191,7 +191,7 @@ class Header extends BaseComponent {
     this.emit('menu.close')
   }
 
-  /* отслеживаем скролл, устанавливаем флаг для хедера */
+  /* Track scrolling and set the header flag. */
   stickyHeader(flag) {
     this.refs.headerContent.classList.toggle('header__controls--shrink', flag)
     document.documentElement.style.setProperty('--is-header-sticky', Number(flag))

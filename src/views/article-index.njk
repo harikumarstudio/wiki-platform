@@ -24,7 +24,7 @@
     </div>
 
     <fieldset class="index-block__filter">
-      {# fieldset и legend не работают с flexbox/grid #}
+      {# fieldset and legend do not work with flexbox/grid. #}
       <legend class="visually-hidden">Sort by:</legend>
       <div aria-hidden="true">Sort by:</div>
 
@@ -42,7 +42,7 @@
 
     <main class="index-block__main" id="main-content">
       <section class="index-section" id="themes">
-        <h2 class="visually-hidden">Статьи раздела «{{ categoryName }}» по темам</h2>
+        <h2 class="visually-hidden">Articles in {{ categoryName }}, by topic</h2>
 
         {% for group in allGroups %}
           <section class="index-section__item articles-group" id="{{ group.name | slugify }}">
@@ -68,7 +68,7 @@
       </section>
 
       <section class="index-section" id="alphabet">
-        <h2 class="visually-hidden">Статьи раздела «{{ categoryName }}» по алфавиту</h2>
+        <h2 class="visually-hidden">Articles in {{ categoryName }}, alphabetically</h2>
         {% for letter in firstLettersOfArticles %}
           <section class="index-section__item articles-group">
             <h3 class="articles-group__title articles-group__title--letter">
@@ -85,7 +85,7 @@
                       {{- article.data.title | descriptionMarkdown | safe }}</a>
                     {% if hasGroups %}
                       <span class="visually-hidden">
-                      Относится к {{ "темам" if hasGroups | length > 1 else "теме" }}:
+                      Related {{ "topics" if hasGroups | length > 1 else "topic" }}:
                       </span>
                       {% for group in groupsBySlug[articleId] %}
                         <span class="article-group__label">{{ group | descriptionMarkdown | safe }}</span>

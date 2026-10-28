@@ -1,15 +1,15 @@
 ---
-title: 'Трудоустройство'
+title: 'Getting hired'
 color: '68 98% 47%'
 design: 'dream-job'
 startDate: '2023-11-17T00:00:10'
 endDate: '2023-11-24T00:00:00'
 links:
   - emoji: '💼'
-    text: 'Как устроиться на работу?'
+    text: 'How do you get a job?'
     url: 'https://dream-job.doka.guide/'
 ---
 
-Всё от начала поиска работы до знакомства с новым коллективом разобрали в спецпроекте «Трудоустройство». Постарались облегчить вам непростой путь и добавить прозрачности.
+Our special project, "Getting hired," covers everything from starting your job search to meeting your new team. We hope it makes this challenging journey a little easier and clearer.
 <br>
-Удачи в поисках идеальной работы! (´▽`ʃ♡ƪ)
+Good luck finding your dream job! (´▽`ʃ♡ƪ)

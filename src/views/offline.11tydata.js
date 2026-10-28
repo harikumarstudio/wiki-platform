@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Вы сейчас не в сети',
+  title: 'You are offline',
   layout: 'base.njk',
   permalink: '/offline/index.html',
 }

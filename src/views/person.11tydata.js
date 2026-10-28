@@ -79,7 +79,7 @@ module.exports = {
     },
 
     practicesPersonRole: function () {
-      return 'Author совета'
+      return 'Tip author'
     },
 
     practicesIndex: function (data) {
@@ -88,7 +88,7 @@ module.exports = {
     },
 
     answersPersonRole: function () {
-      return 'Author ответа'
+      return 'Answer author'
     },
 
     answersInArticles: function (data) {
@@ -177,13 +177,11 @@ module.exports = {
           ? contributionStat['first']
           : releaseDate
         : releaseDate
-      const githubFirstContribution = new Date(pullRequestDate)
-        .toLocaleString('ru', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
-        .replace(' г.', '')
+      const githubFirstContribution = new Date(pullRequestDate).toLocaleString('en', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
 
       return {
         githubFirstContribution,

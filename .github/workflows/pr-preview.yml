@@ -14,9 +14,9 @@ env:
   DEPLOY_DOMAIN: https://platform-${{ github.event.pull_request.number }}.dev.doka.guide
 
 jobs:
-  # Сообщение о начале сборки. Кода из форка здесь нет, поэтому доступна запись в пулреквест.
+  # Post a build-start message. No fork code runs here, so the workflow can write to the pull request.
   start:
-    name: Сообщение о начале
+    name: Post build-start message
     if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/github-script@v9
         env:
-          MESSAGE: "Идёт сборка и публикация превью... [Подробнее](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          MESSAGE: "Building and publishing the preview... [Details](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
         with:
           script: |
             const { owner, repo } = context.repo
@@ -42,16 +42,16 @@ jobs:
               await github.rest.issues.createComment({ owner, repo, issue_number, body })
             }
 
-  # Сборка кода из форка. В переиспользуемом воркфлоу нет ни одного секрета, а
-  # GITHUB_TOKEN урезан до чтения, поэтому выполнение чужого кода (npm ci,
-  # *.11tydata.js) ничего не может утащить. Отдельный префикс кеша не даёт форку
-  # перезаписать кеш продакшн-деплоя.
+  # Build code from the fork. The reusable workflow has no secrets, and
+  # GITHUB_TOKEN is read-only, so running fork code (npm ci, *.11tydata.js)
+  # cannot access credentials. A separate cache prefix prevents the fork from
+  # overwriting the production deployment cache.
   build:
-    name: Сборка превью
+    name: Build preview
     if: ${{ !github.event.pull_request.draft }}
     uses: ./.github/workflows/build-site.yml
-    # Переиспользуемый воркфлоу не может запросить больше прав, чем дал вызывающий,
-    # а на уровне воркфлоу стоит permissions: {} — поэтому выдаём чтение здесь.
+    # A reusable workflow cannot request more permissions than its caller
+    # grants. The workflow-level permissions are empty, so grant read access here.
     permissions:
       contents: read
     with:
@@ -59,19 +59,19 @@ jobs:
       allow-unsafe-checkout: true
       cache-prefix: pr-preview
 
-  # Валидация собранных страниц. Секретов не требует и работает с тем же
-  # артефактом, что и публикация, — сайт больше не собирается второй раз.
+  # Validate the built pages. This job needs no secrets and uses the same
+  # artifact as deployment, so the site is not built a second time.
   validate:
-    name: Валидация разметки
+    name: Validate markup
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
       contents: read
     steps:
-      # Нужен только package.json с зависимостями валидатора: сам сайт приезжает
-      # артефактом. Код из форка не выполняется — берём базовую ветку.
-      - name: Загрузка платформы
+      # Only package.json and the validator dependencies are needed; the site
+      # arrives as an artifact. No fork code runs here, so use the base branch.
+      - name: Check out platform
         uses: actions/checkout@v6
         with:
           persist-credentials: false
@@ -84,27 +84,28 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           architecture: x64
-      - name: Установка модулей
+      - name: Install dependencies
         run: npm ci
-      - name: Загрузка страниц
+      - name: Download pages
         uses: actions/download-artifact@v4
         with:
           name: site-html
-      # Архив собран кодом из форка. Вычищаем симлинки: иначе член архива может
-      # указать куда угодно за пределы dist. Штатная сборка симлинков не создаёт.
-      - name: Распаковка страниц
+      # The archive was built from fork code. Remove symlinks, or an archive
+      # entry could point outside dist. Normal builds do not create symlinks.
+      - name: Extract pages
         run: |
           set -eu
           mkdir -p dist
           tar --extract --file site-html.tar --directory dist \
             --no-same-owner --no-same-permissions
           find dist -type l -delete
-      - name: Валидация
+      - name: Validate
         run: npm run lint:html
 
-  # Публикация. Здесь есть DEPLOY_KEY, но кода из форка нет — только собранная статика.
+  # Deploy the preview. DEPLOY_KEY is available here, but no fork code runs—
+  # only the built static files are used.
   deploy:
-    name: Публикация превью
+    name: Deploy preview
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -112,44 +113,44 @@ jobs:
     env:
       PREVIEW_PATH: /web/sites/dev.doka.guide/platform/${{ github.event.pull_request.number }}
     steps:
-      - name: Загрузка артефакта
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: site-dist
-      # Опись защищает от обрезанного при передаче архива: дальше идёт rsync с
-      # --delete, и неполный артефакт стёр бы недостающее из превью.
-      # Разбираем grep-ом, а не source: опись собрана кодом из форка, это данные.
-      - name: Проверка артефакта
+      # The manifest protects against a truncated archive: rsync --delete runs
+      # next, and an incomplete artifact would remove missing preview files.
+      # Parse with grep, not source: the manifest was produced by fork code and is data.
+      - name: Verify artifact
         run: |
           set -eu
-          test -f site-manifest.txt || { echo "В артефакте нет описи"; exit 1; }
+          test -f site-manifest.txt || { echo "Artifact manifest is missing"; exit 1; }
           EXPECTED_SHA="$(grep '^sha256=' site-manifest.txt | cut -d= -f2)"
           ACTUAL_SHA="$(sha256sum site.tar | cut -d' ' -f1)"
           if [ "$EXPECTED_SHA" != "$ACTUAL_SHA" ]; then
-            echo "Архив побился при передаче: ждали $EXPECTED_SHA, получили $ACTUAL_SHA"
+            echo "Archive was corrupted in transit: expected $EXPECTED_SHA, got $ACTUAL_SHA"
             exit 1
           fi
           echo "EXPECTED_FILES=$(grep '^files=' site-manifest.txt | cut -d= -f2)" >> "$GITHUB_ENV"
-      # Содержимое архива собрано кодом из форка. Распаковываем до записи ключа и
-      # вычищаем симлинки: иначе член архива может указать на
-      # $HOME/.ssh/doka_deploy и ключ утечёт в публичное превью.
-      # Штатная сборка симлинков в dist не создаёт.
-      - name: Распаковка артефакта
+      # The archive was built from fork code. Extract it and remove symlinks
+      # before writing the key, or an archive entry could point to
+      # $HOME/.ssh/doka_deploy and expose the key in the public preview.
+      # Normal builds do not create symlinks in dist.
+      - name: Extract artifact
         run: |
           set -eu
           PREVIEW_DIR="$(mktemp -d "$RUNNER_TEMP/preview.XXXXXX")"
           tar --extract --file site.tar --directory "$PREVIEW_DIR" --no-same-owner --no-same-permissions
           ACTUAL_FILES="$(find "$PREVIEW_DIR" -type f | wc -l | tr -d ' ')"
           if [ "$ACTUAL_FILES" -ne "$EXPECTED_FILES" ]; then
-            echo "Распаковалось $ACTUAL_FILES файлов вместо $EXPECTED_FILES"
+            echo "Extracted $ACTUAL_FILES files instead of $EXPECTED_FILES"
             exit 1
           fi
-          # Симлинки вычищаем после сверки: их удаление не меняет число обычных
-          # файлов, но должно случиться до записи ключа.
+          # Remove symlinks after verifying the file count: removing them does
+          # not change the number of regular files, but must happen before writing the key.
           find "$PREVIEW_DIR" -type l -delete
-          test -f "$PREVIEW_DIR/index.html" || { echo "В артефакте нет index.html"; exit 1; }
+          test -f "$PREVIEW_DIR/index.html" || { echo "Artifact does not contain index.html"; exit 1; }
           echo "PREVIEW_DIR=$PREVIEW_DIR" >> "$GITHUB_ENV"
-      - name: Установка ключа для пользователя
+      - name: Set up deployment key
         env:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
         run: |
@@ -157,19 +158,19 @@ jobs:
           mkdir -p "$HOME/.ssh"
           printf '%s\n' "$DEPLOY_KEY" > "$HOME/.ssh/doka_deploy"
           chmod 600 "$HOME/.ssh/doka_deploy"
-      - name: Публикация превью
+      - name: Deploy preview
         run: |
           set -eu
           SSH_COMMAND="ssh -i $HOME/.ssh/doka_deploy -o StrictHostKeyChecking=no"
           $SSH_COMMAND deploy@dev.doka.guide mkdir -p "$PREVIEW_PATH"
           rsync -e "$SSH_COMMAND" --archive --compress --delete-after --safe-links \
             "$PREVIEW_DIR/" "deploy@dev.doka.guide:$PREVIEW_PATH"
-          echo "Ссылка на превью — $DEPLOY_DOMAIN"
+          echo "Preview available at $DEPLOY_DOMAIN"
 
-  # Итоговый комментарий. always(), иначе при падении сборки пулреквест навсегда
-  # останется с сообщением «Идёт сборка...».
+  # Post the final comment. Without always(), a failed build would leave the
+  # pull request stuck with the "Building..." message.
   report:
-    name: Отчёт в пулреквесте
+    name: Report on pull request
     needs: [start, build, validate, deploy]
     if: ${{ always() && !cancelled() && !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
@@ -180,8 +181,8 @@ jobs:
       - uses: actions/github-script@v9
         env:
           IS_PUBLISHED: ${{ needs.deploy.result == 'success' }}
-          SUCCESS_MESSAGE: '<a href="${{ env.DEPLOY_DOMAIN }}">Превью контента</a> из ${{ github.event.pull_request.head.sha }} опубликовано.'
-          FAILURE_MESSAGE: "Превью контента из ${{ github.event.pull_request.head.sha }} не опубликовано. Ошибка сборки или публикации. [Подробнее](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          SUCCESS_MESSAGE: '<a href="${{ env.DEPLOY_DOMAIN }}">Content preview</a> for ${{ github.event.pull_request.head.sha }} has been published.'
+          FAILURE_MESSAGE: "Content preview for ${{ github.event.pull_request.head.sha }} was not published. Build or deployment failed. [Details](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
         with:
           script: |
             const { owner, repo } = context.repo
@@ -200,5 +201,5 @@ jobs:
               await github.rest.issues.createComment({ owner, repo, issue_number, body })
             }
             if (!isPublished) {
-              core.setFailed('Превью не опубликовано')
+              core.setFailed('Preview was not published')
             }

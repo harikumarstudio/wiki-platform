@@ -30,7 +30,7 @@ module.exports = {
 
     documentDescription: function (data) {
       const { categoryName } = data
-      return `Статьи Доки по теме «${categoryName}»`
+      return `Doka articles about ${categoryName}`
     },
 
     categoryLink: function (data) {

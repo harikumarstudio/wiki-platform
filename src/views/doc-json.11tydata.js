@@ -69,7 +69,8 @@ module.exports = {
 
     docPath: function (data) {
       const { doc } = data
-      // Удаляем `/index` с конца пути (цель - из строки `/js/index-of/index` получить `/js/index-of`)
+      // Remove `/index` from the end of the path (for example, convert
+      // `/js/index-of/index` to `/js/index-of`).
       return doc.filePathStem.replace(/\/index$/, '/')
     },
 
@@ -112,7 +113,7 @@ module.exports = {
     documentTitle: function (data) {
       // удаляем символы обратных кавычек html-тегов из markdown
       const title = data.title.replace(/`/g, '')
-      return titleFormatter([title, data.categoryName, 'Дока'])
+      return titleFormatter([title, data.categoryName, 'Doka'])
     },
 
     nextArticle: function (data) {

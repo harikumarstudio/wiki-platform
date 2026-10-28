@@ -21,19 +21,19 @@ module.exports = {
     json: function (data) {
       const { category, categoryArticles } = data
 
-      // Раньше здесь читался внутренний API 11ty — template._frontMatterDataCache
-      // и template.inputContent. В третьей версии их нет, всё нужное лежит в
-      // публичных article.data и article.rawInput. Важное отличие: rawInput
-      // отдаёт текст уже без фронтматтера, поэтому пропускать его split'ом
-      // по «---» больше не надо.
+      // This used to read the internal 11ty API — template._frontMatterDataCache
+      // and template.inputContent. These are gone in version 3; everything we
+      // need is in the public article.data and article.rawInput. Crucially,
+      // rawInput no longer includes front matter, so there is no need to split
+      // it on '---'.
       //
-      // Заодно убраны async-колбэки у filter и reduce. Промис всегда истинный,
-      // поэтому filter ничего не отсеивал, а аккумулятор reduce после первой
-      // итерации становился промисом — из-за этого в файл попадала ровно одна
-      // статья вместо всего раздела.
-      // 11ty зондирует вычисляемые поля через Proxy, чтобы понять, какие
-      // данные они читают. На этом проходе categoryArticles — не массив,
-      // поэтому проверка обязательна.
+      // Async callbacks were also removed from filter and reduce. A Promise is
+      // always truthy, so filter removed nothing, and reduce's accumulator
+      // became a Promise after the first iteration. As a result, the file
+      // contained one article instead of the entire section.
+      // 11ty probes computed fields through a Proxy to learn which data they
+      // read. During this pass, categoryArticles is not an array, so the guard
+      // is required.
       if (!Array.isArray(categoryArticles)) {
         return {}
       }

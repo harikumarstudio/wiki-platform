@@ -2,12 +2,12 @@ module.exports = {
   permalink: 'feed/index.xml',
   eleventyExcludeFromCollections: true,
   meta: {
-    title: 'Новое в Доке',
-    subtitle: 'Дока — это документация для разработчиков на понятном языке.',
-    language: 'ru',
+    title: 'What’s new at Doka',
+    subtitle: 'Doka is clear documentation for developers.',
+    language: 'en',
     url: 'https://doka.guide/',
     author: {
-      name: 'Дока Дог',
+      name: 'Doka Dog',
       email: 'hi@doka.guide',
     },
   },

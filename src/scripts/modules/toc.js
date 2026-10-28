@@ -1,11 +1,11 @@
 import debounce from '../libs/debounce.js'
 
 /*
-  Описание алгоритма:
+  Algorithm:
 
-  Будем считать активной ту секцию статьи, `titleThreshold * titleHeight` заголовка которой находится выше значения `getWindowThresholdPosition()`.
-  При срабатывании Intersection Observer находим видимые заголовки, берём последний из них.
-  Если таковых не оказалось, ищем ближайший неактивный заголовок выше значения `getWindowThresholdPosition()`.
+  A section is active when its heading, at `titleThreshold * titleHeight`, is above `getWindowThresholdPosition()`.
+  When Intersection Observer fires, find the visible headings and select the last one.
+  If none are visible, find the nearest inactive heading above `getWindowThresholdPosition()`.
 */
 function init() {
   const TOC_CONTAINER_SELECTOR = '.toc'
@@ -73,7 +73,7 @@ function init() {
   function getTitleScrollPosition(title) {
     const titleBox = title?.getBoundingClientRect()
 
-    const additionalOffset = 1 // небольшой отступ, чтобы заголовок гарантировано пересёк границу и стал активным
+    const additionalOffset = 1 // A small offset ensures the heading crosses the boundary and becomes active.
     return (
       window.scrollY +
       (titleBox.top + titleBox.height * titleThreshold + additionalOffset) -
@@ -117,7 +117,7 @@ function init() {
                   : false
 
                 if (document.activeElement === document.body && !isParallelCopying) {
-                  // восстанавливаем фокус на последней нажатой кнопке
+                  // Restore focus to the last button that was pressed.
                   button.focus()
                 }
 
@@ -126,12 +126,12 @@ function init() {
               }, 1800)
             }
           } catch (error) {
-            console.log(`Ошибка с подсказкой об успешном копировании ссылки: ${error.message}`)
+            console.log(`Error showing the link-copied confirmation: ${error.message}`)
           }
         })
-        .catch((error) => console.log(`Ошибка при копировании ссылки: ${error.message}`))
+        .catch((error) => console.log(`Error copying link: ${error.message}`))
     } catch (error) {
-      console.log(`Возможно, соединение незащищенное. Ошибка: ${error.message}`) // доступ к clipboard работает только с https
+      console.log(`The connection may not be secure. Error: ${error.message}`) // Clipboard access requires HTTPS.
     }
   }
 
@@ -187,7 +187,7 @@ function init() {
     })
   }
 
-  // делаем как макро-задачу, чтобы компонент header успел посчитать размеры
+  // Defer this as a macrotask so the header component can calculate its dimensions.
   setTimeout(initObserver)
 
   window.addEventListener('resize', debounce(initObserver, 200))
@@ -239,7 +239,7 @@ function init() {
       }
 
       status.hidden = true
-      status.textContent = '' // Статус должен быть пустым, чтобы его гарантированно не читали скринридеры. Вызвано особенностью работы скринридеров с атрибутом `aria-describedby`.
+      status.textContent = '' // Keep the status empty so screen readers do not announce it. This is due to how they handle `aria-describedby`.
     }
   }
 

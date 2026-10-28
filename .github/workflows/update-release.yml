@@ -12,9 +12,9 @@ jobs:
   release:
     runs-on: ubuntu-22.04
     steps:
-      - name: Загрузка платформы
+      - name: Check out platform
         uses: actions/checkout@v4
-      - name: Создание черновика релиза
+      - name: Create release draft
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}

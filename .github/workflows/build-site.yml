@@ -1,36 +1,36 @@
-name: Сборка сайта
+name: Build site
 
-# Переиспользуемая сборка. Раньше сайт собирался дважды на каждое событие:
-# отдельно для превью/деплоя и отдельно для W3C-валидации. Теперь сборка живёт
-# в одном месте, а результат разъезжается по джобам артефактами.
+# Reusable build. The site used to be built twice for each event: once for the
+# preview/deployment and once for W3C validation. The build now runs in one
+# place, and its artifacts are shared between jobs.
 #
-# Воркфлоу вызывают в том числе из pull_request_target, где выполняется код из
-# форка (npm ci, *.11tydata.js). Поэтому секреты только явные и поимённо: у
-# недоверенной сборки их нет вовсе. Не добавляй в вызовы `secrets: inherit` —
-# это отдаст форку весь набор, включая DEPLOY_KEY.
+# This workflow is also called from pull_request_target, where code from a
+# fork runs (npm ci, *.11tydata.js). Secrets are therefore passed explicitly
+# by name; untrusted builds receive none. Do not use `secrets: inherit` in
+# calls, as that would expose all secrets, including DEPLOY_KEY, to the fork.
 on:
   workflow_call:
     inputs:
       ref:
-        description: Коммит платформы для сборки. Пусто — коммит, на котором запущен воркфлоу.
+        description: Platform commit to build. If empty, use the commit that triggered the workflow.
         type: string
         required: false
         default: ''
       allow-unsafe-checkout:
-        description: Разрешить чекаут кода из форка. Нужно при вызове из pull_request_target.
+        description: Allow checking out code from a fork. Required when called from pull_request_target.
         type: boolean
         required: false
         default: false
       cache-prefix:
         description: >-
-          Префикс ключа npm-кеша. Недоверенные сборки обязаны использовать
-          собственный префикс, иначе форк сможет отравить кеш продакшн-деплоя.
+          Prefix for the npm cache key. Untrusted builds must use their own
+          prefix; otherwise, a fork could poison the production deployment cache.
         type: string
         required: true
 
 jobs:
   build:
-    name: Сборка
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -38,19 +38,19 @@ jobs:
     env:
       PATH_TO_CONTENT: ./content
     steps:
-      - name: Загрузка платформы
+      - name: Check out platform
         uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref }}
           allow-unsafe-pr-checkout: ${{ inputs.allow-unsafe-checkout }}
           persist-credentials: false
-      - name: Загрузка контента
+      - name: Check out content
         uses: actions/checkout@v6
         with:
           repository: doka-guide/content
           path: content
           persist-credentials: false
-      - name: Загрузка кеша
+      - name: Check out cache
         uses: actions/checkout@v6
         with:
           repository: doka-guide/cache
@@ -59,39 +59,39 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
-      # Без restore-keys: недоверенная сборка не должна ни читать, ни
-      # перезаписывать кеш доверенной. Разделение обеспечивает cache-prefix.
-      - name: Кэширование модулей
+      # Without restore-keys, an untrusted build cannot read or overwrite the
+      # trusted cache. cache-prefix keeps the caches separate.
+      - name: Cache npm modules
         uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ inputs.cache-prefix }}-${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-      - name: Установка модулей
+      - name: Install dependencies
         run: npm ci
-      - name: Копирование кеша
+      - name: Copy cache file
         run: cp ./cache/issues.json ./.issues.json
-      - name: Сборка сайта
+      - name: Build site
         run: |
           set -eu
           cp .env.example .env
           npm run build
-      # Пустой dist доезжает до rsync --delete и стирает сайт, поэтому
-      # проверяем до упаковки, а не после выгрузки.
-      - name: Проверка результата
+      # An empty dist would reach rsync --delete and erase the site, so check
+      # the build before packaging or uploading it.
+      - name: Verify build output
         run: |
           set -eu
-          test -f dist/index.html || { echo "dist пуст — сборка ничего не выдала"; exit 1; }
-      # Два артефакта вместо одного. Полный нужен деплою, но валидатору из
-      # почти 500 МБ интересны только страницы: качать ради них сотни мегабайт
-      # картинок — дороже, чем собрать отдельный маленький архив.
-      # Один tar вместо десятков тысяч файлов: иначе выгрузка дольше сборки.
-      - name: Упаковка сайта
+          test -f dist/index.html || { echo "dist is empty; the build produced no output"; exit 1; }
+      # The full artifact is used for deployment, but the validator only needs
+      # HTML pages, not the nearly 500 MB of images. This keeps its artifact
+      # small while deployment still gets the complete site.
+      # Use one tar archive instead of tens of thousands of files; otherwise
+      # uploading would take longer than building the site.
+      - name: Package site
         run: tar --create --file site.tar --directory dist .
-      # Опись едет вместе с архивом, чтобы принимающая сторона могла убедиться,
-      # что доехало ровно то же самое. Без неё обрезанный при передаче архив
-      # распакуется частично, пройдёт проверку на index.html и уедет в rsync
-      # с --delete, который вычистит недостающее с боевого сайта.
-      - name: Опись артефакта
+      # The manifest lets the receiving job verify that the archive arrived
+      # intact. Without it, a truncated archive could still contain index.html
+      # and be sent to rsync --delete, removing missing files from production.
+      - name: Create artifact manifest
         run: |
           set -eu
           {
@@ -100,13 +100,13 @@ jobs:
             printf 'html=%s\n' "$(find dist -type f -name '*.html' | wc -l | tr -d ' ')"
           } > site-manifest.txt
           cat site-manifest.txt
-      - name: Упаковка страниц
+      - name: Package HTML pages
         run: |
           set -eu
           cd dist
           find . -name '*.html' -print0 \
             | tar --create --file ../site-html.tar --null --files-from -
-      - name: Выгрузка сайта
+      - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
           name: site-dist
@@ -115,11 +115,11 @@ jobs:
             site-manifest.txt
           retention-days: 1
           if-no-files-found: error
-          # Из 494 МБ около 340 МБ — уже сжатые картинки, но 86 МБ HTML жмутся
-          # в 5.7 раза. Первый уровень забирает почти весь выигрыш, не тратя
-          # процессор на остальное.
+          # Of 494 MB, about 340 MB are already-compressed images, while 86 MB
+          # of HTML compress to 5.7 times smaller. Level 1 gets most of the
+          # benefit without spending CPU on the rest.
           compression-level: 1
-      - name: Выгрузка страниц
+      - name: Upload HTML artifact
         uses: actions/upload-artifact@v4
         with:
           name: site-html

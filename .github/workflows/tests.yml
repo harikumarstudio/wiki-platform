@@ -10,13 +10,13 @@ permissions: {}
 
 jobs:
   test:
-    name: Тесты
+    name: Tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       contents: read
     steps:
-      - name: Загрузка платформы
+      - name: Check out platform
         uses: actions/checkout@v6
         with:
           persist-credentials: false
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: 'npm'
-      - name: Установка зависимостей
+      - name: Install dependencies
         run: npm ci
-      - name: Тесты
+      - name: Run tests
         run: npm test

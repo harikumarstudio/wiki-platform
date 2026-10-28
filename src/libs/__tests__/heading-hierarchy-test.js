@@ -51,6 +51,7 @@ describe('render', () => {
     const html = HeadingHierarchy.render(root)
 
     expect(html).toContain('class="toc"')
+    expect(html).toContain('aria-label="Contents"')
     expect(html).toContain('href="#kak-eto"')
     expect(html).toContain('Как это')
   })

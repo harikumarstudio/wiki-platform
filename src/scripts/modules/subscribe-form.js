@@ -49,14 +49,14 @@ class Settings extends BaseComponent {
       this.email.parentElement.classList.add('subscribe-settings__row--hidden')
       this.active.value = data.active
       if (data.active) {
-        this.button.innerHTML = 'Сохранить'
-        this.title.innerHTML = 'Настройка рассылки'
+        this.button.innerHTML = 'Save'
+        this.title.innerHTML = 'Newsletter settings'
       } else if (!data.active && data.reason) {
-        this.button.innerHTML = 'Подписаться снова'
-        this.title.innerHTML = 'Вы отписаны от рассылки'
+        this.button.innerHTML = 'Subscribe again'
+        this.title.innerHTML = 'You have unsubscribed from the newsletter'
       } else if (!data.active) {
-        this.button.innerHTML = 'Сохранить'
-        this.title.innerHTML = 'Настройте рассылку'
+        this.button.innerHTML = 'Save'
+        this.title.innerHTML = 'Set up your newsletter'
       }
       if (data.who) {
         this.who.forEach((w) => {

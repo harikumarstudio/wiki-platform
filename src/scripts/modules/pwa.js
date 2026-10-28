@@ -34,8 +34,8 @@ function setNetworkStatus() {
   })
 }
 
-// Сервис-воркер отключён, регистрации здесь больше нет: см. комментарий в
-// src/sw.js. Осталась только разметка состояния сети и ссылок.
+// The service worker is disabled, so it is no longer registered; see the
+// comment in src/sw.js. Only the network status and links remain.
 window.addEventListener('load', () => {
   setNetworkStatus()
   setLinksMarked()

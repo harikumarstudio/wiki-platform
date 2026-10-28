@@ -1,16 +1,16 @@
 ---
-title: 'Может, ты?'
+title: 'Could it be you?'
 color: '0 100% 50%'
 design: 'stream'
 startDate: '2023-12-15T00:00:00'
 endDate: '2023-12-17T00:00:00'
 links:
   - emoji: '👤'
-    text: 'Заполнить анкету'
+    text: 'Fill out the form'
     url: 'https://docs.google.com/forms/d/1uMPGQ-a7TkdbnlKiQPUsPHdadstxUSm8DtKPxQZwLRI/edit'
   - emoji: '▶️'
-    text: 'Ссылка на стрим'
+    text: 'Stream link'
     url: 'https://www.youtube.com/watch?v=r93nWksNJQc'
 ---
 
-19 декабря проведём открытое техническое собеседование. Хороший способ проверить свои знания и понять, что нужно подтянуть. Собеседовать будет <a href="https://t.me/zarzakharov" class="link">Зар Захаров</a>. Обещаем добрую и бережную обратную связь, в стиле Доки. Нам нужен тот, кого будем собеседовать. Если это ты, то заполни анкету по ссылке ниже.
+On December 19, we'll hold an open technical interview. It's a great way to test your knowledge and find out what to work on. <a href="https://t.me/zarzakharov" class="link">Zar Zakharov</a> will conduct the interview. Expect kind and thoughtful feedback, Doka-style. We're looking for someone to interview. If that's you, fill out the form below.

@@ -5,13 +5,13 @@
 import { init } from '../../modules/last-update'
 
 const createPastDate = (passedSeconds) => {
-  // Создаёт дату на момент «N-секунд назад» и возвращает её для последующих проверок.
+  // Create a date N seconds ago and return it for subsequent checks.
   //
-  // Считается вычитанием миллисекунд, а не через setHours. Прежний вариант
-  // передавал в setHours дробное число часов, а оно усекается к нулю: днём
-  // getHours() - 1.944 давало «минус два часа», но в первом часу ночи
-  // 0 - 1.944 превращалось в -1, то есть в один час. Из-за этого тест падал
-  // каждые сутки с 00:00 до 01:00.
+  // Subtract milliseconds instead of using setHours. The previous version
+  // passed a fractional number of hours to setHours, which truncates it toward
+  // zero: during the day, getHours() - 1.944 meant "minus two hours," but in
+  // the first hour after midnight, 0 - 1.944 became -1, or one hour. This made
+  // the test fail every day between midnight and 1 a.m.
   const date = new Date(Date.now() - passedSeconds * 1000)
 
   const time = document.createElement('time')
@@ -28,25 +28,25 @@ const createPastDate = (passedSeconds) => {
 }
 
 describe('last-update', () => {
-  it('должен создавать языковую запись времени в секундах', () => {
+  it('formats elapsed time in seconds', () => {
     const date = createPastDate(30)
     init()
-    expect(date.textContent).toMatch('30 секунд назад')
+    expect(date.textContent).toMatch('30 seconds ago')
   })
 
-  it('должен создавать языковую запись времени в минутах', () => {
+  it('formats elapsed time in minutes', () => {
     const date = createPastDate(600)
     init()
-    expect(date.textContent).toMatch('10 минут назад')
+    expect(date.textContent).toMatch('10 minutes ago')
   })
 
-  it('должен создавать языковую запись времени в часах и округлять значение в большую сторону', () => {
+  it('formats elapsed time in hours and rounds up', () => {
     const date = createPastDate(7000)
     init()
-    expect(date.textContent).toMatch('2 часа назад')
+    expect(date.textContent).toMatch('2 hours ago')
   })
 
-  it('должен проигнорировать создание языковой записи времени', () => {
+  it('does not format elapsed time after one day', () => {
     const date = createPastDate(86400)
     init()
     expect(date.textContent).toMatch('')

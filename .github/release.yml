@@ -1,38 +1,38 @@
 changelog:
   categories:
-    - title: Автоматизация
+    - title: Automation
       labels:
         - автоматизация
-    - title: Вопрос
+    - title: Questions
       labels:
         - вопрос
-    - title: Вёрстка
+    - title: Markup
       labels:
         - вёрстка
-    - title: Движок
+    - title: Engine
       labels:
         - движок
-    - title: Дизайн
+    - title: Design
       labels:
         - дизайн
-    - title: Доступность
+    - title: Accessibility
       labels:
         - доступность
-    - title: Кухня
+    - title: Infrastructure
       labels:
         - кухня
-    - title: Ошибка
+    - title: Bug fixes
       labels:
         - ошибка
-    - title: Поиск
+    - title: Search
       labels:
         - поиск
-    - title: Улучшение
+    - title: Improvements
       labels:
         - улучшение
-    - title: Хороший старт
+    - title: Good first issues
       labels:
         - хороший старт
-    - title: Другие изменения
+    - title: Other changes
       labels:
         - "*"

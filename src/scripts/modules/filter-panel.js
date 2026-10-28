@@ -13,11 +13,11 @@ function init() {
 
     if (expanded) {
       button.setAttribute('aria-expanded', 'false')
-      buttonName.innerHTML = 'Показать фильтр'
+      buttonName.innerHTML = 'Show filters'
       expanded = false
     } else {
       button.setAttribute('aria-expanded', 'true')
-      buttonName.innerHTML = 'Скрыть фильтр'
+      buttonName.innerHTML = 'Hide filters'
       expanded = true
     }
   })
