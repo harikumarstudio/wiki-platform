@@ -8,9 +8,9 @@ The automated deployment requires:
 
 - The site and its content repositories to be available to GitHub Actions.
 - A server account with SSH access and write permission to the site's document root.
-- The repository's GitHub Actions secrets `DEPLOY_KEY` and `DEPLOY_CONFIG`. The key authenticates the deployment, and the SSH config defines the `dev.doka.guide` host used by the workflow.
+- The repository's GitHub Actions secrets `DEPLOY_KEY` and `DEPLOY_CONFIG`. The key authenticates the deployment and is written to `~/.ssh/wiki_deploy`; configure `DEPLOY_CONFIG` with `IdentityFile ~/.ssh/wiki_deploy` for the deployment server at `31.170.164.47`.
 
-The current platform workflow publishes to `dev.doka.guide:/web/sites/doka.guide/www/`. Update the workflow and its SSH configuration if your server or document root differs.
+The platform workflow publishes to `31.170.164.47:/home/u815720699/domains/archvizwiki.com/public_html/`.
 
 ## Deployment steps
 
@@ -19,8 +19,10 @@ The current platform workflow publishes to `dev.doka.guide:/web/sites/doka.guide
 3. In the platform workflow, GitHub Actions checks out the platform, content, and cache repositories, installs dependencies, and builds the site. The full static site is packaged as the `site-dist` artifact.
 4. GitHub Actions also validates the generated HTML. This is a separate job: deployment depends on a successful build, not on HTML validation, so a validation failure does not by itself block publication.
 5. Before publishing, the deploy job verifies the artifact checksum and file count, confirms that it contains `index.html`, and rejects a build with fewer than 1,000 HTML pages.
-6. The deploy job connects to the server over SSH and uses `rsync` to transfer the site. It preserves the server's `api.json` and `mail` paths, removes obsolete files only after transfer, and aborts if the number of deletions exceeds its safety limit.
-7. Check the GitHub Actions run to confirm that **Build site** and **Deploy site** succeeded, then open the deployed site and verify the updated pages.
+6. The deploy job connects to `31.170.164.47` over SSH and uses `rsync` to transfer the site into `/home/u815720699/domains/archvizwiki.com/public_html/`. It preserves the server's `api.json` and `mail` paths, removes obsolete files only after transfer, and aborts if the number of deletions exceeds its safety limit.
+7. Check the GitHub Actions run to confirm that **Build site** and **Deploy site** succeeded, then open `https://archvizwiki.com` and verify the updated pages.
+
+PR previews are published under `/home/u815720699/domains/archvizwiki.com/public_html/platform/<PR number>` and are available at `https://archvizwiki.com/platform/<PR number>`.
 
 ## If deployment fails
 

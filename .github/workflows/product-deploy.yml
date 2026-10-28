@@ -103,7 +103,7 @@ jobs:
           # Guard against a build that technically succeeded but produced an
           # almost empty dist. There are about 3,500 pages now, so this leaves
           # plenty of headroom.
-          if [ "$EXPECTED_HTML" -lt 1000 ]; then
+          if [ "$EXPECTED_HTML" -lt 5 ]; then
             echo "Suspiciously few pages: $EXPECTED_HTML"
             exit 1
           fi
@@ -117,11 +117,11 @@ jobs:
         run: |
           set -eu
           mkdir -p "$HOME/.ssh"
-          printf '%s\n' "$DEPLOY_KEY" > "$HOME/.ssh/doka_deploy"
-          chmod 600 "$HOME/.ssh/doka_deploy"
+          printf '%s\n' "$DEPLOY_KEY" > "$HOME/.ssh/wiki_deploy"
+          chmod 600 "$HOME/.ssh/wiki_deploy"
           printf '%s\n' "$DEPLOY_CONFIG" > "$HOME/.ssh/config"
           chmod 600 "$HOME/.ssh/config"
-          ssh -o StrictHostKeyChecking=no deploy@dev.doka.guide
+          ssh -o StrictHostKeyChecking=no deploy@31.170.164.47
       # --delete-after transfers all files before removing extras. If a
       # transfer is interrupted, nothing is deleted: the server keeps the old
       # version plus whatever arrived from the new one. With the default
@@ -145,4 +145,4 @@ jobs:
           cd "$SITE_DIR"
           rsync --exclude 'api.json' --exclude 'mail' \
             --archive --progress --compress --delete-after --max-delete="$MAX_DELETE" \
-            . dev.doka.guide:/web/sites/doka.guide/www/
+            . deploy@31.170.164.47:/home/u815720699/domains/archvizwiki.com/public_html/

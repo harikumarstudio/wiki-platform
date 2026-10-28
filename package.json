@@ -32,7 +32,7 @@
     "debug": "cross-env-shell NODE_ENV=development NODE_OPTIONS=--max-old-space-size=8192 \"npm run make-links && node --inspect-brk node_modules/@11ty/eleventy/cmd.js --serve --quiet\"",
     "start": "cross-env-shell NODE_ENV=development NODE_OPTIONS=--max-old-space-size=8192 \"npm run make-links && eleventy --incremental --serve --quiet\"",
     "build": "cross-env-shell NODE_ENV=production \"npm run make-links && eleventy --quiet && npx gulp\"",
-    "deploy": "cd dist && rsync -e 'ssh -i $HOME/.ssh/doka_deploy -o StrictHostKeyChecking=no' --exclude 'api.json' --exclude 'mail' --archive --progress --compress --delete . deploy@dev.doka.guide:$(echo $(grep 'SERVER_PATH' ../.env | cut -d '=' -f2))",
+    "deploy": "cd dist && rsync -e 'ssh -i $HOME/.ssh/wiki_deploy -o StrictHostKeyChecking=no' --exclude 'api.json' --exclude 'mail' --archive --progress --compress --delete . deploy@31.170.164.47:$(echo $(grep 'SERVER_PATH' ../.env | cut -d '=' -f2))",
     "editorconfig": "editorconfig-checker",
     "lint:css": "stylelint \"src/styles/**/*.css\"",
     "lint:js": "eslint \"**/*.js\"",

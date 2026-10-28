@@ -11,7 +11,7 @@ concurrency:
 permissions: {}
 
 env:
-  DEPLOY_DOMAIN: https://platform-${{ github.event.pull_request.number }}.dev.doka.guide
+  DEPLOY_DOMAIN: https://archvizwiki.com/platform/${{ github.event.pull_request.number }}
 
 jobs:
   # Post a build-start message. No fork code runs here, so the workflow can write to the pull request.
@@ -111,7 +111,7 @@ jobs:
     timeout-minutes: 20
     permissions: {}
     env:
-      PREVIEW_PATH: /web/sites/dev.doka.guide/platform/${{ github.event.pull_request.number }}
+      PREVIEW_PATH: /home/u815720699/domains/archvizwiki.com/public_html/platform/${{ github.event.pull_request.number }}
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -133,7 +133,7 @@ jobs:
           echo "EXPECTED_FILES=$(grep '^files=' site-manifest.txt | cut -d= -f2)" >> "$GITHUB_ENV"
       # The archive was built from fork code. Extract it and remove symlinks
       # before writing the key, or an archive entry could point to
-      # $HOME/.ssh/doka_deploy and expose the key in the public preview.
+      # $HOME/.ssh/wiki_deploy and expose the key in the public preview.
       # Normal builds do not create symlinks in dist.
       - name: Extract artifact
         run: |
@@ -156,15 +156,15 @@ jobs:
         run: |
           set -eu
           mkdir -p "$HOME/.ssh"
-          printf '%s\n' "$DEPLOY_KEY" > "$HOME/.ssh/doka_deploy"
-          chmod 600 "$HOME/.ssh/doka_deploy"
+          printf '%s\n' "$DEPLOY_KEY" > "$HOME/.ssh/wiki_deploy"
+          chmod 600 "$HOME/.ssh/wiki_deploy"
       - name: Deploy preview
         run: |
           set -eu
-          SSH_COMMAND="ssh -i $HOME/.ssh/doka_deploy -o StrictHostKeyChecking=no"
-          $SSH_COMMAND deploy@dev.doka.guide mkdir -p "$PREVIEW_PATH"
+          SSH_COMMAND="ssh -i $HOME/.ssh/wiki_deploy -o StrictHostKeyChecking=no"
+          $SSH_COMMAND deploy@31.170.164.47 mkdir -p "$PREVIEW_PATH"
           rsync -e "$SSH_COMMAND" --archive --compress --delete-after --safe-links \
-            "$PREVIEW_DIR/" "deploy@dev.doka.guide:$PREVIEW_PATH"
+            "$PREVIEW_DIR/" "deploy@31.170.164.47:$PREVIEW_PATH"
           echo "Preview available at $DEPLOY_DOMAIN"
 
   # Post the final comment. Without always(), a failed build would leave the
