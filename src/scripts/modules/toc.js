@@ -105,7 +105,7 @@ function init() {
                 <path d="m8.77,19.52l-6.97,-7.11l1.38,-1.43l5.6,5.71l12.04,-12.25l1.38,1.43l-13.41,13.65l-0.02,0z"></path>
               </svg>
               `
-              status.textContent = 'Скопировано'
+              status.textContent = 'Copied'
               status.hidden = false
 
               setTimeout(() => {

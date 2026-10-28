@@ -36,7 +36,7 @@ module.exports = function (window) {
 
       const copier = window.document.createElement('span')
       const buttonHTML = createButtonMarkup(id, headingText)
-      const statusHTML = `<span role="status" id="status-${id}" class="article-heading__status">Скопировано</span>`
+      const statusHTML = `<span role="status" id="status-${id}" class="article-heading__status">Copied</span>`
       const space = window.document.createTextNode(' ')
 
       copier.innerHTML = buttonHTML + statusHTML
