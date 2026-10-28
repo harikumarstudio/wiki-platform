@@ -5,3 +5,4 @@
 [![Deployment status](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml)
 
 1. Enabled Site Deploy
+2. Updated server path

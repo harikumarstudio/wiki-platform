@@ -8,9 +8,9 @@ The automated deployment requires:
 
 - The site and its content repositories to be available to GitHub Actions.
 - A server account with SSH access and write permission to the site's document root.
-- The repository's GitHub Actions secrets `DEPLOY_KEY` and `DEPLOY_CONFIG`. The key authenticates the deployment and is written to `~/.ssh/wiki_deploy`; configure `DEPLOY_CONFIG` with `IdentityFile ~/.ssh/wiki_deploy` for the deployment server at `31.170.164.47`.
+- The repository's GitHub Actions secrets `DEPLOY_KEY` and `DEPLOY_CONFIG`. The key authenticates the deployment and is written to `~/.ssh/wiki_deploy`; configure `DEPLOY_CONFIG` with `IdentityFile ~/.ssh/wiki_deploy` and `Port 65002` for the deployment server at `31.170.164.47`.
 
-The platform workflow publishes to `31.170.164.47:/home/u815720699/domains/archvizwiki.com/public_html/`.
+The platform workflow connects over SSH port `65002` and publishes to `31.170.164.47:/home/u815720699/domains/archvizwiki.com/public_html/`.
 
 ## Deployment steps
 

@@ -121,7 +121,7 @@ jobs:
           chmod 600 "$HOME/.ssh/wiki_deploy"
           printf '%s\n' "$DEPLOY_CONFIG" > "$HOME/.ssh/config"
           chmod 600 "$HOME/.ssh/config"
-          ssh -o StrictHostKeyChecking=no deploy@31.170.164.47
+          ssh -p 65002 -o StrictHostKeyChecking=no deploy@31.170.164.47
       # --delete-after transfers all files before removing extras. If a
       # transfer is interrupted, nothing is deleted: the server keeps the old
       # version plus whatever arrived from the new one. With the default
@@ -143,6 +143,6 @@ jobs:
           MAX_DELETE=$((EXPECTED_FILES / 5))
           echo "Artifact files: $EXPECTED_FILES; deletion limit: $MAX_DELETE"
           cd "$SITE_DIR"
-          rsync --exclude 'api.json' --exclude 'mail' \
+          rsync -e 'ssh -p 65002' --exclude 'api.json' --exclude 'mail' \
             --archive --progress --compress --delete-after --max-delete="$MAX_DELETE" \
             . deploy@31.170.164.47:/home/u815720699/domains/archvizwiki.com/public_html/
