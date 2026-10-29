@@ -15,7 +15,7 @@ The `platform` is based on the 11ty static site generator . The site pages are d
 
 The `backend` is a REST API implemented in Go. The API allows users to save completed forms and reactions to articles, and also serves as a platform for organizing email newsletters.
 
-The `search` engine includes a search engine that allows you to search a pre-built inverted index. The index is generated during site deployment from the main branch.
+Search uses a JSON index generated from the platform's content collection during each site build. Search results therefore come only from the content repository checked out for that build.
 
 The Content and Platform repositories are used to build a static site, while the Backend and Search repositories are used to make the site interactive.
 
