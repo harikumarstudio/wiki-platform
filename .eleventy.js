@@ -96,7 +96,7 @@ module.exports = function (config) {
 
   config.addCollection('posts', async (collectionApi) => {
     const changeLog = await (
-      await fetch('https://raw.githubusercontent.com/doka-guide/content/main/CHANGELOG.md')
+      await fetch('https://raw.githubusercontent.com/harikumarstudio/wiki-content/main/CHANGELOG.md')
     ).text()
     const months = [
       'января',

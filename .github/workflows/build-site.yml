@@ -21,12 +21,21 @@ on:
         type: boolean
         required: false
         default: false
+      content-repository:
+        description: GitHub repository containing the content to build.
+        type: string
+        required: false
+        default: harikumarstudio/wiki-content
       cache-prefix:
         description: >-
           Prefix for the npm cache key. Untrusted builds must use their own
           prefix; otherwise, a fork could poison the production deployment cache.
         type: string
         required: true
+    secrets:
+      content-token:
+        description: Token with read access to a private content repository.
+        required: false
 
 jobs:
   build:
@@ -47,7 +56,8 @@ jobs:
       - name: Check out content
         uses: actions/checkout@v6
         with:
-          repository: doka-guide/content
+          repository: ${{ inputs.content-repository }}
+          token: ${{ secrets.content-token || github.token }}
           path: content
           persist-credentials: false
       - name: Check out cache

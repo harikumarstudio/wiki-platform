@@ -1,6 +1,6 @@
 # Contributing to the Doka platform
 
-Thank you for wanting to help. This repository is the engine behind [doka.guide](https://doka.guide). If you want to edit an **article**, use the [content repository](https://github.com/doka-guide/content): articles, practical tips, and contributor pages live there.
+Thank you for wanting to help. This repository is the engine behind [doka.guide](https://doka.guide). If you want to edit an **article**, use the [content repository](https://github.com/harikumarstudio/wiki-content): articles, practical tips, and contributor pages live there.
 
 ## Workflow
 

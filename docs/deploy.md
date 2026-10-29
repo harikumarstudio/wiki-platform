@@ -12,7 +12,7 @@ The project is built using [GitHub Actions](https://docs.github.com/en/actions).
 
 Each repository describes its own build workflow:
 
-- [The content workflow](https://github.com/doka-guide/content/blob/main/.github/workflows/product-deploy.yml) — is one continuous pass: download, install, compile, send to the server;
+- [The content workflow](https://github.com/harikumarstudio/wiki-content/blob/main/.github/workflows/product-deploy.yml) — is one continuous pass: download, install, compile, send to the server;
 - [The platform workflow](https://github.com/doka-guide/platform/blob/main/.github/workflows/product-deploy.yml) — consists of three jobs, described below:
 
 ### How the platform assembly works
@@ -37,10 +37,11 @@ No actions occur on the server side other than publishing the transferred folder
 
 ## Netlify deployment
 
-The [netlify.yml](../.github/workflows/netlify.yml) workflow deploys the same verified `site-dist` artifact to Netlify on pushes to `main`. Configure these GitHub Actions settings in the repository:
+The [netlify.yml](../.github/workflows/netlify.yml) workflow builds its content from [`harikumarstudio/wiki-content`](https://github.com/harikumarstudio/wiki-content) and deploys the verified `site-dist` artifact to Netlify on pushes to this repository's `main` branch. To deploy content changes without a platform change, run **Netlify Deploy** manually from the repository's Actions tab. Configure these GitHub Actions settings in the repository:
 
 - Add a `NETLIFY_AUTH_TOKEN` Actions secret containing a Netlify personal access token.
 - Add a `NETLIFY_SITE_ID` Actions variable containing the Site ID from the Netlify site settings.
+- If `harikumarstudio/wiki-content` is private, add a `CONTENT_REPO_TOKEN` Actions secret with read access to that repository.
 
 The existing `product-deploy.yml` workflow remains enabled and will continue deploying to the server on the same pushes. Disable it if you want Netlify to be the only production deployment.
 

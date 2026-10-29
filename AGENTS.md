@@ -75,7 +75,7 @@ Check: if any text in the repository is now inaccurate, the work isn't finished.
 
 ## 2. About this repository
 
-The [doka.guide](https://doka.guide) site is a static generator built with [Eleventy](https://www.11ty.dev). It takes Markdown from the **separate** [`doka-guide/content`](https://github.com/doka-guide/content) repository and renders it with Nunjucks templates.
+The [doka.guide](https://doka.guide) site is a static generator built with [Eleventy](https://www.11ty.dev). It takes Markdown from the **separate** [`harikumarstudio/wiki-content`](https://github.com/harikumarstudio/wiki-content) repository and renders it with Nunjucks templates.
 
 Content and platform code intentionally live in separate repositories: authors can work on materials without knowing the build system, while the platform can evolve independently. This is unusual for 11ty, which is why the project uses symlinks, `.11tydata.js` files, and manually defined collections.
 

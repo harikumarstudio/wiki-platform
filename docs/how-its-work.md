@@ -4,7 +4,7 @@
 
 Doka lives on GitHub and works on several repositories:
 
-- [Content](https://github.com/doka-guide/content), which contains all materials;
+- [Content](https://github.com/harikumarstudio/wiki-content), which contains all materials;
 - [The platform](https://github.com/doka-guide/platform), that contains all the assembly code and client code for a web application;
 - [The backend](https://github.com/doka-guide/api), which contains the Doki API;
 - [Search](https://github.com/doka-guide/search), which stores the API for organizing content search.

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions: {}
 
@@ -19,6 +20,9 @@ jobs:
       contents: read
     with:
       cache-prefix: netlify
+      content-repository: harikumarstudio/wiki-content
+    secrets:
+      content-token: ${{ secrets.CONTENT_REPO_TOKEN }}
 
   # Validate the markup. The built pages are passed in as an artifact, so this
   # job does not rebuild the site or need content or secrets.

@@ -181,7 +181,7 @@ module.exports = {
         .map((q) => {
           const answerDirExists = fs.existsSync(q.inputPath.replace('index.md', 'answers/'))
           q['addAnswer'] =
-            `https://github.com/doka-guide/content/tree/main${q.inputPath
+            `https://github.com/harikumarstudio/wiki-content/tree/main${q.inputPath
               .replace('./src', '')
               .replace('index.md', '')}/` + (answerDirExists ? 'answers/' : '')
           return q
