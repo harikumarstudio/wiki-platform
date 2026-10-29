@@ -35,6 +35,15 @@ Publishing is done `rsync` with deletion of excess data, so an incomplete artifa
 
 No actions occur on the server side other than publishing the transferred folder with the assembly.
 
+## Netlify deployment
+
+The [netlify.yml](../.github/workflows/netlify.yml) workflow deploys the same verified `site-dist` artifact to Netlify on pushes to `main`. Configure these GitHub Actions settings in the repository:
+
+- Add a `NETLIFY_AUTH_TOKEN` Actions secret containing a Netlify personal access token.
+- Add a `NETLIFY_SITE_ID` Actions variable containing the Site ID from the Netlify site settings.
+
+The existing `product-deploy.yml` workflow remains enabled and will continue deploying to the server on the same pushes. Disable it if you want Netlify to be the only production deployment.
+
 ## Docker image
 
 Docker [docker-deploy.yml](https://github.com/doka-guide/platform/blob/main/.github/workflows/docker-deploy.yml) workflow builds an image for two architectures, each with its own native runner, and then tags the shared manifest. Using QEMU emulation, the arm64 build failed occasionally.

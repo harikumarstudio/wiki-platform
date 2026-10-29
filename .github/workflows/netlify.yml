@@ -1,0 +1,109 @@
+name: Netlify Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  # The build uses a reusable workflow. Previously, every push to main built
+  # the site twice: here and in a separate W3C validation job.
+  build:
+    name: Build site
+    uses: ./.github/workflows/build-site.yml
+    # A reusable workflow cannot request more permissions than its caller
+    # grants. The workflow-level permissions are empty, so grant read access here.
+    permissions:
+      contents: read
+    with:
+      cache-prefix: netlify
+
+  # Validate the markup. The built pages are passed in as an artifact, so this
+  # job does not rebuild the site or need content or secrets.
+  validate:
+    name: Validate markup
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Check out platform
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: 'npm'
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          architecture: x64
+      - name: Install dependencies
+        run: npm ci
+      - name: Download pages
+        uses: actions/download-artifact@v4
+        with:
+          name: site-html
+      - name: Extract pages
+        run: |
+          set -eu
+          mkdir -p dist
+          tar --extract --file site-html.tar --directory dist \
+            --no-same-owner --no-same-permissions
+      - name: Validate
+        run: npm run lint:html
+
+  # Production deployment intentionally depends on the build, not validation.
+  # Before the build was extracted, these were independent workflows, so
+  # invalid markup did not stop a deployment. Adding a validation gate should
+  # be a deliberate decision, not a side effect of moving to artifacts.
+  deploy:
+    name: Deploy site
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions: {}
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+      # Verify the archive and manifest before extracting and publishing it.
+      - name: Verify artifact
+        run: |
+          set -eu
+          test -f site-manifest.txt || { echo "Artifact manifest is missing"; exit 1; }
+          EXPECTED_SHA="$(grep '^sha256=' site-manifest.txt | cut -d= -f2)"
+          ACTUAL_SHA="$(sha256sum site.tar | cut -d' ' -f1)"
+          if [ "$EXPECTED_SHA" != "$ACTUAL_SHA" ]; then
+            echo "Archive was corrupted in transit: expected $EXPECTED_SHA, got $ACTUAL_SHA"
+            exit 1
+          fi
+          echo "EXPECTED_FILES=$(grep '^files=' site-manifest.txt | cut -d= -f2)" >> "$GITHUB_ENV"
+          echo "EXPECTED_HTML=$(grep '^html=' site-manifest.txt | cut -d= -f2)" >> "$GITHUB_ENV"
+      - name: Extract artifact
+        run: |
+          set -eu
+          SITE_DIR="$(mktemp -d "$RUNNER_TEMP/site.XXXXXX")"
+          tar --extract --file site.tar --directory "$SITE_DIR" --no-same-owner --no-same-permissions
+          test -f "$SITE_DIR/index.html" || { echo "Artifact does not contain index.html"; exit 1; }
+          ACTUAL_FILES="$(find "$SITE_DIR" -type f | wc -l | tr -d ' ')"
+          if [ "$ACTUAL_FILES" -ne "$EXPECTED_FILES" ]; then
+            echo "Extracted $ACTUAL_FILES files instead of $EXPECTED_FILES"
+            exit 1
+          fi
+          if [ "$EXPECTED_HTML" -lt 5 ]; then
+            echo "Suspiciously few pages: $EXPECTED_HTML"
+            exit 1
+          fi
+          echo "SITE_DIR=$SITE_DIR" >> "$GITHUB_ENV"
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
+        run: npx --yes netlify-cli deploy --dir "$SITE_DIR" --prod --site "$NETLIFY_SITE_ID"
