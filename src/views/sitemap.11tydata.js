@@ -1,4 +1,5 @@
 const { baseUrl, mainSections } = require('../../config/constants')
+const getArticleDates = require('../libs/article-dates')
 
 module.exports = {
   permalink: '/sitemap.xml',
@@ -14,7 +15,9 @@ module.exports = {
           const pathName = item.filePathStem.replace('index', '')
           const url = `${baseUrl}${pathName}`
 
-          const dateField = item.data.updatedAt || item.data.createdAt
+          const articleDates = getArticleDates(item)
+          const dateField =
+            articleDates?.updatedAt || articleDates?.createdAt || item.data.updatedAt || item.data.createdAt
           const date = dateField ? new Date(dateField) : item.data.page.date || new Date()
 
           return {

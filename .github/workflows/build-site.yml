@@ -61,6 +61,7 @@ jobs:
           repository: ${{ inputs.content-repository }}
           token: ${{ secrets.content-token || github.token }}
           path: content
+          fetch-depth: 0
           persist-credentials: false
       - name: Check out cache
         uses: actions/checkout@v6

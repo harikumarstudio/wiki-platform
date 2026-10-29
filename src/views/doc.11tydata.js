@@ -1,5 +1,6 @@
 const fs = require('fs')
 const { baseUrl } = require('../../config/constants')
+const getArticleDates = require('../libs/article-dates')
 const { titleFormatter } = require('../libs/title-formatter/title-formatter')
 const roleCollection = require('../libs/role-constructor/collection.json')
 const transformArticleData = require('../scripts/modules/transform-article-data.js')
@@ -241,12 +242,16 @@ module.exports = {
 
     createdAt: function (data) {
       const { doc } = data
-      return doc.data.createdAt ? new Date(doc.data.createdAt) : null
+      const { createdAt } = getArticleDates(doc) || {}
+      const date = createdAt || doc.data.createdAt
+      return date ? new Date(date) : null
     },
 
     updatedAt: function (data) {
       const { doc } = data
-      return doc.data.updatedAt ? new Date(doc.data.updatedAt) : null
+      const { updatedAt } = getArticleDates(doc) || {}
+      const date = updatedAt || doc.data.updatedAt
+      return date ? new Date(date) : null
     },
 
     isPlaceholder: function (data) {

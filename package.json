@@ -30,7 +30,9 @@
   },
   "scripts": {
     "debug": "cross-env-shell NODE_ENV=development NODE_OPTIONS=--max-old-space-size=8192 \"npm run make-links && node --inspect-brk node_modules/@11ty/eleventy/cmd.js --serve --quiet\"",
+    "prestart": "node scripts/generate-article-dates.js",
     "start": "cross-env-shell NODE_ENV=development NODE_OPTIONS=--max-old-space-size=8192 \"npm run make-links && eleventy --incremental --serve --quiet\"",
+    "prebuild": "node scripts/generate-article-dates.js",
     "build": "cross-env-shell NODE_ENV=production \"npm run make-links && eleventy --quiet && npx gulp\"",
     "deploy": "cd dist && rsync -e 'ssh -i $HOME/.ssh/wiki_deploy -p 65002 -o StrictHostKeyChecking=no' --exclude 'api.json' --exclude 'mail' --archive --progress --compress --delete . u815720699@31.170.164.47:$(echo $(grep 'SERVER_PATH' ../.env | cut -d '=' -f2))",
     "editorconfig": "editorconfig-checker",

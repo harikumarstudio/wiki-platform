@@ -1,4 +1,5 @@
 const { titleFormatter } = require('../libs/title-formatter/title-formatter')
+const getArticleDates = require('../libs/article-dates')
 
 function getPersons(personGetter) {
   return function (data) {
@@ -97,12 +98,16 @@ module.exports = {
 
     createdAt: function (data) {
       const { doc } = data
-      return doc.data.createdAt ? new Date(doc.data.createdAt) : null
+      const { createdAt } = getArticleDates(doc) || {}
+      const date = createdAt || doc.data.createdAt
+      return date ? new Date(date) : null
     },
 
     updatedAt: function (data) {
       const { doc } = data
-      return doc.data.updatedAt ? new Date(doc.data.updatedAt) : null
+      const { updatedAt } = getArticleDates(doc) || {}
+      const date = updatedAt || doc.data.updatedAt
+      return date ? new Date(date) : null
     },
 
     isPlaceholder: function (data) {
