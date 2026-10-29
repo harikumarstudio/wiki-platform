@@ -23,18 +23,18 @@ const DIST = 'dist'
 // One representative for each page type. Add new page types here so they are checked.
 const PAGES = [
   ['index.html', 'home page'],
-  ['css/index.html', 'section index'],
+  ['cpp/index.html', 'section index'],
   ['all/index.html', 'all articles list'],
   ['people/index.html', 'contributors list'],
-  ['people/solarrust/index.html', 'contributor page'],
+  ['people/harikumarstudio/index.html', 'contributor page'],
   ['search/index.html', 'search page'],
   ['about/index.html', 'information page'],
   ['subscribe/index.html', 'subscription page'],
   ['offline/index.html', 'offline page'],
   ['404/index.html', 'error page'],
-  ['css/display/index.html', 'article with all transforms'],
-  ['css/index.sc.html', 'section social card'],
-  ['css/display/index.sc.html', 'article social card'],
+  ['cpp/cs50-algorithms/index.html', 'article with all transforms'],
+  ['cpp/index.sc.html', 'section social card'],
+  ['cpp/cs50-algorithms/index.sc.html', 'article social card'],
   ['all/index.sc.html', 'all articles social card'],
 ]
 
