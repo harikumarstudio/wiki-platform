@@ -254,6 +254,11 @@ module.exports = {
       return date ? new Date(date) : null
     },
 
+    hasUpdatedAt: function (data) {
+      const { createdAt, updatedAt } = data
+      return Boolean(updatedAt && (!createdAt || updatedAt.getTime() !== createdAt.getTime()))
+    },
+
     isPlaceholder: function (data) {
       const { doc } = data
       return hasTag(doc.data.tags, 'placeholder')

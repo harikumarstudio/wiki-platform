@@ -17,7 +17,7 @@ The `backend` is a REST API implemented in Go. The API allows users to save comp
 
 Search uses a JSON index generated from the platform's content collection during each site build. Search results therefore come only from the content repository checked out for that build.
 
-Article creation and last-modified dates are generated from the content repository's Git history at build time and stored in `.article-dates.json` in the content checkout. The content checkout must include full Git history for those dates to be accurate.
+Article creation and last-modified dates are generated from the content repository's Git history at build time and stored in an `article-date.json` file in each article folder. These files are copied to the matching article folders in the built site. The content checkout must include full Git history for those dates to be accurate.
 
 The Content and Platform repositories are used to build a static site, while the Backend and Search repositories are used to make the site interactive.
 

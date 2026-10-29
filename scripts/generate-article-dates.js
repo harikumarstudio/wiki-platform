@@ -31,20 +31,58 @@ function parseGitLog(log) {
   return dates
 }
 
+function removeArticleDateFiles(directory) {
+  if (!fs.existsSync(directory)) {
+    return
+  }
+
+  fs.readdirSync(directory, { withFileTypes: true }).forEach((entry) => {
+    const entryPath = path.join(directory, entry.name)
+
+    if (entry.isDirectory()) {
+      removeArticleDateFiles(entryPath)
+    } else if (entry.isFile() && entry.name === 'article-date.json') {
+      fs.unlinkSync(entryPath)
+    }
+  })
+}
+
+function writeArticleDates(dates, contentPath, sections = mainSections) {
+  sections.forEach((section) => removeArticleDateFiles(path.join(contentPath, section)))
+
+  let articleCount = 0
+
+  Object.entries(dates).forEach(([markdownPath, articleDates]) => {
+    if (path.posix.basename(markdownPath) !== 'index.md') {
+      return
+    }
+
+    const articleIndexPath = path.join(contentPath, markdownPath)
+    if (!fs.existsSync(articleIndexPath)) {
+      return
+    }
+
+    const outputPath = path.join(path.dirname(articleIndexPath), 'article-date.json')
+    fs.writeFileSync(outputPath, `${JSON.stringify(articleDates)}\n`)
+    articleCount++
+  })
+
+  return articleCount
+}
+
 function generateArticleDates(contentPath = path.resolve(defaultPathToContent), sections = mainSections) {
   const log = execFileSync('git', ['-C', contentPath, 'log', '--format=COMMIT:%cI', '--name-only', '--', ...sections], {
     encoding: 'utf8',
     maxBuffer: 64 * 1024 * 1024,
   })
   const dates = parseGitLog(log)
-  const outputPath = path.join(contentPath, '.article-dates.json')
+  const articleCount = writeArticleDates(dates, contentPath, sections)
 
-  fs.writeFileSync(outputPath, `${JSON.stringify(dates)}\n`)
-  console.log(`Generated Git dates for ${Object.keys(dates).length} content files.`)
+  console.log(`Generated Git dates for ${articleCount} articles.`)
 }
 
 if (require.main === module) {
   generateArticleDates()
 }
 
-module.exports = { generateArticleDates, parseGitLog }
+module.exports = { generateArticleDates, parseGitLog, writeArticleDates }
