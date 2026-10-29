@@ -1,33 +1,43 @@
-# Deploying to a server
+# Deploying to Netlify
 
-The site is generated as static files and published to a web server over SSH. This guide describes that server deployment; it does not use GitHub Pages.
+The site is built from this platform repository and `harikumarstudio/wiki-content`, then published to the existing Netlify site by GitHub Actions. Deployment is manual; pushing a commit does not start it automatically.
 
-## Before deploying
+## One-time setup
 
-The automated deployment requires:
+### 1. Confirm the Netlify site
 
-- The site and its content repositories to be available to GitHub Actions.
-- A server account with SSH access and write permission to the site's document root.
-- The repository's GitHub Actions secrets `DEPLOY_KEY` and `DEPLOY_CONFIG`. The key authenticates the deployment and is written to `~/.ssh/wiki_deploy`; configure `DEPLOY_CONFIG` with `User u815720699`, `IdentityFile ~/.ssh/wiki_deploy`, and `Port 65002` for the deployment server at `31.170.164.47`.
+In Netlify, open the existing **archviz-wiki** site and copy its **Site ID** from the site settings. Use the ID for that existing site, not its name or URL. This ensures deployments target the intended site instead of creating or selecting another project.
 
-The platform workflow connects over SSH port `65002` and publishes to `31.170.164.47:/home/u815720699/domains/archvizwiki.com/public_html/`.
+### 2. Add GitHub Actions settings
 
-## Deployment steps
+In the `harikumarstudio/wiki-platform` repository, open **Settings → Secrets and variables → Actions** and add:
 
-1. Make and review changes in the platform or content repository.
-2. Merge the changes into the repository's `main` branch. The platform deployment workflow runs when a commit is pushed to `main`; the content repository has its own deployment workflow.
-3. In the platform workflow, GitHub Actions checks out the platform, content, and cache repositories, installs dependencies, and builds the site. The full static site is packaged as the `site-dist` artifact.
-4. GitHub Actions also validates the generated HTML. This is a separate job: deployment depends on a successful build, not on HTML validation, so a validation failure does not by itself block publication.
-5. Before publishing, the deploy job verifies the artifact checksum and file count, confirms that it contains `index.html`, and rejects a build with fewer than 1,000 HTML pages.
-6. The deploy job connects to `31.170.164.47` over SSH and uses `rsync` to transfer the site into `/home/u815720699/domains/archvizwiki.com/public_html/`. It preserves the server's `api.json` and `mail` paths, removes obsolete files only after transfer, and aborts if the number of deletions exceeds its safety limit.
-7. Check the GitHub Actions run to confirm that **Build site** and **Deploy site** succeeded, then open `https://archvizwiki.com` and verify the updated pages.
+- **Repository variable** `NETLIFY_SITE_ID` — the Site ID copied from the existing `archviz-wiki` site.
+- **Repository secret** `NETLIFY_AUTH_TOKEN` — a Netlify personal access token authorized to deploy to that site.
+- **Repository secret** `CONTENT_REPO_TOKEN` — needed only if `harikumarstudio/wiki-content` is private. It must have read access to that repository.
 
-PR previews are published under `/home/u815720699/domains/archvizwiki.com/public_html/platform/<PR number>` and are available at `https://archvizwiki.com/platform/<PR number>`.
+The workflow checks that `NETLIFY_SITE_ID` and `NETLIFY_AUTH_TOKEN` are present before deploying. It passes the Site ID explicitly to Netlify CLI, so it will fail rather than create a new site if the ID is missing.
+
+No SSH deployment settings or Netlify build-hook settings are needed for this workflow.
+
+## Run a deployment
+
+1. Make and review changes in `wiki-platform` or `wiki-content`. The workflow always builds from the configured `harikumarstudio/wiki-content` repository.
+2. In GitHub, open the `wiki-platform` repository's **Actions** tab and select **Netlify Deploy**.
+3. Select **Run workflow**, choose the platform branch to build, and confirm **Run workflow**. The workflow runs only when manually started.
+4. GitHub Actions checks out the platform, the content repository with its full Git history, and the build cache. It installs dependencies, builds the full static site, and uploads the result as the `site-dist` artifact.
+5. The deploy job verifies the artifact checksum and file count, confirms that `index.html` is present, and extracts the complete site. It then uses Netlify CLI with `NETLIFY_SITE_ID` to publish the artifact as a production deployment.
+6. A separate job validates generated HTML. It runs alongside deployment after the build; a markup validation failure does not block publishing.
+7. Check the workflow run's **Build site** and **Deploy site** jobs, then open the site's configured Netlify domain or custom domain and verify the updated pages.
+
+Each run builds and publishes the complete generated site from the artifact, rather than uploading only changed pages.
 
 ## If deployment fails
 
-Open the failed job in the GitHub Actions run and review its logs. A build or artifact-verification failure stops deployment. SSH and `rsync` errors usually indicate that the deployment key/configuration, server access, or destination path needs attention. Since excess files are deleted only after transfer and `rsync` has a deletion limit, a failed transfer should not proceed with an unrestricted cleanup.
+Open the failed job in the workflow run and review its logs:
 
-## Docker image
-
-The separate [Docker deployment workflow](../.github/workflows/docker-deploy.yml) builds and publishes a multi-architecture image. It does not publish the static site files to the web server; follow the server deployment steps above for the website.
+- **`NETLIFY_SITE_ID is empty`** — add or correct the repository variable. Use the ID from the existing `archviz-wiki` site.
+- **`NETLIFY_AUTH_TOKEN is empty` or `Unauthorized`** — add or replace the repository secret with a valid token that can access the target site.
+- **Content checkout fails** — if `wiki-content` is private, add or update `CONTENT_REPO_TOKEN` with read access.
+- **Build or artifact verification fails** — deployment stops; inspect the build output or artifact-verification error before retrying.
+- **HTML validation fails** — this is reported by the separate validation job and does not, by itself, stop the deployment job.
