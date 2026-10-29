@@ -245,7 +245,6 @@ Templates for individual page blocks are located in the _src/includes_ folder :
 - _[blocks/theme-toggle.njk](https://github.com/doka-guide/platform/blob/main/src/includes/blocks/theme-toggle.njk)_ — website theme switcher;
 - _[articles-gallery.njk](https://github.com/doka-guide/platform/blob/main/src/includes/articles-gallery.njk)_ — a block with all the materials on the main page that were selected for featuring (the list of materials is updated weekly);
 - _[contributors.njk](https://github.com/doka-guide/platform/blob/main/src/includes/contributors.njk)_ — a block for materials that displays all participants;
-- _[feedback-form.njk](https://github.com/doka-guide/platform/blob/main/src/includes/feedback-form.njk)_ — a form for sending feedback on materials;
 - _[meta.njk](https://github.com/doka-guide/platform/blob/main/src/includes/meta.njk)_ — connecting icons, manifests, fonts, and styles, configuring available themes, generating meta tags and micro-markup for pages;
 - _[practices.njk](https://github.com/doka-guide/platform/blob/main/src/includes/practices.njk)_ — a section of the "In Practice" section in materials;
 - _[questions.njk](https://github.com/doka-guide/platform/blob/main/src/includes/questions.njk)_ — a section of the "At the interview" section in the materials;
