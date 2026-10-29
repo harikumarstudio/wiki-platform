@@ -10,16 +10,17 @@
 ) }}
 
 <div class="container">
+  <h1 class="visually-hidden">{{ title }}</h1>
   <ul class="article-indexes-list base-list all-articles">
     {% for sectionIndex in collections.articleIndexes %}
       {% set category = sectionIndex.fileSlug %}
 
       <li class="article-indexes-list__item">
-        <h3 class="article-indexes-list__title" style="--accent-color: var(--color-base-{{ category }})">
+        <h2 class="article-indexes-list__title" style="--accent-color: var(--color-base-{{ category }})">
           <a class="article-indexes-list__link" href="/{{ category }}/">
             {{ sectionIndex.data.name }}
           </a>
-        </h3>
+        </h2>
         <ul class="index-group-list base-list">
           {% for article in collections[category] %}
             <li class="index-group-list__item">

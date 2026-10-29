@@ -142,12 +142,10 @@ class Header extends BaseComponent {
 
   closeOnFocusout(event) {
     const cookieBanner = document.querySelector('.cookie-notification')
-    const subscriptionBanner = document.querySelector('.subscribe-popup')
     if (
       event.relatedTarget &&
       !this.refs.rootElement.contains(event.relatedTarget) &&
-      !cookieBanner.contains(event.relatedTarget) &&
-      !subscriptionBanner.contains(event.relatedTarget)
+      !cookieBanner.contains(event.relatedTarget)
     ) {
       this.closeMenu()
     }
@@ -155,12 +153,7 @@ class Header extends BaseComponent {
 
   closeOnClickOutside(event) {
     const cookieBanner = document.querySelector('.cookie-notification')
-    const subscriptionBanner = document.querySelector('.subscribe-popup')
-    if (
-      !this.refs.rootElement.contains(event.target) &&
-      !cookieBanner.contains(event.target) &&
-      !subscriptionBanner.contains(event.target)
-    ) {
+    if (!this.refs.rootElement.contains(event.target) && !cookieBanner.contains(event.target)) {
       this.closeMenu()
     }
   }
