@@ -1,8 +1,8 @@
 # Wiki Platform
 
-[![Linting status](https://github.com/doka-guide/platform/actions/workflows/linting.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/linting.yml)
-[![Test status](https://github.com/doka-guide/platform/actions/workflows/tests.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/tests.yml)
-[![Deployment status](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml/badge.svg?branch=main&event=push)](https://github.com/doka-guide/platform/actions/workflows/product-deploy.yml)
+[![Linting](https://github.com/harikumarstudio/wiki-platform/actions/workflows/linting.yml/badge.svg?branch=main)](https://github.com/harikumarstudio/wiki-platform/actions/workflows/linting.yml)
+[![Tests](https://github.com/harikumarstudio/wiki-platform/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/harikumarstudio/wiki-platform/actions/workflows/tests.yml)
+[![Netlify Deploy](https://github.com/harikumarstudio/wiki-platform/actions/workflows/netlify.yml/badge.svg?branch=main&event=workflow_dispatch)](https://github.com/harikumarstudio/wiki-platform/actions/workflows/netlify.yml)
 
 1. Enabled Site Deploy
 2. Updated server path
