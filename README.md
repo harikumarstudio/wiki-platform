@@ -7,4 +7,4 @@
 1. Enabled Site Deploy
 2. Updated server path
 3. Updated SSH user
-4. Refreshed page 
+4. Refreshed page
