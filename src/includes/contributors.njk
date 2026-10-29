@@ -43,6 +43,17 @@
     <dd class="contributors__value">{{ personsList(list=populatedAuthors, personType="author") }}</dd>
   </div>
 
+  {% if updatedAt %}
+    <div class="contributors__item">
+      <dt class="contributors__key">Date:</dt>
+      <dd class="contributors__value">
+        <time data-relative-time datetime="{{ updatedAt | isoDate }}">
+          {{ updatedAt | enDate }}
+        </time>
+      </dd>
+    </div>
+  {% endif %}
+
   {% if populatedContributors.length > 0 %}
     <div class="contributors__item">
       <dt class="contributors__key">Contributors:</dt>
