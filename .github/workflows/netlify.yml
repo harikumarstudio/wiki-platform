@@ -110,4 +110,10 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
-        run: npx --yes netlify-cli deploy --dir "$SITE_DIR" --prod --site "$NETLIFY_SITE_ID"
+        run: |
+          set -eu
+          if [ -z "$NETLIFY_SITE_ID" ]; then
+            echo "::error::NETLIFY_SITE_ID is empty. Add it as a repository or organization Actions variable."
+            exit 1
+          fi
+          npx --yes netlify-cli deploy --dir "$SITE_DIR" --prod --site "$NETLIFY_SITE_ID"

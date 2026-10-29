@@ -46,6 +46,8 @@ jobs:
       contents: read
     env:
       PATH_TO_CONTENT: ./content
+      SECTIONS: cpp, houdini, python, ai, unreal
+      CONTENT_REP_FOLDERS: cpp, houdini, python, ai, unreal, people, pages, settings
     steps:
       - name: Check out platform
         uses: actions/checkout@v6
@@ -80,6 +82,16 @@ jobs:
         run: npm ci
       - name: Copy cache file
         run: cp ./cache/issues.json ./.issues.json
+      - name: Verify content folders
+        run: |
+          set -eu
+          IFS=', ' read -r -a CONTENT_FOLDERS <<< "$CONTENT_REP_FOLDERS"
+          for folder in "${CONTENT_FOLDERS[@]}"; do
+            test -d "content/$folder" || {
+              echo "::error::Content folder is missing: content/$folder"
+              exit 1
+            }
+          done
       - name: Build site
         run: |
           set -eu
